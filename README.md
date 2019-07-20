@@ -67,8 +67,18 @@ Project Directory Structure Definition
 
 Using Swagger
 
+visiting http://localhost:8080/swagger-ui.html
+
 - Integer with Spring Fox
 - Fix config bean doesn't scan the problem.
 - Using Swagger-UI.
 - Using Swagger Core annotations in controller.
+
+
+
+
+### References
+
+[Documenting Spring Boot REST API with Swagger and SpringFox](https://www.vojtechruzicka.com/documenting-spring-boot-rest-api-swagger-springfox/)
+
 
