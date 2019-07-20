@@ -32,12 +32,12 @@ Media
 - Weibo
 - Douban
 - Tianya
-- 云音乐
+- CloudMusic
 
 Techiques
 
 - Backend
-  - Spring-boot
+  - Spring Boot
   - Swagger
   - JUnit
 - Frontend
@@ -47,4 +47,28 @@ Techiques
 
 ### Implementation
 
-- Build Maven Project run hello-world of spring-boot
+Build Maven Project run hello-world of spring-boot
+
+Project Function Module
+
+Project Directory Structure Definition
+
+```$xslt
+/controller
+/service
+/dao
+/crawler
+/entity
+/util
+/conf
+```
+
+### Interfaces Design
+
+Using Swagger
+
+- Integer with Spring Fox
+- Fix config bean doesn't scan the problem.
+- Using Swagger-UI.
+- Using Swagger Core annotations in controller.
+

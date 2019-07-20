@@ -1,1 +1,3 @@
-com\taogen\App.class
+com\taogen\hotcrawler\controller\InfoController.class
+com\taogen\hotcrawler\App.class
+com\taogen\hotcrawler\config\SpringFoxConfig.class
