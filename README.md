@@ -1,15 +1,24 @@
-# Info Crawler
+# Hot Crawler
+
 
 Content
 
-- Prepared
-- Implementation
+- Requirement Analysis
+- System Design
+- Code Implementation
+- Test & Deployment
+- Optimization Function
+
+### Main
 
 
+### 1. Requirement Analysis
 
-### Prepared
+#### 1.1 Requirements
 
-project name: HotCrawler
+- Crawler hot content from media.
+- Frontend and Backend separation.
+- Timer Crawler. 
 
 Stage
 
@@ -24,6 +33,7 @@ Stage
 - Stage 3
   - Crawler WeChat API
   - Storing information URL to DB.
+  
 
 Media
 
@@ -34,24 +44,109 @@ Media
 - Tianya
 - CloudMusic
 
-Techiques
+#### 1.2 Using Techniques
 
 - Backend
-  - Spring Boot
-  - Swagger
-  - JUnit
+  - Spring Boot 2
+  - Swagger 2
+  - JUnit 5
+  - Apache Nutch
 - Frontend
   - Vue.js
-- Docker+Jenkins
-- Database
+- Test & Deployment
+  - Docker
+  - Jenkins
+- Database & Cache
 
-### Implementation
+### 2. System Design
 
-### Build Environment
+#### 2.1 Function Module
 
-Build Maven Project run hello-world of spring-boot
+System Function
 
-Project Function Module
+Frontend --> Backend Controller --> Cache <--> Crawler 
+
+#### 2.2 Database Design
+
+t_info_type
+
+| Name | Type    | Length | NULL     | Key  | Description |
+| ---- | ------- | ------ | -------- | ---- | ----------- |
+| id   | varchar | 64     | not null | P    |             |
+| name | varchar | 64     | not null |      |             |
+
+t_info
+
+| Name  | Type    | Length | NULL     | Key  | Description |
+| ----- | ------- | ------ | -------- | ---- | ----------- |
+| id    | varchar | 64     | not null | P    |             |
+| title | varchar | 128    | not null |      |             |
+| url   | varchar | 255    | not null |      |             |
+
+
+
+#### 2.3 Interfaces Design
+
+1\. v1/types
+
+Method: GET
+
+Data Type: JSON
+
+Parameters: null
+
+Result:
+
+```json
+{
+    ret_code: 0,
+    ret_msg: "success",
+    data: [
+        {
+            id: 1
+            name: "v2ex"
+        },
+        ...
+    ]
+}
+
+```
+
+2\. v1/types/{id}/infos
+
+Method: GET
+
+Data Type: JSON
+
+Parameters: null
+
+Result:
+
+```json
+{
+    ret_code: 0,
+    ret_msg: "success",
+    data: [
+        {
+            id: 1,
+            title: "",
+            url: ""
+        },
+        ...
+    ]
+}
+```
+
+
+
+### 3. Code Implementation
+
+#### 3.1 Implementation Backend
+
+
+##### 3.1.1 Build Project
+
+Build Maven Project, run hello-world of spring-boot
 
 Project Directory Structure Definition
 
@@ -65,9 +160,7 @@ Project Directory Structure Definition
 /conf
 ```
 
-### Interfaces Design with Swagger
-
-Using Swagger
+##### 3.1.2 Integrate Swagger
 
 visiting http://localhost:8080/swagger-ui.html
 
@@ -76,15 +169,35 @@ visiting http://localhost:8080/swagger-ui.html
 - Using Swagger-UI.
 - Using Swagger Core annotations in controller.
 
-Design API
-
-
-
-### Test Drive Development
+##### 3.1.3 Test Drive Development
 
 - Integrate JUnit5
 
-### Developing Crawler with Apache Nutch
+##### 3.1.4 Developing Crawler with Apache Nutch
+
+
+
+#### 3.2 Implementation Frontend
+
+### 4. Test & Deployment
+
+#### CD/CI
+
+### 5. Optimization Function
+
+Notify
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### References
 
