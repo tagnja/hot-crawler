@@ -37,7 +37,7 @@ Stage
 
 Media
 
-- zhihu
+- Zhihu
 - V2EX
 - Weibo
 - Douban
@@ -173,7 +173,9 @@ visiting http://localhost:8080/swagger-ui.html
 
 - Integrate JUnit5
 
-##### 3.1.4 Developing Crawler with Apache Nutch
+##### 3.1.4 Developing Crawler with Apache WebMagic
+
+
 
 
 
