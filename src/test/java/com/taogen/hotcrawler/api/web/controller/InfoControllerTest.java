@@ -1,4 +1,4 @@
-package com.taogen.hotcrawler;
+package com.taogen.hotcrawler.api.web.controller;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,14 +20,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-/**
- * Unit test for simple App.
- */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AppTest 
+public class InfoControllerTest
 {
+    @Autowired
+    private InfoController infoController;
+
     @Autowired
     private WebApplicationContext wac;
 
@@ -50,8 +49,11 @@ public class AppTest
 
     @Test
     public void testResponseBody() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get("/")).andDo(print())
+        MvcResult mvcResult = this.mockMvc.perform(get("/api/v1/test")).andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.ret_code").value(0))
+                .andExpect(jsonPath("$.ret_msg").value("ok"))
                 .andReturn();
+        Assert.assertEquals("application/json;charset=UTF-8", mvcResult.getResponse().getContentType());
     }
 }

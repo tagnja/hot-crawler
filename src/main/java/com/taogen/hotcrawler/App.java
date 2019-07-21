@@ -20,7 +20,8 @@ public class App
     @ApiOperation("Just return hello")
     String home()
     {
-        return "Hello world by hotcrawler!";
+        String str = "Hello world by hotcrawler! ";
+        return str;
     }
 
     public static void main(String[] args)
