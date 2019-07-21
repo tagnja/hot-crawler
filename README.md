@@ -179,9 +179,9 @@ Jsoup, Jsonpath
 
 ##### 3.1.5 Timer Scheduler
 
-##### 3.1.6 Implementation API.
+##### 3.1.6 Using Redis Cache.
 
-##### 3.1.7 Using Redis Cache.
+##### 3.1.7 Implementation API.
 
 ##### 3.1.8 Add Log File
 
