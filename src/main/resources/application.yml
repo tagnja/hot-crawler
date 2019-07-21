@@ -1,0 +1,4 @@
+crawlerTask:
+    initialDelay: 5000
+    fixedRate: 10000
+    #cron: "*/5 * * * * ?"

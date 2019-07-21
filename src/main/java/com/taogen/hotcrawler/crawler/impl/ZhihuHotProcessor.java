@@ -4,11 +4,13 @@ import com.jayway.jsonpath.JsonPath;
 import com.taogen.hotcrawler.crawler.HotProcess;
 import com.taogen.hotcrawler.entity.Info;
 import org.jsoup.Jsoup;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ZhihuHotProcessor implements HotProcess
 {
     public static final String ZHIHU_DOMAIN = "https://zhihu.com";
