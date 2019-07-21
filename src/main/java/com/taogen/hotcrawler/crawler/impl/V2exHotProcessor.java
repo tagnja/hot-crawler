@@ -1,5 +1,6 @@
-package com.taogen.hotcrawler.crawler;
+package com.taogen.hotcrawler.crawler.impl;
 
+import com.taogen.hotcrawler.crawler.HotProcess;
 import com.taogen.hotcrawler.entity.Info;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -10,10 +11,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class V2exPageProcessor implements PageProcess
+public class V2exHotProcessor implements HotProcess
 {
     public static final String V2EX_DOMAIN = "https://v2ex.com";
-    public static final String PAGE_HOT = "/?tab=hot";
+    public static final String HOT_URL = "https://v2ex.com/?tab=hot";
     public static final String ITEM_KEY = "item_title";
 
     @Override
@@ -24,7 +25,7 @@ public class V2exPageProcessor implements PageProcess
         // document
         Document doc = null;
         try {
-            doc = Jsoup.connect(V2EX_DOMAIN + PAGE_HOT).get();
+            doc = Jsoup.connect(HOT_URL).get();
         } catch (IOException e) {
             e.printStackTrace();
         }
