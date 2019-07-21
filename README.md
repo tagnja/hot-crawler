@@ -173,9 +173,17 @@ visiting http://localhost:8080/swagger-ui.html
 
 - Integrate JUnit5
 
-##### 3.1.4 Developing Crawler with Apache WebMagic
+##### 3.1.4 Developing Crawler
 
+Jsoup, Jsonpath
 
+##### 3.1.5 Timer Scheduler
+
+##### 3.1.6 Implementation API.
+
+##### 3.1.7 Using Redis Cache.
+
+##### 3.1.8 Add Log File
 
 
 
