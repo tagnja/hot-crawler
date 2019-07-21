@@ -1,29 +1,18 @@
 crawler:
-    task:
-      initialDelay: 60000
-      fixedRate: 10000
-      cron: "*/5 * * * * ?"
-    site:
-        v2ex:
-            domain: "https://v2ex.com"
-            hotPageUrl: "https://v2ex.com/?tab=hot"
-            hotApiUrl: ""
-            itemKey: "item_title"
-        zhihu:
-            domain: "https://zhihu.com"
-            hotPageUrl: "https://zhihu.com/hot"
-            hotApiUrl: "https://www.zhihu.com/api/v3/feed/topstory/hot-lists/total?limit=50&desktop=true"
-            itemKey: "HotItem"
+  task:
+    initialDelay: 60000
+    fixedRate: 10000
+    cron: "*/5 * * * * ?"
 spring:
-    cache:
-      type: redis
-    redis:
-      host: localhost
-      port: 6379
-      password:
-      jedis:
-        pool:
-          max-active: 7
-          max-idle: 7
-          min-idle: 2
-          max-wait: -1ms
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
+    password:
+    jedis:
+      pool:
+        max-active: 7
+        max-idle: 7
+        min-idle: 2
+        max-wait: -1ms

@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,18 +17,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@PropertySource("classpath:sites.properties")
 public class V2exHotProcessor implements HotProcess
 {
     private static final Logger log = LoggerFactory.getLogger(V2exHotProcessor.class);
 
-    @Value("${crawler.site.v2ex.domain}")
+    @Value("${sites[0].domain}")
     private String V2EX_DOMAIN;
 
-    @Value("${crawler.site.v2ex.hotPageUrl}")
+    @Value("${sites[0].hotPageUrl}")
     private String HOT_PAGE_URL;
 
-    @Value("${crawler.site.v2ex.itemKey}")
+    @Value("${sites[0].itemKey}")
     private String ITEM_KEY;
+
 
     @Override
     public List<Info> getHotList()

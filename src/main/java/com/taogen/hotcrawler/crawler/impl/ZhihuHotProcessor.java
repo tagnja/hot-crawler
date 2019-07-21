@@ -7,6 +7,7 @@ import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -14,14 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@PropertySource("classpath:sites.properties")
 public class ZhihuHotProcessor implements HotProcess
 {
     private static final Logger log = LoggerFactory.getLogger(ZhihuHotProcessor.class);
 
-    @Value("${crawler.site.zhihu.domain}")
+    @Value("${sites[1].domain}")
     private String ZHIHU_DOMAIN;
 
-    @Value("${crawler.site.zhihu.hotApiUrl}")
+    @Value("${sites[1].hotApiUrl}")
     private String HOT_API_URL;
 
     @Override
