@@ -27,14 +27,14 @@ public class CrawlerTask
     private ZhihuHotProcessor zhihuProcess;
 
 
-    @Scheduled(fixedRateString = "${crawlerTask.fixedRate}", initialDelayString = "${crawlerTask.initialDelay}")
+    @Scheduled(fixedRateString = "${crawler.task.fixedRate}", initialDelayString = "${crawler.task.initialDelay}")
     public void crawlerV2ex()
     {
         List<Info> v2exList = v2exProcess.getHotList();
         log.info("crawler v2ex hot list size: " + v2exList.size());
     }
 
-    @Scheduled(fixedRateString = "${crawlerTask.fixedRate}", initialDelayString = "${crawlerTask.initialDelay}")
+    @Scheduled(fixedRateString = "${crawler.task.fixedRate}", initialDelayString = "${crawler.task.initialDelay}")
     public void crawlerZhihu()
     {
         List<Info> zhihuList = zhihuProcess.getHotList();

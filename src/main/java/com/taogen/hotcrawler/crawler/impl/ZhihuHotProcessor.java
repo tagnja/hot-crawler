@@ -4,6 +4,9 @@ import com.jayway.jsonpath.JsonPath;
 import com.taogen.hotcrawler.crawler.HotProcess;
 import com.taogen.hotcrawler.entity.Info;
 import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -13,10 +16,13 @@ import java.util.List;
 @Component
 public class ZhihuHotProcessor implements HotProcess
 {
-    public static final String ZHIHU_DOMAIN = "https://zhihu.com";
-//    public static final String HOT_URL = "https://zhihu.com/hot";
-//    public static final String ITEM_KEY = "HotItem";
-    public static final String HOT_API = "https://www.zhihu.com/api/v3/feed/topstory/hot-lists/total?limit=50&desktop=true";
+    private static final Logger log = LoggerFactory.getLogger(ZhihuHotProcessor.class);
+
+    @Value("${crawler.site.zhihu.domain}")
+    private String ZHIHU_DOMAIN;
+
+    @Value("${crawler.site.zhihu.hotApiUrl}")
+    private String HOT_API_URL;
 
     @Override
     public List<Info> getHotList()
@@ -27,7 +33,7 @@ public class ZhihuHotProcessor implements HotProcess
         // json by API
         String json = null;
         try {
-            json = Jsoup.connect(HOT_API).ignoreContentType(true).execute().body();
+            json = Jsoup.connect(HOT_API_URL).ignoreContentType(true).execute().body();
         } catch (IOException e) {
             e.printStackTrace();
         }

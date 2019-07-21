@@ -6,6 +6,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -15,9 +18,16 @@ import java.util.List;
 @Component
 public class V2exHotProcessor implements HotProcess
 {
-    public static final String V2EX_DOMAIN = "https://v2ex.com";
-    public static final String HOT_URL = "https://v2ex.com/?tab=hot";
-    public static final String ITEM_KEY = "item_title";
+    private static final Logger log = LoggerFactory.getLogger(V2exHotProcessor.class);
+
+    @Value("${crawler.site.v2ex.domain}")
+    private String V2EX_DOMAIN;
+
+    @Value("${crawler.site.v2ex.hotPageUrl}")
+    private String HOT_PAGE_URL;
+
+    @Value("${crawler.site.v2ex.itemKey}")
+    private String ITEM_KEY;
 
     @Override
     public List<Info> getHotList()
@@ -27,7 +37,8 @@ public class V2exHotProcessor implements HotProcess
         // document
         Document doc = null;
         try {
-            doc = Jsoup.connect(HOT_URL).get();
+            doc = Jsoup.connect(HOT_PAGE_URL).get();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

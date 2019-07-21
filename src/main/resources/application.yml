@@ -1,4 +1,16 @@
-crawlerTask:
-    initialDelay: 5000
-    fixedRate: 10000
-    #cron: "*/5 * * * * ?"
+crawler:
+    task:
+      initialDelay: 5000
+      fixedRate: 10000
+      cron: "*/5 * * * * ?"
+    site:
+        v2ex:
+            domain: "https://v2ex.com"
+            hotPageUrl: "https://v2ex.com/?tab=hot"
+            hotApiUrl:
+            itemKey: "item_title"
+        zhihu:
+            domain: "https://zhihu.com"
+            hotPageUrl: "https://zhihu.com/hot"
+            hotApiUrl: "https://www.zhihu.com/api/v3/feed/topstory/hot-lists/total?limit=50&desktop=true"
+            itemKey: "HotItem"
