@@ -1,6 +1,5 @@
 package com.taogen.hotcrawler.crawler;
 
-import com.taogen.hotcrawler.AppTest;
 import com.taogen.hotcrawler.crawler.impl.V2exHotProcessor;
 import com.taogen.hotcrawler.crawler.impl.ZhihuHotProcessor;
 import com.taogen.hotcrawler.entity.Info;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class HotProcessorTest extends AppTest
+public class HotProcessorTest
 {
     @Autowired
     private V2exHotProcessor v2exHotProcessor;

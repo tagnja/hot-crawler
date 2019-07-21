@@ -1,5 +1,6 @@
 package com.taogen.hotcrawler.entity;
 
+
 public class Info
 {
     private String id;
