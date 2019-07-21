@@ -50,7 +50,7 @@ public class AppTest
 
     @Test
     public void testResponseBody() throws Exception {
-        MvcResult mvcResult = this.mockMvc.perform(get("/info/test")).andDo(print())
+        MvcResult mvcResult = this.mockMvc.perform(get("/api/v1/test")).andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.ret_code").value(0))
                 .andExpect(jsonPath("$.ret_msg").value("ok"))
