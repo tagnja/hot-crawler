@@ -38,7 +38,7 @@ public class InfoController extends BaseV1Controller
     public GenericResponseModel<InfoType> getTypes()
     {
         GenericResponseModel result = new GenericResponseModel();
-        result.setData(siteProperties.getSites());
+        result.setData(siteProperties.convertToInfoTypeList());
         return result;
     }
 
