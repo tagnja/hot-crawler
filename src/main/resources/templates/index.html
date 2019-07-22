@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <script th:src="@{/js/jquery-3.4.1.min.js}" />
+   <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+</head>
+<body>
+    This is index page.
+    <span th:text="'Hello, ' + ${message}"></span>
+
+
+    <script>
+        /*var getTypesUrl = "http://localhost:8080/api/v1/types";
+        $.ajax({
+            url: getTypesUrl,
+            type: "get",
+            async: false,
+            dataType: "json",
+            success: function(data){
+                alert(JSON.stringify(data));
+            },
+            error: function(data){
+                alert(JSON.stringify(data))
+            }
+        });*/
+    </script>
+</body>
+</html>
