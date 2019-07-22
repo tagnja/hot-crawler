@@ -1,5 +1,6 @@
 package com.taogen.hotcrawler.api.constant;
 
+import com.taogen.hotcrawler.commons.entity.db.InfoType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -10,18 +11,11 @@ import java.util.List;
 
 @Data
 @Configuration
-@EnableConfigurationProperties(SiteConstant.class)
+@EnableConfigurationProperties(SiteProperties.class)
 @PropertySource("classpath:sites.properties")
 @ConfigurationProperties
-public class SiteConstant
+public class SiteProperties
 {
-    List<SiteInfo> sites;
-
-    @Data
-    public static class SiteInfo
-    {
-        private String id;
-        private String name;
-    }
+    List<InfoType> sites;
 
 }

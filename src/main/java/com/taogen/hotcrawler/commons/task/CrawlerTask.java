@@ -3,6 +3,7 @@ package com.taogen.hotcrawler.commons.task;
 import com.taogen.hotcrawler.commons.crawler.impl.V2exHotProcessor;
 import com.taogen.hotcrawler.commons.crawler.impl.ZhihuHotProcessor;
 import com.taogen.hotcrawler.commons.entity.db.Info;
+import com.taogen.hotcrawler.commons.repository.InfoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,18 +27,25 @@ public class CrawlerTask
     @Autowired
     private ZhihuHotProcessor zhihuProcess;
 
+    @Autowired
+    private InfoRepository infoRepository;
+
 
     @Scheduled(fixedRateString = "${crawler.task.fixedRate}", initialDelayString = "${crawler.task.initialDelay}")
     public void crawlerV2ex()
     {
-        List<Info> v2exList = v2exProcess.getHotList();
+        List<Info> v2exList = v2exProcess.crawlHotList();
         log.info("crawler v2ex hot list size: " + v2exList.size());
+        infoRepository.removeByTypeId(v2exProcess.getSITE_ID());
+        infoRepository.saveAll(v2exList, v2exProcess.getSITE_ID());
     }
 
     @Scheduled(fixedRateString = "${crawler.task.fixedRate}", initialDelayString = "${crawler.task.initialDelay}")
     public void crawlerZhihu()
     {
-        List<Info> zhihuList = zhihuProcess.getHotList();
+        List<Info> zhihuList = zhihuProcess.crawlHotList();
         log.info("crawler zhihu hot list size: " + zhihuList.size());
+        infoRepository.removeByTypeId(zhihuProcess.getSITE_ID());
+        infoRepository.saveAll(zhihuList, zhihuProcess.getSITE_ID());
     }
 }

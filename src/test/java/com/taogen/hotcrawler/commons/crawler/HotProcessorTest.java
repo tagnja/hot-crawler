@@ -25,7 +25,7 @@ public class HotProcessorTest
     @Test
     public void getV2exHotInfo()
     {
-        List<Info> v2exList = v2exHotProcessor.getHotList();
+        List<Info> v2exList = v2exHotProcessor.crawlHotList();
         Assert.assertNotNull(v2exList);
         Assert.assertTrue(v2exList.size() > 0);
         System.out.println("v2ex hot list size: " + v2exList.size());
@@ -34,7 +34,7 @@ public class HotProcessorTest
     @Test
     public void getZhihuHotInfo()
     {
-        List<Info> zhihuList = zhihuHotProcessor.getHotList();
+        List<Info> zhihuList = zhihuHotProcessor.crawlHotList();
         Assert.assertNotNull(zhihuList);
         Assert.assertTrue(zhihuList.size() > 0);
         System.out.println("zhihu hot list size: " + zhihuList.size());

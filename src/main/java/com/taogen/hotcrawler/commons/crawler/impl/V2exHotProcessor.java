@@ -2,6 +2,7 @@ package com.taogen.hotcrawler.commons.crawler.impl;
 
 import com.taogen.hotcrawler.commons.crawler.HotProcess;
 import com.taogen.hotcrawler.commons.entity.db.Info;
+import lombok.Data;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,9 +19,13 @@ import java.util.List;
 
 @Component
 @PropertySource("classpath:sites.properties")
+@Data
 public class V2exHotProcessor implements HotProcess
 {
     private static final Logger log = LoggerFactory.getLogger(V2exHotProcessor.class);
+
+    @Value("${sites[0].id}")
+    private  String SITE_ID;
 
     @Value("${sites[0].domain}")
     private String V2EX_DOMAIN;
@@ -33,7 +38,7 @@ public class V2exHotProcessor implements HotProcess
 
 
     @Override
-    public List<Info> getHotList()
+    public List<Info> crawlHotList()
     {
         List<Info> list = new ArrayList<>();
 
@@ -55,6 +60,7 @@ public class V2exHotProcessor implements HotProcess
             Elements elements1 = element.getElementsByTag("a");
             String infoTitle = elements1.html();
             String infoUrl = V2EX_DOMAIN + elements1.attr("href");
+            infoUrl = infoUrl.substring(0, infoUrl.indexOf("#"));
             String id = String.valueOf(++i);
             list.add(new Info(id, infoTitle, infoUrl));
         }

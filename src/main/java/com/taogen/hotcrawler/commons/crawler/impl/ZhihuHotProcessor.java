@@ -3,6 +3,7 @@ package com.taogen.hotcrawler.commons.crawler.impl;
 import com.jayway.jsonpath.JsonPath;
 import com.taogen.hotcrawler.commons.crawler.HotProcess;
 import com.taogen.hotcrawler.commons.entity.db.Info;
+import lombok.Data;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +17,13 @@ import java.util.List;
 
 @Component
 @PropertySource("classpath:sites.properties")
+@Data
 public class ZhihuHotProcessor implements HotProcess
 {
     private static final Logger log = LoggerFactory.getLogger(ZhihuHotProcessor.class);
+
+    @Value("${sites[1].id}")
+    private  String SITE_ID;
 
     @Value("${sites[1].domain}")
     private String ZHIHU_DOMAIN;
@@ -27,7 +32,7 @@ public class ZhihuHotProcessor implements HotProcess
     private String HOT_API_URL;
 
     @Override
-    public List<Info> getHotList()
+    public List<Info> crawlHotList()
     {
         List<Info> list = new ArrayList<>();
         // login

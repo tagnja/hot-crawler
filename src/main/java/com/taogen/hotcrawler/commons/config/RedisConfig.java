@@ -1,12 +1,15 @@
 package com.taogen.hotcrawler.commons.config;
 
+import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
-public class RedisConfig
+@EnableCaching
+public class RedisConfig extends CachingConfigurerSupport
 {
 
     @Bean
@@ -20,4 +23,6 @@ public class RedisConfig
         template.setConnectionFactory(jedisConnectionFactory());
         return template;
     }
+
+
 }

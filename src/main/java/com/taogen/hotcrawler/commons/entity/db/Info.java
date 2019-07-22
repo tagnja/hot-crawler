@@ -1,8 +1,13 @@
 package com.taogen.hotcrawler.commons.entity.db;
 
+import lombok.Data;
 
-public class Info
+import java.io.Serializable;
+
+@Data
+public class Info implements Serializable, Comparable<Info>
 {
+    private static final long serialVersionUID = -3946734305303957850L;
     private String id;
     private String title;
     private String url;
@@ -10,42 +15,26 @@ public class Info
     public Info() {
     }
 
-    public Info(String id, String title, String url) {
+    public Info(String id, String title, String url)
+    {
         this.id = id;
         this.title = title;
-        this.url = url;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
         this.url = url;
     }
 
     @Override
-    public String toString() {
-        return "Info{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", url='" + url + '\'' +
-                '}';
+    public int compareTo(Info info)
+    {
+        return Integer.valueOf(this.id).compareTo(Integer.valueOf(info.id));
     }
+
+
+//   public Map<Object, Object> getMap()
+//   {
+//       Map<Object, Object> map = new HashMap<>();
+//       map.put("id", this.id);
+//       map.put("title", this.title);
+//       map.put("url", this.url);
+//       return map;
+//   }
 }

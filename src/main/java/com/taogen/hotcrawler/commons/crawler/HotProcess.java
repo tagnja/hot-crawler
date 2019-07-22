@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface HotProcess
 {
-    public List<Info> getHotList();
+    public List<Info> crawlHotList();
 }

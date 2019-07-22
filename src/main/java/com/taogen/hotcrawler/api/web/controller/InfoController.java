@@ -1,6 +1,11 @@
 package com.taogen.hotcrawler.api.web.controller;
 
-import com.taogen.hotcrawler.api.constant.SiteConstant;
+import com.taogen.hotcrawler.api.constant.SiteProperties;
+import com.taogen.hotcrawler.api.exception.DataNotFoundException;
+import com.taogen.hotcrawler.api.service.InfoService;
+import com.taogen.hotcrawler.api.web.model.response.GenericResponseModel;
+import com.taogen.hotcrawler.commons.entity.db.Info;
+import com.taogen.hotcrawler.commons.entity.db.InfoType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -13,16 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController("InfoController")
-@RequestMapping("/api/v1")
 @Api(description = "Information API")
-public class InfoController
+@RestController("InfoController")
+@RequestMapping({"/api/v1"})
+public class InfoController extends BaseV1Controller
 {
     private static final Logger log = LoggerFactory.getLogger(InfoController.class);
     public static final String PRODUCES_JSON = "application/json;charset=UTF-8";
 
     @Autowired
-    private SiteConstant siteConstant;
+    private SiteProperties siteProperties;
+
+    @Autowired
+    private InfoService infoService;
+
 
     @RequestMapping(value = "/test", method = RequestMethod.GET, produces = PRODUCES_JSON)
     public String test()
@@ -32,16 +41,27 @@ public class InfoController
 
     @RequestMapping(value = "/types", method = RequestMethod.GET, produces = PRODUCES_JSON)
     @ApiOperation("Get All Type of Information.")
-    public String getTypes()
+    public GenericResponseModel<InfoType> getTypes()
     {
-        List<SiteConstant.SiteInfo> sitesInfo = siteConstant.getSites();
-        return "{ \"ret_code\": 0, \"ret_msg\": \"ok\"}";
+        GenericResponseModel result = new GenericResponseModel();
+        result.setData(siteProperties.getSites());
+        return result;
     }
 
     @RequestMapping(value = "/type/{id}/infos", method = RequestMethod.GET, produces = PRODUCES_JSON)
     @ApiOperation("Get All Information of specified type.")
-    public String getTypeInfos(@PathVariable(value = "id") String id)
+    public GenericResponseModel<Info> getTypeInfos(@PathVariable(value = "id") Integer id)
     {
-        return "{ \"ret_code\": 0, \"ret_msg\": \"ok\", \"type\":" + id +"}";
+        GenericResponseModel result = new GenericResponseModel();
+        List<Info> infoList = infoService.findListByTypeId(String.valueOf(id));
+        if (infoList != null)
+        {
+            result.setData(infoList);
+        }
+        else
+        {
+            throw new DataNotFoundException("无法找到指定数据");
+        }
+        return result;
     }
 }
