@@ -8,6 +8,7 @@ import com.taogen.hotcrawler.commons.repository.InfoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -31,23 +32,28 @@ public class CrawlerTask
     @Autowired
     private SiteProperties siteProperties;
 
+    @Value("${crawler.task.enable}")
+    private Boolean enable;
 
     @Scheduled(fixedRateString = "${crawler.task.fixedRate}", initialDelayString = "${crawler.task.initialDelay}")
     public void crawlHotList()
     {
-        List<SiteProperties.SiteInfo> siteList = siteProperties.getSites();
-        if (siteList != null)
+        if (enable)
         {
-            for (SiteProperties.SiteInfo site : siteList)
+            List<SiteProperties.SiteInfo> siteList = siteProperties.getSites();
+            if (siteList != null)
             {
-                new Thread(()->
+                for (SiteProperties.SiteInfo site : siteList)
                 {
-                    HotProcessor hotProcess = (HotProcessor) baseService.getBean(site.getProcessorName());
-                    List<Info> infoList = hotProcess.crawlHotList();
-                    log.info("crawler " + site.getName()+ " hot list size: " + infoList.size());
-                    infoRepository.removeByTypeId(site.getId());
-                    infoRepository.saveAll(infoList, site.getId());
-                }).start();
+                    new Thread(() ->
+                    {
+                        HotProcessor hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
+                        List<Info> infoList = hotProcessor.crawlHotList();
+                        log.info("crawler " + site.getName() + " hot list size: " + infoList.size());
+                        infoRepository.removeByTypeId(site.getId());
+                        infoRepository.saveAll(infoList, site.getId());
+                    }).start();
+                }
             }
         }
     }
