@@ -1,4 +1,4 @@
-package com.taogen.hotcrawler.commons.entity.db;
+package com.taogen.hotcrawler.commons.entity;
 
 import lombok.Data;
 

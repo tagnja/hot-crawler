@@ -1,7 +1,5 @@
 package com.taogen.hotcrawler.api.service;
 
-import com.taogen.hotcrawler.commons.entity.db.InfoType;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

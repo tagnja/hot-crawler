@@ -1,6 +1,6 @@
 package com.taogen.hotcrawler.commons.repository;
 
-import com.taogen.hotcrawler.commons.entity.db.Info;
+import com.taogen.hotcrawler.commons.entity.Info;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

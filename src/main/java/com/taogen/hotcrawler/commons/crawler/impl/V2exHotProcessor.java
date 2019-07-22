@@ -1,7 +1,7 @@
 package com.taogen.hotcrawler.commons.crawler.impl;
 
 import com.taogen.hotcrawler.commons.crawler.HotProcess;
-import com.taogen.hotcrawler.commons.entity.db.Info;
+import com.taogen.hotcrawler.commons.entity.Info;
 import lombok.Data;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

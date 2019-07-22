@@ -2,7 +2,7 @@ package com.taogen.hotcrawler.commons.crawler;
 
 import com.taogen.hotcrawler.commons.crawler.impl.V2exHotProcessor;
 import com.taogen.hotcrawler.commons.crawler.impl.ZhihuHotProcessor;
-import com.taogen.hotcrawler.commons.entity.db.Info;
+import com.taogen.hotcrawler.commons.entity.Info;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

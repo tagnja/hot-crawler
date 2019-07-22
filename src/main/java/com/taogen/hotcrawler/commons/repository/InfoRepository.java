@@ -1,6 +1,6 @@
 package com.taogen.hotcrawler.commons.repository;
 
-import com.taogen.hotcrawler.commons.entity.db.Info;
+import com.taogen.hotcrawler.commons.entity.Info;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.HashOperations;

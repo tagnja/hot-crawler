@@ -1,6 +1,6 @@
 package com.taogen.hotcrawler.api.constant;
 
-import com.taogen.hotcrawler.commons.entity.db.InfoType;
+import com.taogen.hotcrawler.commons.entity.InfoType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

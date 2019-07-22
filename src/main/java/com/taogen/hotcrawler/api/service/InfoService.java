@@ -2,7 +2,7 @@ package com.taogen.hotcrawler.api.service;
 
 import com.taogen.hotcrawler.commons.crawler.impl.V2exHotProcessor;
 import com.taogen.hotcrawler.commons.crawler.impl.ZhihuHotProcessor;
-import com.taogen.hotcrawler.commons.entity.db.Info;
+import com.taogen.hotcrawler.commons.entity.Info;
 import com.taogen.hotcrawler.commons.repository.InfoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

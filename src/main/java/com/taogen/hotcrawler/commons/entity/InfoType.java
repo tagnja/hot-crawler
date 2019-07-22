@@ -1,4 +1,4 @@
-package com.taogen.hotcrawler.commons.entity.db;
+package com.taogen.hotcrawler.commons.entity;
 
 import lombok.Data;
 
@@ -10,7 +10,8 @@ public class InfoType
 
     public InfoType(){}
 
-    public InfoType(String id, String name) {
+    public InfoType(String id, String name)
+    {
         this.id = id;
         this.name = name;
     }
