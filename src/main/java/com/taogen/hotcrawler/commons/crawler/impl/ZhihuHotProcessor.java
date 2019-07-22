@@ -1,7 +1,7 @@
 package com.taogen.hotcrawler.commons.crawler.impl;
 
 import com.jayway.jsonpath.JsonPath;
-import com.taogen.hotcrawler.commons.crawler.HotProcess;
+import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import lombok.Data;
 import org.jsoup.Jsoup;
@@ -15,10 +15,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Component("ZhihuHotProcessor")
 @PropertySource("classpath:sites.properties")
 @Data
-public class ZhihuHotProcessor implements HotProcess
+public class ZhihuHotProcessor implements HotProcessor
 {
     private static final Logger log = LoggerFactory.getLogger(ZhihuHotProcessor.class);
 

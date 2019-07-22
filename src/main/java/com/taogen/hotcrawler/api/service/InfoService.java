@@ -1,7 +1,7 @@
 package com.taogen.hotcrawler.api.service;
 
-import com.taogen.hotcrawler.commons.crawler.impl.V2exHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.impl.ZhihuHotProcessor;
+import com.taogen.hotcrawler.api.constant.SiteProperties;
+import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import com.taogen.hotcrawler.commons.repository.InfoRepository;
 import org.slf4j.Logger;
@@ -13,18 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class InfoService
+public class InfoService extends BaseService
 {
     private Logger log = LoggerFactory.getLogger(InfoService.class);
 
     @Autowired
-    private V2exHotProcessor v2exHotProcessor;
-
-    @Autowired
-    private ZhihuHotProcessor zhihuHotProcessor;
-
-    @Autowired
     private InfoRepository infoRepository;
+
+    @Autowired
+    private SiteProperties siteProperties;
 
     public List<Info> findListByTypeId(String typeId)
     {
@@ -44,13 +41,22 @@ public class InfoService
     private List<Info> crawlHotList(String typeId)
     {
         List<Info> hotList = new ArrayList<>();
-        if (v2exHotProcessor.getSITE_ID().equals(typeId))
+        HotProcessor hotProcess = null;
+        List<SiteProperties.SiteInfo> siteList = siteProperties.getSites();
+        if (siteList != null)
         {
-            hotList = v2exHotProcessor.crawlHotList();
+            for (SiteProperties.SiteInfo site : siteList)
+            {
+                if (site.getId().equals(typeId))
+                {
+                    hotProcess = (HotProcessor) getBean(site.getProcessorName());
+                    break;
+                }
+            }
         }
-        else if (zhihuHotProcessor.getSITE_ID().equals(typeId))
+        if (hotProcess != null)
         {
-            hotList = zhihuHotProcessor.crawlHotList();
+            hotList = hotProcess.crawlHotList();
         }
         return hotList;
     }

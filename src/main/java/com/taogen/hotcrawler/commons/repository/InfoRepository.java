@@ -32,10 +32,7 @@ public class InfoRepository
     public void save(Info info, String typeId)
     {
         String key = "site:" + typeId.trim() + ":info";
-//        log.info("key: " + key);
         hashOps.putIfAbsent(key, info.getId(), info);
-//        log.info("has key: " + redisTemplate.hasKey(key));
-//        log.info("myinfo: "+ hashOps.get(key, info.getId()));
         return;
     }
 
@@ -51,10 +48,7 @@ public class InfoRepository
     {
         System.out.println();
         String key = "site:" + typeId.trim() + ":info";
-//        log.info("key: " + key);
         hashOps.put(key, info.getId(), info);
-//        log.info("has key: " + redisTemplate.hasKey(key));
-//        log.info("myinfo: "+ hashOps.get(key, info.getId()));
         return;
     }
 
@@ -62,12 +56,10 @@ public class InfoRepository
     {
         Map<String, Info> infoMap = new HashMap<>();
         String key = "site:" + typeId.trim() + ":info";
-//        log.info("key: " + key);
         if (redisTemplate.hasKey(key))
         {
             infoMap = hashOps.entries(key);
         }
-//        log.info("infoMap: " + infoMap);
         List<Info> infoList = new ArrayList<>();
         infoMap.forEach((k, v) -> {infoList.add(v);} );
         Collections.sort(infoList);
@@ -78,7 +70,6 @@ public class InfoRepository
     {
         Info info = null;
         String key = "site:" + typeId.trim() + ":info";
-//        log.info("key: " + key);
         if (redisTemplate.hasKey(key))
         {
             info = hashOps.get(key, infoId);

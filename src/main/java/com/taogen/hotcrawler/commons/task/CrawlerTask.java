@@ -1,7 +1,8 @@
 package com.taogen.hotcrawler.commons.task;
 
-import com.taogen.hotcrawler.commons.crawler.impl.V2exHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.impl.ZhihuHotProcessor;
+import com.taogen.hotcrawler.api.constant.SiteProperties;
+import com.taogen.hotcrawler.api.service.BaseService;
+import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import com.taogen.hotcrawler.commons.repository.InfoRepository;
 import org.slf4j.Logger;
@@ -22,30 +23,32 @@ public class CrawlerTask
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     @Autowired
-    private V2exHotProcessor v2exProcess;
-
-    @Autowired
-    private ZhihuHotProcessor zhihuProcess;
-
-    @Autowired
     private InfoRepository infoRepository;
 
+    @Autowired
+    private BaseService baseService;
+
+    @Autowired
+    private SiteProperties siteProperties;
+
 
     @Scheduled(fixedRateString = "${crawler.task.fixedRate}", initialDelayString = "${crawler.task.initialDelay}")
-    public void crawlerV2ex()
+    public void crawlHotList()
     {
-        List<Info> v2exList = v2exProcess.crawlHotList();
-        log.info("crawler v2ex hot list size: " + v2exList.size());
-        infoRepository.removeByTypeId(v2exProcess.getSITE_ID());
-        infoRepository.saveAll(v2exList, v2exProcess.getSITE_ID());
-    }
-
-    @Scheduled(fixedRateString = "${crawler.task.fixedRate}", initialDelayString = "${crawler.task.initialDelay}")
-    public void crawlerZhihu()
-    {
-        List<Info> zhihuList = zhihuProcess.crawlHotList();
-        log.info("crawler zhihu hot list size: " + zhihuList.size());
-        infoRepository.removeByTypeId(zhihuProcess.getSITE_ID());
-        infoRepository.saveAll(zhihuList, zhihuProcess.getSITE_ID());
+        List<SiteProperties.SiteInfo> siteList = siteProperties.getSites();
+        if (siteList != null)
+        {
+            for (SiteProperties.SiteInfo site : siteList)
+            {
+                new Thread(()->
+                {
+                    HotProcessor hotProcess = (HotProcessor) baseService.getBean(site.getProcessorName());
+                    List<Info> infoList = hotProcess.crawlHotList();
+                    log.info("crawler " + site.getName()+ " hot list size: " + infoList.size());
+                    infoRepository.removeByTypeId(site.getId());
+                    infoRepository.saveAll(infoList, site.getId());
+                }).start();
+            }
+        }
     }
 }

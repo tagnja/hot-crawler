@@ -33,12 +33,6 @@ public class InfoController extends BaseV1Controller
     private InfoService infoService;
 
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET, produces = PRODUCES_JSON)
-    public String test()
-    {
-        return "{ \"ret_code\": 0, \"ret_msg\": \"ok\"}";
-    }
-
     @RequestMapping(value = "/types", method = RequestMethod.GET, produces = PRODUCES_JSON)
     @ApiOperation("Get All Type of Information.")
     public GenericResponseModel<InfoType> getTypes()
