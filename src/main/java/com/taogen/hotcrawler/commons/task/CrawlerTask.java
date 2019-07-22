@@ -15,6 +15,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 @Configuration
 @EnableScheduling
@@ -33,26 +36,29 @@ public class CrawlerTask
     private SiteProperties siteProperties;
 
     @Value("${crawler.task.enable}")
-    private Boolean enable;
+    private Boolean ENABLE;
+
+    @Value("${crawler.task.threadPoolNum}")
+    private int THREAD_POOL_NUM;
 
     @Scheduled(fixedRateString = "${crawler.task.fixedRate}", initialDelayString = "${crawler.task.initialDelay}")
     public void crawlHotList()
     {
-        if (enable)
+        if (ENABLE)
         {
             List<SiteProperties.SiteInfo> siteList = siteProperties.getSites();
             if (siteList != null)
             {
+                ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_NUM);
                 for (SiteProperties.SiteInfo site : siteList)
                 {
-                    new Thread(() ->
-                    {
+                    executorService.submit(() -> {
                         HotProcessor hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
                         List<Info> infoList = hotProcessor.crawlHotList();
                         log.info("crawler " + site.getName() + " hot list size: " + infoList.size());
                         infoRepository.removeByTypeId(site.getId());
                         infoRepository.saveAll(infoList, site.getId());
-                    }).start();
+                    });
                 }
             }
         }

@@ -2,7 +2,8 @@ site:
   host: http://localhost:8080
 crawler:
   task:
-    enable: false
+    enable: true
+    threadPoolNum: 5
     initialDelay: 60000
     fixedRate: 30000
     cron: "*/5 * * * * ?"
