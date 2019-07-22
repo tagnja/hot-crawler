@@ -42,7 +42,7 @@ public class InfoController extends BaseV1Controller
         return result;
     }
 
-    @RequestMapping(value = "/type/{id}/infos", method = RequestMethod.GET, produces = PRODUCES_JSON)
+    @RequestMapping(value = "/types/{id}/infos", method = RequestMethod.GET, produces = PRODUCES_JSON)
     @ApiOperation("Get All Information of specified type.")
     public GenericResponseModel<Info> getTypeInfos(@PathVariable(value = "id") Integer id)
     {

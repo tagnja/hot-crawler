@@ -49,7 +49,8 @@ public class CrawlerTask
             List<SiteProperties.SiteInfo> siteList = siteProperties.getSites();
             if (siteList != null)
             {
-                ExecutorService executorService = Executors.newFixedThreadPool(THREAD_POOL_NUM);
+                int threadPoolNum = THREAD_POOL_NUM < siteList.size() ? THREAD_POOL_NUM : siteList.size();
+                ExecutorService executorService = Executors.newFixedThreadPool(threadPoolNum);
                 for (SiteProperties.SiteInfo site : siteList)
                 {
                     executorService.submit(() -> {
