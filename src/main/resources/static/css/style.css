@@ -1,0 +1,67 @@
+body{
+    font-family: "Microsoft JhengHei";
+    font-size: 14px;
+    padding: 0px;
+    margin: 0px;
+    /*font: 14px Helvetica Neue, Helvetica, PingFang SC, Tahoma, Arial, sans-serif;*/
+}
+
+a{
+    color: black;
+    text-decoration : none;
+    cursor: pointer;
+}
+.pointer {cursor: pointer;}
+a:link {
+    color: black;
+}
+a:visited {
+    color: black;
+}
+a:hover {
+    color: gray;
+}
+a:active {
+    color: gray;
+}
+
+h1,h2,h3,h4,h5,h6{
+    margin: 10px 0px 10px 3%;
+}
+
+
+#menu-bar{
+    width: 60%;
+    height:50px;
+    margin: 0px 0px 0px 3%;
+    background-color: cadetblue;
+}
+.menu-item{
+    height: 50px;
+    line-height: 50px;
+    width: 80px;
+    float: left;
+    text-align: center;
+    /*background-color: aquamarine;*/
+    margin: 0px 0px 0px 10px;
+    font-size: 25px;
+    font-family: FangSong;
+    font-weight: bold;
+}
+.menu-item-selected{
+    /*TODO*/
+    border-bottom: 2px solid #009688;
+}
+#content{
+    /*background-color: antiquewhite;*/
+    margin: 20px 0 0 3% ;
+    width: 60%;
+}
+.info-item{
+    height: 35px;
+    line-height: 35px;
+    /*background-color: darkseagreen;*/
+    margin: 0px 0px 0px 0px;
+    padding: 0 0 0 15px;
+    border: 1px solid darkgray;
+}

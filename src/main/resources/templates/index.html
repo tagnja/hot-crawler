@@ -3,30 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
-    <title>Title</title>
+    <title>Index Page</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    <script th:src="@{/js/jquery-3.4.1.min.js}" />
-   <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <script th:src="@{/js/jquery-3.4.1-min.js}"></script>
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
 </head>
 <body>
-    This is index page.
-    <span th:text="'Hello, ' + ${message}"></span>
+    <h3>热点聚合</h3>
 
+    <div id="menu-bar"></div>
+    <div id="content"></div>
 
     <script>
-        /*var getTypesUrl = "http://localhost:8080/api/v1/types";
+        var domain = "http://localhost:8080";
+        var getTypesUrl = domain + "/api/v1/types";
+        var infoTypes;
         $.ajax({
             url: getTypesUrl,
             type: "get",
             async: false,
             dataType: "json",
-            success: function(data){
-                alert(JSON.stringify(data));
+            success: function(res){
+                console.log(JSON.stringify(res));
+                infoTypes = res.data;
+                for (var i = 0; i < infoTypes.length; i++)
+                {
+                    var menuItem = "<div class='menu-item pointer' id='"+infoTypes[i].id+"'>" + infoTypes[i].name + "</div>";
+                    $("#menu-bar").append(menuItem);
+                    var contentBlock = "<div id='content-block'></div>";
+                    $("#content").append(contentBlock)
+                }
             },
-            error: function(data){
-                alert(JSON.stringify(data))
+            error: function(res){
+                alert(JSON.stringify(res))
             }
-        });*/
+        });
+
+        var infos = getInfos(infoTypes[0].id);
+        putInfos("#content-block", infos);
+
+
+        $(".menu-item").click(function () {
+            var typeId = $(this).attr("id");
+            var infos = getInfos(typeId);
+            console.log(infos);
+            putInfos("#content-block", infos);
+        });
+
+        function getInfos(typeId)
+        {
+            var infos;
+            var getInfoUrl = domain + "/api/v1/types/" + typeId + "/infos";
+            $.ajax({
+                url: getInfoUrl,
+                type: "get",
+                async: false,
+                dataType: "json",
+                success: function(res){
+                    infos = res.data;
+                },
+                error: function(res){
+                    alert(JSON.stringify(res))
+                }
+            });
+            return infos;
+        }
+        
+        function putInfos(elementId, infos) {
+            $(elementId).empty();
+            for (var j = 0; j < infos.length; j++)
+            {
+                var infoItem = "<div class='info-item'><a href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
+                $(elementId).append(infoItem);
+            }
+        }
     </script>
 </body>
 </html>
