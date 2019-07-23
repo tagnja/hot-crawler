@@ -56,7 +56,7 @@ public class CrawlerTask
                     executorService.submit(() -> {
                         HotProcessor hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
                         List<Info> infoList = hotProcessor.crawlHotList();
-                        log.info("crawler " + site.getName() + " hot list size: " + infoList.size());
+//                        log.info("crawler " + site.getName() + " hot list size: " + infoList.size());
                         infoRepository.removeByTypeId(site.getId());
                         infoRepository.saveAll(infoList, site.getId());
                     });
