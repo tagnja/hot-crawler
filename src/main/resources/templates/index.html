@@ -34,21 +34,18 @@
                     var contentBlock = "<div id='content-block'></div>";
                     $("#content").append(contentBlock)
                 }
+                // initial get infos
+                getInfos(infoTypes[0].id);
             },
             error: function(res){
                 alert(JSON.stringify(res))
             }
         });
 
-        var infos = getInfos(infoTypes[0].id);
-        putInfos("#content-block", infos);
-
-
         $(".menu-item").click(function () {
             var typeId = $(this).attr("id");
-            var infos = getInfos(typeId);
+            getInfos(typeId);
             //console.log(infos);
-            putInfos("#content-block", infos);
         });
 
         function getInfos(typeId)
@@ -58,10 +55,11 @@
             $.ajax({
                 url: getInfoUrl,
                 type: "get",
-                async: false,
+                async: true,
                 dataType: "json",
                 success: function(res){
                     infos = res.data;
+                    putInfos("#content-block", infos);
                 },
                 error: function(res){
                     alert(JSON.stringify(res))
