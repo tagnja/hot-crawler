@@ -53,7 +53,7 @@
 - Spring Boot embedded server - Jetty
 
 ### 如何运行
-运行前必需保证已安装 Git, JDK, Maven, Redis 等软件。
+运行前必须保证已安装 Git, JDK, Maven, Redis 等软件。
 
 ```shell
 $ git clone https://github.com/tagnja/hot-crawler.git
