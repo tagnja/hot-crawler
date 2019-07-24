@@ -105,14 +105,21 @@ $ java -jar target/hotcrawler-1.0-SNAPSHOT.jar
 
 3. 本地测试和运行
 
-   ```
-   # 进入项目根目录，执行单元测试
-   $ mvn test
-   # 本地运行项目
-   $ mvn spring-boot:run
-   ```
+   - 运行 Redis 缓存。
 
-   访问 http://localhost:8080 ，即可看到你添加的爬虫页面。
+   - 进入项目根目录，执行单元测试
+
+     ```
+     $ mvn test
+     ```
+
+   - 进入项目根目录，使用 maven 插件运行项目
+
+     ```
+     $ mvn spring-boot:run
+     ```
+
+   - 访问 http://localhost:8080 ，即可看到你添加的爬虫 example 的页面。
 
 ### 其它
 
