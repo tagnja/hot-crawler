@@ -1,7 +1,7 @@
 # Hot Crawler
 
 
-Const520 热点聚合。一站式资讯阅览，轻松掌握热点话题。
+[Const520 热点聚合](http://hot.const520.com)。一站式资讯阅览，轻松掌握热点话题。
 
 ![网站首页图](res/home-page.png)
 
