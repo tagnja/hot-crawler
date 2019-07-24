@@ -28,7 +28,7 @@
 - Spring Boot Redis
 - Spring Boot Devtools
 - Spring Scheduling Tasks
-- Restful API
+- RESTful API
 - Swagger UI/SpringFox
 - Lombok
 
