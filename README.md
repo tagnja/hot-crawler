@@ -74,6 +74,46 @@ $ java -jar target/hotcrawler-1.0-SNAPSHOT.jar
 2. 实现“待处理站点”爬虫。
 3. 修复 issues。
 
+添加一个页面爬虫快速指南
+
+1. 添加站点信息在 hot-crawler/src/main/resources/sites.properties。注意，序号 sites[0] 不能和已存在的重复。
+
+   ```
+   #example
+   sites[0].id = 1
+   sites[0].name = example
+   sites[0].processorName: ExampleHotProcessor
+   sites[0].domain: https://example.com
+   sites[0].hotPageUrl: https://example.com/xxx
+   sites[0].hotApiUrl: xxx
+   sites[0].itemKey: xxx
+   ```
+
+2. 添加热点爬取处理器，如 hot-crawler/src/main/java/com/taogen/hotcrawler/commons/crawler/impl/ExampleHotProcessor.java
+
+   ```java
+   @Component("ExampleHotProcessor")
+   public class ExampleHotProcessor implements HotProcessor
+   {
+   	@Override
+       public List<Info> crawlHotList() 
+       {
+       	...
+       }
+   }
+   ```
+
+3. 本地测试和运行
+
+   ```
+   # 进入项目根目录，执行单元测试
+   $ mvn test
+   # 本地运行项目
+   $ mvn spring-boot:run
+   ```
+
+   访问 http://localhost:8080 ，即可看到你添加的爬虫页面。
+
 ### 其它
 
 - [更新日志](update_log.md) 
