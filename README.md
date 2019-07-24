@@ -33,6 +33,7 @@
 - Spring Boot Redis
 - Spring Boot Devtools
 - Spring Scheduling Tasks
+- SLF4j
 - RESTful API
 - Swagger UI/SpringFox
 - Lombok
