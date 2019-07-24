@@ -11,10 +11,13 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -28,6 +31,9 @@ public class HotProcessorTest
     @Autowired
     private BaseService baseService;
 
+    @Value("${crawler.task.threadPoolNum}")
+    private int THREAD_POOL_NUM;
+
     @Test
     public void getHotInfoTest()
     {
@@ -35,13 +41,17 @@ public class HotProcessorTest
 
         if (siteInfos != null)
         {
+            int threadPoolNum = THREAD_POOL_NUM < siteInfos.size() ? THREAD_POOL_NUM : siteInfos.size();
+            ExecutorService executorService = Executors.newFixedThreadPool(threadPoolNum);
             for (SiteProperties.SiteInfo site : siteInfos)
             {
-                HotProcessor hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
-                List<Info> hotList = hotProcessor.crawlHotList();
-                Assert.assertNotNull(hotList);
-                log.info("crawl " + site.getName() + " hot list size: " + hotList.size());
-                Assert.assertTrue(hotList.size() > 0);
+                executorService.submit(() -> {
+                    HotProcessor hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
+                    List<Info> hotList = hotProcessor.crawlHotList();
+                    Assert.assertNotNull(hotList);
+                    log.info("crawl " + site.getName() + " hot list size: " + hotList.size());
+                    Assert.assertTrue(hotList.size() > 0);
+                });
             }
         }
 
