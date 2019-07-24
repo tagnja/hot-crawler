@@ -1,216 +1,75 @@
 # Hot Crawler
 
 
-Content
+Const520 热点聚合。一站式资讯阅览，轻松掌握热点话题。
 
-- Requirement Analysis
-- System Design
-- Code Implementation
-- Test & Deployment
-- Optimization Function
+![网站首页图](home-page.png)
 
-### Main
+### 已展示站点
 
-
-### 1. Requirement Analysis
-
-#### 1.1 Requirements
-
-- Crawler hot content from media.
-- Frontend and Backend separation.
-- Timer Crawler. 
-
-Stage
-
-- Stage 1
-  - Write Crawler one site API interface.
-  - Write Frontend page.
-  - Easy Deploy.
-- Stage 2
-  - Write  crawler more sites API interface.
-  - Update Frontend page.
-  - Auto Deploy.
-- Stage 3
-  - Crawler WeChat API
-  - Storing information URL to DB.
-  
-
-Media
-
-- Zhihu
 - V2EX
-- Weibo
-- Douban
-- Tianya
-- CloudMusic
+- 知乎
+- GitHub
+- 新浪微博
+- 豆瓣
+- 天涯
+- 网易云音乐
+- Hacker News
 
-#### 1.2 Using Techniques
+### 待实现站点 TODO
 
-- Backend
-  - Spring Boot 2
-  - Swagger 2
-  - JUnit 5
-  - Apache Nutch
-- Frontend
-  - Vue.js
-- Test & Deployment
-  - Docker
-  - Jenkins
-- Database & Cache
+- Twitter
 
-### 2. System Design
+### 使用技术
+后端
 
-#### 2.1 Function Module
+- Spring Boot
+- Spring Boot Web
+- Spring Boot Redis
+- Spring Boot Devtools
+- Spring Scheduling Tasks
+- Restful API
+- Swagger UI/SpringFox
+- Lombok
 
-System Function
+页面爬取解析
+- Jsoup
+- Jsonpath
 
-Frontend --> Backend Controller --> Cache <--> Crawler 
+前端
 
-#### 2.2 Database Design
+- Thymeleaf
+- jQuery
 
-t_info_type
+缓存
+- Redis
 
-| Name | Type    | Length | NULL     | Key  | Description |
-| ---- | ------- | ------ | -------- | ---- | ----------- |
-| id   | varchar | 64     | not null | P    |             |
-| name | varchar | 64     | not null |      |             |
+测试
+- JUnit4
 
-t_info
+部署
 
-| Name  | Type    | Length | NULL     | Key  | Description |
-| ----- | ------- | ------ | -------- | ---- | ----------- |
-| id    | varchar | 64     | not null | P    |             |
-| title | varchar | 128    | not null |      |             |
-| url   | varchar | 255    | not null |      |             |
+- Nginx 代理
+- Spring Boot embedded server - Jetty
 
+### 如何运行
+运行前必需保证已安装 Git, JDK, Maven, Redis 等软件。
 
-
-#### 2.3 Interfaces Design
-
-1\. v1/types
-
-Method: GET
-
-Data Type: JSON
-
-Parameters: null
-
-Result:
-
-```json
-{
-    ret_code: 0,
-    ret_msg: "success",
-    data: [
-        {
-            id: 1
-            name: "v2ex"
-        },
-        ...
-    ]
-}
-
+```shell
+$ git clone https://github.com/tagnja/hot-crawler.git
+$ cd hot-crawler
+$ mvn package spring-boot:repackage
+$ java -jar target/hotcrawler-1.0-SNAPSHOT.jar
 ```
 
-2\. v1/types/{id}/infos
+### 如何贡献
 
-Method: GET
+可对本项目做以下贡献
 
-Data Type: JSON
+1. 添加有价值的网站到“待实现站点” 的 todo list 中。
+2. 实现带实现站点爬虫。
+3. 修复 issues。
 
-Parameters: null
+### 其它
 
-Result:
-
-```json
-{
-    ret_code: 0,
-    ret_msg: "success",
-    data: [
-        {
-            id: 1,
-            title: "",
-            url: ""
-        },
-        ...
-    ]
-}
-```
-
-
-
-### 3. Code Implementation
-
-#### 3.1 Implementation Backend
-
-
-##### 3.1.1 Build Project
-
-Build Maven Project, run hello-world of spring-boot
-
-Project Directory Structure Definition
-
-```$xslt
-/controller
-/service
-/dao
-/crawler
-/entity
-/util
-/conf
-```
-
-##### 3.1.2 Integrate Swagger
-
-visiting http://localhost:8080/swagger-ui.html
-
-- Integer with Spring Fox
-- Fix config bean doesn't scan the problem.
-- Using Swagger-UI.
-- Using Swagger Core annotations in controller.
-
-##### 3.1.3 Test Drive Development
-
-- Integrate JUnit5
-
-##### 3.1.4 Developing Crawler
-
-Jsoup, Jsonpath
-
-##### 3.1.5 Timer Scheduler
-
-##### 3.1.6 Using Redis Cache.
-
-##### 3.1.7 Implementation API.
-
-##### 3.1.8 Add Log File
-
-
-
-#### 3.2 Implementation Frontend
-
-### 4. Test & Deployment
-
-#### CD/CI
-
-### 5. Optimization Function
-
-Notify
-
-
-
-
-
-
-
-
-
-
-
-
-
-### References
-
-[Documenting Spring Boot REST API with Swagger and SpringFox](https://www.vojtechruzicka.com/documenting-spring-boot-rest-api-swagger-springfox/)
-
-
+- [更新日志](update_log.md) 
