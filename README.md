@@ -60,10 +60,13 @@
 运行前必须保证已安装 Git, JDK, Maven, Redis 等软件。
 
 ```shell
+# Download
 $ git clone https://github.com/tagnja/hot-crawler.git
+# Running redis in your computer
+$ ./redis-server
+# Running project
 $ cd hot-crawler
-$ mvn package spring-boot:repackage
-$ java -jar target/hotcrawler-1.0-SNAPSHOT.jar
+$ mvn spring-boot:run
 ```
 
 ### 如何贡献
