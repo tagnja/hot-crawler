@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component("V2exHotProcessor")
-@PropertySource("classpath:sites.properties")
 public class V2exHotProcessor implements HotProcessor
 {
     private static final Logger log = LoggerFactory.getLogger(V2exHotProcessor.class);

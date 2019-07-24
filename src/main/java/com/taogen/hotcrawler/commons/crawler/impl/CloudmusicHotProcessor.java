@@ -3,6 +3,7 @@ package com.taogen.hotcrawler.commons.crawler.impl;
 import com.taogen.hotcrawler.api.constant.SiteProperties;
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,7 +11,6 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -18,10 +18,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component("GithubHotProcessor")
-public class GithubHotProcessor implements HotProcessor
+@Component("CloudmusicHotProcessor")
+public class CloudmusicHotProcessor implements HotProcessor
 {
-    private static final Logger log = LoggerFactory.getLogger(GithubHotProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(CloudmusicHotProcessor.class);
 
     @Autowired
     private SiteProperties siteProperties;
@@ -40,37 +40,38 @@ public class GithubHotProcessor implements HotProcessor
     }
 
     @Override
-    public List<Info> crawlHotList()
-    {
+    public List<Info> crawlHotList() {
         List<Info> list = new ArrayList<>();
 
         // document
         Document doc = null;
         try {
-            doc = Jsoup.connect(HOT_PAGE_URL).get();
-
+            Connection connection = Jsoup.connect(HOT_PAGE_URL); //connect(HOT_PAGE_URL).get();
+            connection.header("Host", "music.163.com");
+            connection.header("Referer", "https://music.163.com/");
+            connection.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0");
+            doc = connection.get();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // elements
-        Elements elements = doc.getElementsByClass(ITEM_KEY);
-
+        Elements elements = doc.getElementById(ITEM_KEY).getElementsByTag("li");
         int i = 0;
         for (Element element : elements)
         {
+            Element itemElement = element.getElementsByTag("a").get(0);
+
             // id
             String id = String.valueOf(++i);
 
             // url
-            Element urlElement = element.getElementsByTag("h1").get(0).getElementsByTag("a").get(0);
-            String infoUrl = urlElement.attr("href");
+            String infoUrl = itemElement.attr("href");
 
             // title
-            Element titleElement = element.getElementsByTag("p").get(0);
-            String infoTitle = infoUrl.substring(infoUrl.indexOf("/",1) + 1) + ". " + titleElement.html();
+            String infoTitle = itemElement.html();
 
-            infoUrl = DOMAIN + infoUrl;
+            infoUrl = DOMAIN + "#" + infoUrl;
             list.add(new Info(id, infoTitle, infoUrl));
         }
         return list;

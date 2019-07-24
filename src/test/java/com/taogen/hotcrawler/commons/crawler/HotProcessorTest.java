@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -35,7 +36,16 @@ public class HotProcessorTest
         {
             for (SiteProperties.SiteInfo site : siteInfos)
             {
-                HotProcessor hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
+                HotProcessor hotProcessor = null;
+                try
+                {
+                    hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
+                }
+                catch (BeansException e)
+                {
+                    log.error(e.getMessage());
+                    continue;
+                }
                 List<Info> hotList = hotProcessor.crawlHotList();
                 Assert.assertNotNull(hotList);
                 log.info("crawl " + site.getName() + " hot list size: " + hotList.size());

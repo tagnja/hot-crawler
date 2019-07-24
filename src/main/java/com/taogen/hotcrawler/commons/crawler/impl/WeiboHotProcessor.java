@@ -19,10 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component("WeiboHotProcessor")
-@PropertySource("classpath:sites.properties")
 public class WeiboHotProcessor implements HotProcessor
 {
-    Logger log = LoggerFactory.getLogger(WeiboHotProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(WeiboHotProcessor.class);
 
     @Autowired
     private SiteProperties siteProperties;

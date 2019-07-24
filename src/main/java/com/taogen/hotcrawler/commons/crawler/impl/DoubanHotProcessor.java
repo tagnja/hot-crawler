@@ -10,7 +10,6 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -18,10 +17,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component("GithubHotProcessor")
-public class GithubHotProcessor implements HotProcessor
+@Component("DoubanHotProcessor")
+public class DoubanHotProcessor implements HotProcessor
 {
-    private static final Logger log = LoggerFactory.getLogger(GithubHotProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(DoubanHotProcessor.class);
 
     @Autowired
     private SiteProperties siteProperties;
@@ -40,8 +39,7 @@ public class GithubHotProcessor implements HotProcessor
     }
 
     @Override
-    public List<Info> crawlHotList()
-    {
+    public List<Info> crawlHotList() {
         List<Info> list = new ArrayList<>();
 
         // document
@@ -59,18 +57,17 @@ public class GithubHotProcessor implements HotProcessor
         int i = 0;
         for (Element element : elements)
         {
+            Element itemElement = element.getElementsByClass("bd").get(0).getElementsByTag("a").get(0);
+
             // id
             String id = String.valueOf(++i);
 
             // url
-            Element urlElement = element.getElementsByTag("h1").get(0).getElementsByTag("a").get(0);
-            String infoUrl = urlElement.attr("href");
+            String infoUrl = itemElement.attr("href");
 
             // title
-            Element titleElement = element.getElementsByTag("p").get(0);
-            String infoTitle = infoUrl.substring(infoUrl.indexOf("/",1) + 1) + ". " + titleElement.html();
+            String infoTitle = itemElement.html();
 
-            infoUrl = DOMAIN + infoUrl;
             list.add(new Info(id, infoTitle, infoUrl));
         }
         return list;
