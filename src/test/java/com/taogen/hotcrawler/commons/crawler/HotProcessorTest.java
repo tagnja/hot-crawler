@@ -41,17 +41,13 @@ public class HotProcessorTest
 
         if (siteInfos != null)
         {
-            int threadPoolNum = THREAD_POOL_NUM < siteInfos.size() ? THREAD_POOL_NUM : siteInfos.size();
-            ExecutorService executorService = Executors.newFixedThreadPool(threadPoolNum);
             for (SiteProperties.SiteInfo site : siteInfos)
             {
-                executorService.submit(() -> {
                     HotProcessor hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
                     List<Info> hotList = hotProcessor.crawlHotList();
                     Assert.assertNotNull(hotList);
                     log.info("crawl " + site.getName() + " hot list size: " + hotList.size());
                     Assert.assertTrue(hotList.size() > 0);
-                });
             }
         }
 
