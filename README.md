@@ -18,7 +18,9 @@
 
 ### 待处理站点 TODO
 
-- Twitter
+- Twitter. GET trends/place — Twitter Developers 
+- Medium. `https://medium.com/topic/popular`
+- Reddit. `https://www.reddit.com/hot/`
 
 ### 使用技术
 后端
