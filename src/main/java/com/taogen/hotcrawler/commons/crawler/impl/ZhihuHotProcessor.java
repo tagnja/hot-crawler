@@ -25,7 +25,6 @@ public class ZhihuHotProcessor implements HotProcessor
     @Autowired
     private SiteProperties siteProperties;
 
-    private  String SITE_ID;
     private String DOMAIN;
     private String HOT_API_URL;
     private String ITEM_KEY;
@@ -34,7 +33,6 @@ public class ZhihuHotProcessor implements HotProcessor
     public void init()
     {
         SiteProperties.SiteInfo siteInfo = siteProperties.findByProcessorName(this.getClass().getSimpleName());
-        this.SITE_ID = siteInfo.getId();
         this.DOMAIN = siteInfo.getDomain();
         this.HOT_API_URL = siteInfo.getHotApiUrl();
         this.ITEM_KEY = siteInfo.getItemKey();

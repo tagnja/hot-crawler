@@ -27,7 +27,6 @@ public class V2exHotProcessor implements HotProcessor
     @Autowired
     private SiteProperties siteProperties;
 
-    private  String SITE_ID;
     private String DOMAIN;
     private String HOT_PAGE_URL;
     private String ITEM_KEY;
@@ -36,7 +35,6 @@ public class V2exHotProcessor implements HotProcessor
     public void init()
     {
         SiteProperties.SiteInfo siteInfo = siteProperties.findByProcessorName(this.getClass().getSimpleName());
-        this.SITE_ID = siteInfo.getId();
         this.DOMAIN = siteInfo.getDomain();
         this.HOT_PAGE_URL = siteInfo.getHotPageUrl();
         this.ITEM_KEY = siteInfo.getItemKey();
