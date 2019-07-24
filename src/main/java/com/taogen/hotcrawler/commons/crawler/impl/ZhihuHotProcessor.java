@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component("ZhihuHotProcessor")
-@PropertySource("classpath:sites.properties")
 public class ZhihuHotProcessor implements HotProcessor
 {
     private static final Logger log = LoggerFactory.getLogger(ZhihuHotProcessor.class);

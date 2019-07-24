@@ -7,6 +7,7 @@ import com.taogen.hotcrawler.commons.entity.Info;
 import com.taogen.hotcrawler.commons.repository.InfoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -54,7 +55,16 @@ public class CrawlerTask
                 for (SiteProperties.SiteInfo site : siteList)
                 {
                     executorService.submit(() -> {
-                        HotProcessor hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
+                        HotProcessor hotProcessor = null;
+                        try
+                        {
+                            hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
+                        }
+                        catch (BeansException e)
+                        {
+                            log.error(e.getMessage());
+                            return;
+                        }
                         List<Info> infoList = hotProcessor.crawlHotList();
 //                        log.info("crawler " + site.getName() + " hot list size: " + infoList.size());
                         infoRepository.removeByTypeId(site.getId());
