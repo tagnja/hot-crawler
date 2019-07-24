@@ -3,7 +3,7 @@
 
 [Const520 热点聚合](http://hot.const520.com)。一站式资讯阅览，轻松掌握热点话题。
 
-![网站首页图](res/home-page.png)
+![网站首页图](home-page.png)
 
 ### 已展示站点
 
