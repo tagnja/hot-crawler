@@ -47,7 +47,8 @@ public class GithubHotProcessor implements HotProcessor
         // document
         Document doc = null;
         try {
-            doc = Jsoup.connect(HOT_PAGE_URL).get();
+            // Fix jsoup SocketTimeoutException: Read timeout. Add a timeout.
+            doc = Jsoup.connect(HOT_PAGE_URL).timeout(10 * 1000).get();
 
         } catch (IOException e) {
             e.printStackTrace();
