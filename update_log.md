@@ -2,6 +2,10 @@
 
 
 
+2019.07.24
+
+- Implements crawler of GitHub, Weibo, Douban, Tianya, Cloud music, Hacker News websites.
+
 2019.07.23
 
 - Install server software environment.
