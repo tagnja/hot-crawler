@@ -99,7 +99,7 @@ $ mvn spring-boot:run
    @Component("ExampleHotProcessor")
    public class ExampleHotProcessor implements HotProcessor
    {
-   	@Override
+       @Override
        public List<Info> crawlHotList() 
        {
        	...
