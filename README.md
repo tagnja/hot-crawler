@@ -3,7 +3,7 @@
 
 Const520 热点聚合。一站式资讯阅览，轻松掌握热点话题。
 
-![网站首页图](home-page.png)
+![网站首页图](res/home-page.png)
 
 ### 已展示站点
 
@@ -16,7 +16,7 @@ Const520 热点聚合。一站式资讯阅览，轻松掌握热点话题。
 - 网易云音乐
 - Hacker News
 
-### 待实现站点 TODO
+### 待处理站点 TODO
 
 - Twitter
 
@@ -66,7 +66,7 @@ $ java -jar target/hotcrawler-1.0-SNAPSHOT.jar
 
 可对本项目做以下贡献
 
-1. 添加有价值的网站到“待实现站点” 的 todo list 中。
+1. 添加有价值的网站到“待处理站点” 的 todo list 中。
 2. 实现带实现站点爬虫。
 3. 修复 issues。
 
