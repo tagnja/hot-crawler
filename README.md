@@ -67,7 +67,7 @@ $ java -jar target/hotcrawler-1.0-SNAPSHOT.jar
 可对本项目做以下贡献
 
 1. 添加有价值的网站到“待处理站点” 的 todo list 中。
-2. 实现带实现站点爬虫。
+2. 实现“待处理站点”爬虫。
 3. 修复 issues。
 
 ### 其它
