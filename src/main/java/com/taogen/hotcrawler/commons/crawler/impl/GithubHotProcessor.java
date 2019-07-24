@@ -1,32 +1,42 @@
 package com.taogen.hotcrawler.commons.crawler.impl;
 
+import com.taogen.hotcrawler.api.constant.SiteProperties;
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component("GithubHotProcessor")
+@PropertySource("classpath:sites.properties")
 public class GithubHotProcessor implements HotProcessor
 {
-    @Value("${sites[2].id}")
+    @Autowired
+    private SiteProperties siteProperties;
+
     private  String SITE_ID;
-
-    @Value("${sites[2].domain}")
     private String DOMAIN;
-
-    @Value("${sites[2].hotPageUrl}")
     private String HOT_PAGE_URL;
-
-    @Value("${sites[2].itemKey}")
     private String ITEM_KEY;
+
+    @PostConstruct
+    public void init()
+    {
+        SiteProperties.SiteInfo siteInfo = siteProperties.findByProcessorName(this.getClass().getSimpleName());
+        this.SITE_ID = siteInfo.getId();
+        this.DOMAIN = siteInfo.getDomain();
+        this.HOT_PAGE_URL = siteInfo.getHotPageUrl();
+        this.ITEM_KEY = siteInfo.getItemKey();
+    }
 
     @Override
     public List<Info> crawlHotList()

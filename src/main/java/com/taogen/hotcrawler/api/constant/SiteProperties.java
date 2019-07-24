@@ -25,6 +25,10 @@ public class SiteProperties
         private String id;
         private String name;
         private String processorName;
+        private String domain;
+        private String hotPageUrl;
+        private String hotApiUrl;
+        private String itemKey;
     }
 
     public List<InfoType> convertToInfoTypeList()
@@ -35,5 +39,20 @@ public class SiteProperties
             this.sites.forEach(site -> { infoTypes.add(new InfoType(site.getId(), site.getName()));});
         }
         return infoTypes;
+    }
+
+    public SiteInfo findByProcessorName(String proceesorName)
+    {
+        if (this.sites != null)
+        {
+            for (SiteInfo siteInfo : this.sites)
+            {
+                if (siteInfo.getProcessorName().equals(proceesorName))
+                {
+                    return siteInfo;
+                }
+            }
+        }
+        return null;
     }
 }

@@ -1,35 +1,44 @@
 package com.taogen.hotcrawler.commons.crawler.impl;
 
 import com.jayway.jsonpath.JsonPath;
+import com.taogen.hotcrawler.api.constant.SiteProperties;
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
-import lombok.Data;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component("ZhihuHotProcessor")
 @PropertySource("classpath:sites.properties")
-@Data
 public class ZhihuHotProcessor implements HotProcessor
 {
     private static final Logger log = LoggerFactory.getLogger(ZhihuHotProcessor.class);
 
-    @Value("${sites[1].id}")
+    @Autowired
+    private SiteProperties siteProperties;
+
     private  String SITE_ID;
-
-    @Value("${sites[1].domain}")
-    private String ZHIHU_DOMAIN;
-
-    @Value("${sites[1].hotApiUrl}")
+    private String DOMAIN;
     private String HOT_API_URL;
+    private String ITEM_KEY;
+
+    @PostConstruct
+    public void init()
+    {
+        SiteProperties.SiteInfo siteInfo = siteProperties.findByProcessorName(this.getClass().getSimpleName());
+        this.SITE_ID = siteInfo.getId();
+        this.DOMAIN = siteInfo.getDomain();
+        this.HOT_API_URL = siteInfo.getHotApiUrl();
+        this.ITEM_KEY = siteInfo.getItemKey();
+    }
 
     @Override
     public List<Info> crawlHotList()
@@ -50,7 +59,7 @@ public class ZhihuHotProcessor implements HotProcessor
         List<String> urls = JsonPath.read(json, "$.data.[*].target.url");
         for (int i = 0; i < urls.size(); i++)
         {
-            urls.set(i, urls.get(i).replace("https://api.zhihu.com/questions", ZHIHU_DOMAIN + "/question"));
+            urls.set(i, urls.get(i).replace("https://api.zhihu.com/questions", DOMAIN + "/question"));
         }
         for (int i = 1; i < titles.size(); i++)
         {
