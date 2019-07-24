@@ -21,6 +21,8 @@
 - Twitter. GET trends/place — Twitter Developers 
 - Medium. `https://medium.com/topic/popular`
 - Reddit. `https://www.reddit.com/hot/`
+- YouTube. `https://www.youtube.com/feed/trending`
+- 开发者头条. `https://toutiao.io/`
 
 ### 使用技术
 后端
