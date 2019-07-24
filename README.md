@@ -23,6 +23,7 @@
 - Reddit. `https://www.reddit.com/hot/`
 - YouTube. `https://www.youtube.com/feed/trending`
 - 开发者头条. `https://toutiao.io/`
+- 掘金. `https://juejin.im/`
 
 ### 使用技术
 后端
