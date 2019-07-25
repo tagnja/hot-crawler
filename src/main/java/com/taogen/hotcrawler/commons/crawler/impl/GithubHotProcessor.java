@@ -10,7 +10,6 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -51,28 +50,40 @@ public class GithubHotProcessor implements HotProcessor
             doc = Jsoup.connect(HOT_PAGE_URL).timeout(10 * 1000).get();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
+            log.error("Fail to connect!");
+            return list;
         }
+
+        log.debug("Title: " + doc.title());
 
         // elements
         Elements elements = doc.getElementsByClass(ITEM_KEY);
 
-        int i = 0;
-        for (Element element : elements)
+        try
         {
-            // id
-            String id = String.valueOf(++i);
+            int i = 0;
+            for (Element element : elements)
+            {
+                log.debug("itemElement: " + element);
+                // id
+                String id = String.valueOf(++i);
 
-            // url
-            Element urlElement = element.getElementsByTag("h1").get(0).getElementsByTag("a").get(0);
-            String infoUrl = urlElement.attr("href");
+                // url
+                Element urlElement = element.getElementsByTag("h1").get(0).getElementsByTag("a").get(0);
+                String infoUrl = urlElement.attr("href");
 
-            // title
-            Element titleElement = element.getElementsByTag("p").get(0);
-            String infoTitle = infoUrl.substring(infoUrl.indexOf("/",1) + 1) + ". " + titleElement.html();
+                // title
+                Element titleElement = element.getElementsByTag("p").get(0);
+                String infoTitle = infoUrl.substring(infoUrl.indexOf("/", 1) + 1) + ". " + titleElement.html();
 
-            infoUrl = DOMAIN + infoUrl;
-            list.add(new Info(id, infoTitle, infoUrl));
+                infoUrl = DOMAIN + infoUrl;
+                list.add(new Info(id, infoTitle, infoUrl));
+            }
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            log.error(e.getMessage());
         }
         return list;
     }
