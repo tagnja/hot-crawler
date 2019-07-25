@@ -7,6 +7,7 @@ crawler:
     initialDelay: 60000
     fixedRate: 60000
     cron: "*/5 * * * * ?"
+#--------------------------------------------
 spring:
   cache:
     type: redis
@@ -22,3 +23,9 @@ spring:
         max-idle: 7
         min-idle: 2
         max-wait: -1ms
+logging:
+  level:
+    root: ERROR
+    org.springframework.web: ERROR
+    com.taogen.hotcrawler: INFO
+    org.hibernate: ERROR
