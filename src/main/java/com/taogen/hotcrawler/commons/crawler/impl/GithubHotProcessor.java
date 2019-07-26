@@ -25,6 +25,9 @@ public class GithubHotProcessor implements HotProcessor
     @Autowired
     private SiteProperties siteProperties;
 
+    @Autowired
+    private BaseHotProcessor baseHotProcessor;
+
     private String DOMAIN;
     private String HOT_PAGE_URL;
     private String ITEM_KEY;
@@ -44,47 +47,51 @@ public class GithubHotProcessor implements HotProcessor
         List<Info> list = new ArrayList<>();
 
         // document
-        Document doc = null;
-        try {
-            // Fix jsoup SocketTimeoutException: Read timeout. Add a timeout.
-            doc = Jsoup.connect(HOT_PAGE_URL).timeout(10 * 1000).get();
-
-        } catch (IOException e) {
-            log.error(e.getMessage());
-            log.error("Fail to connect!");
+        Document doc = baseHotProcessor.getDoc(HOT_PAGE_URL, null, log);
+        if (doc == null)
+        {
             return list;
         }
-
         log.debug("Title: " + doc.title());
 
         // elements
         Elements elements = doc.getElementsByClass(ITEM_KEY);
+        log.debug("elements size: " + elements.size());
 
-        try
+        int i = 0;
+        for (Element element : elements)
         {
-            int i = 0;
-            for (Element element : elements)
+            // id
+            String id = String.valueOf(++i);
+            Element urlElement = null;
+            Element descElement = null;
+
+            try
             {
-                log.debug("itemElement: " + element);
-                // id
-                String id = String.valueOf(++i);
-
                 // url
-                Element urlElement = element.getElementsByTag("h1").get(0).getElementsByTag("a").get(0);
-                String infoUrl = urlElement.attr("href");
-
-                // title
-                Element titleElement = element.getElementsByTag("p").get(0);
-                String infoTitle = infoUrl.substring(infoUrl.indexOf("/", 1) + 1) + ". " + titleElement.html();
-
-                infoUrl = DOMAIN + infoUrl;
-                list.add(new Info(id, infoTitle, infoUrl));
+                urlElement = element.getElementsByTag("h1").get(0).getElementsByTag("a").get(0);
+                // title-desc
+                if (element.getElementsByTag("p").size() > 0)
+                {
+                    descElement = element.getElementsByTag("p").get(0);
+                }
             }
+            catch (NullPointerException | IndexOutOfBoundsException e)
+            {
+                log.error("Can't found item element by attribute!");
+                log.error(e.getClass().getName() + ": " + e.getMessage());
+                log.debug("error element: " + i);
+                continue;
+            }
+
+            String infoUrl = urlElement.attr("href");
+            String infoTitle = infoUrl.substring(infoUrl.indexOf("/", 1) + 1) + ". ";
+            String desc = descElement == null ? "" : descElement.html();
+            infoTitle = infoTitle + desc;
+            infoUrl = DOMAIN + infoUrl;
+            list.add(new Info(id, infoTitle, infoUrl));
         }
-        catch (IndexOutOfBoundsException e)
-        {
-            log.error(e.getMessage());
-        }
+        log.debug("return list size: " + list.size());
         return list;
     }
 }

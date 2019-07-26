@@ -26,6 +26,9 @@ public class HackernewsHotProcessor implements HotProcessor
     @Autowired
     private SiteProperties siteProperties;
 
+    @Autowired
+    private BaseHotProcessor baseHotProcessor;
+
     private String DOMAIN;
     private String HOT_PAGE_URL;
     private String ITEM_KEY;
@@ -44,19 +47,17 @@ public class HackernewsHotProcessor implements HotProcessor
         List<Info> list = new ArrayList<>();
 
         // document
-        Document doc = null;
-        try {
-            Connection connection = Jsoup.connect(HOT_PAGE_URL); //connect(HOT_PAGE_URL).get();
-            connection.header("Host", "news.ycombinator.com");
-            connection.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0");
-            doc = connection.get();
-        } catch (IOException e) {
-            e.printStackTrace();
+        Document doc = baseHotProcessor.getDoc(HOT_PAGE_URL, null, log);
+        if (doc == null)
+        {
+            return list;
         }
+        log.debug("Title: " + doc.title());
 
         // elements
         Elements titleElements = doc.getElementsByClass(ITEM_KEY);
         Elements urlElements = doc.getElementsByClass("subtext");
+        log.debug("elements size: " + titleElements.size());
 
         for (int i = 0; i < titleElements.size(); i++)
         {
@@ -73,6 +74,7 @@ public class HackernewsHotProcessor implements HotProcessor
 
             list.add(new Info(id, infoTitle, infoUrl));
         }
+        log.debug("return list size: " + list.size());
         return list;
     }
 }

@@ -24,6 +24,9 @@ public class ZhihuHotProcessor implements HotProcessor
     @Autowired
     private SiteProperties siteProperties;
 
+    @Autowired
+    private BaseHotProcessor baseHotProcessor;
+
     private String DOMAIN;
     private String HOT_API_URL;
     private String ITEM_KEY;
@@ -44,25 +47,28 @@ public class ZhihuHotProcessor implements HotProcessor
         // login
 
         // json by API
-        String json = null;
-        try {
-            json = Jsoup.connect(HOT_API_URL).ignoreContentType(true).execute().body();
-        } catch (IOException e) {
-            e.printStackTrace();
+        String json = baseHotProcessor.getJson(HOT_API_URL, log);
+        if (json == null)
+        {
+            return list;
         }
 
         // items
         List<String> titles = JsonPath.read(json, "$.data.[*].target.title");
         List<String> urls = JsonPath.read(json, "$.data.[*].target.url");
+        log.debug("elements size: " + titles.size());
+
         for (int i = 0; i < urls.size(); i++)
         {
             urls.set(i, urls.get(i).replace("https://api.zhihu.com/questions", DOMAIN + "/question"));
         }
+
         for (int i = 1; i < titles.size(); i++)
         {
             list.add(new Info(String.valueOf(i), titles.get(i), urls.get(i)));
         }
 
+        log.debug("return list size: " + list.size());
         return list;
     }
 }

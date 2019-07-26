@@ -25,6 +25,9 @@ public class DoubanHotProcessor implements HotProcessor
     @Autowired
     private SiteProperties siteProperties;
 
+    @Autowired
+    private BaseHotProcessor baseHotProcessor;
+
     private String DOMAIN;
     private String HOT_PAGE_URL;
     private String ITEM_KEY;
@@ -43,22 +46,31 @@ public class DoubanHotProcessor implements HotProcessor
         List<Info> list = new ArrayList<>();
 
         // document
-        Document doc = null;
-        try {
-            doc = Jsoup.connect(HOT_PAGE_URL).get();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        Document doc = baseHotProcessor.getDoc(HOT_PAGE_URL, null, log);
+        if (doc == null)
+        {
+            return list;
         }
+        log.debug("Title: " + doc.title());
 
         // elements
         Elements elements = doc.getElementsByClass(ITEM_KEY);
+        log.debug("elements size: " + elements.size());
 
         int i = 0;
         for (Element element : elements)
         {
-            Element itemElement = element.getElementsByClass("bd").get(0).getElementsByTag("a").get(0);
-
+            Element itemElement = null;
+            try
+            {
+                itemElement = element.getElementsByClass("bd").get(0).getElementsByTag("a").get(0);
+            }
+            catch (NullPointerException | IndexOutOfBoundsException e)
+            {
+                log.error("Can't found item element by attribute!");
+                log.error(e.getClass().getName() + ": " + e.getMessage());
+                continue;
+            }
             // id
             String id = String.valueOf(++i);
 
@@ -70,6 +82,7 @@ public class DoubanHotProcessor implements HotProcessor
 
             list.add(new Info(id, infoTitle, infoUrl));
         }
+        log.debug("return list size: " + list.size());
         return list;
     }
 }

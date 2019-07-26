@@ -16,7 +16,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component("CloudmusicHotProcessor")
 public class CloudmusicHotProcessor implements HotProcessor
@@ -25,6 +27,9 @@ public class CloudmusicHotProcessor implements HotProcessor
 
     @Autowired
     private SiteProperties siteProperties;
+
+    @Autowired
+    private BaseHotProcessor baseHotProcessor;
 
     private String DOMAIN;
     private String HOT_PAGE_URL;
@@ -44,36 +49,56 @@ public class CloudmusicHotProcessor implements HotProcessor
         List<Info> list = new ArrayList<>();
 
         // document
-        Document doc = null;
-        try {
-            Connection connection = Jsoup.connect(HOT_PAGE_URL); //connect(HOT_PAGE_URL).get();
-            connection.header("Host", "music.163.com");
-            connection.header("Referer", "https://music.163.com/");
-            connection.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0");
-            doc = connection.get();
-        } catch (IOException e) {
-            e.printStackTrace();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Host", "music.163.com");
+        headers.put("Referer", "https://music.163.com/");
+        Document doc = baseHotProcessor.getDoc(HOT_PAGE_URL, headers, log);
+        if (doc == null)
+        {
+            return list;
         }
+        log.debug("Title: " + doc.title());
 
         // elements
-        Elements elements = doc.getElementById(ITEM_KEY).getElementsByTag("li");
+        Elements elements = null;
+        Element contentElement = doc.getElementById(ITEM_KEY);
+        if (contentElement != null)
+        {
+            elements = contentElement.getElementsByTag("li");
+        }
+        log.debug("elements size: " + elements.size());
+
         int i = 0;
         for (Element element : elements)
         {
-            Element itemElement = element.getElementsByTag("a").get(0);
+            Element itemElement = null;
+            try
+            {
+                itemElement = element.getElementsByTag("a").get(0);
+            }
+            catch (NullPointerException | IndexOutOfBoundsException e)
+            {
+                log.error("Can't found item element by attribute!");
+                log.error(e.getClass().getName() + ": " + e.getMessage());
+                continue;
+            }
 
-            // id
-            String id = String.valueOf(++i);
+            if (itemElement != null)
+            {
+                // id
+                String id = String.valueOf(++i);
 
-            // url
-            String infoUrl = itemElement.attr("href");
+                // url
+                String infoUrl = itemElement.attr("href");
 
-            // title
-            String infoTitle = itemElement.html();
+                // title
+                String infoTitle = itemElement.html();
 
-            infoUrl = DOMAIN + "#" + infoUrl;
-            list.add(new Info(id, infoTitle, infoUrl));
+                infoUrl = DOMAIN + "#" + infoUrl;
+                list.add(new Info(id, infoTitle, infoUrl));
+            }
         }
+        log.debug("return list size: " + list.size());
         return list;
     }
 }

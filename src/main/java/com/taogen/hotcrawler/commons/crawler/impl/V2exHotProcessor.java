@@ -26,6 +26,9 @@ public class V2exHotProcessor implements HotProcessor
     @Autowired
     private SiteProperties siteProperties;
 
+    @Autowired
+    private BaseHotProcessor baseHotProcessor;
+
     private String DOMAIN;
     private String HOT_PAGE_URL;
     private String ITEM_KEY;
@@ -46,16 +49,16 @@ public class V2exHotProcessor implements HotProcessor
         List<Info> list = new ArrayList<>();
 
         // document
-        Document doc = null;
-        try {
-            doc = Jsoup.connect(HOT_PAGE_URL).get();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        Document doc = baseHotProcessor.getDoc(HOT_PAGE_URL, null, log);
+        if (doc == null)
+        {
+            return list;
         }
+        log.debug("Title: " + doc.title());
 
         // elements
         Elements elements = doc.getElementsByClass(ITEM_KEY);
+        log.debug("elements size: " + elements.size());
 
         int i = 0;
         for (Element element : elements)
@@ -67,6 +70,8 @@ public class V2exHotProcessor implements HotProcessor
             String id = String.valueOf(++i);
             list.add(new Info(id, infoTitle, infoUrl));
         }
+
+        log.debug("return list size: " + list.size());
         return list;
     }
 }
