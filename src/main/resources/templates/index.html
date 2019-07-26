@@ -2,80 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />-->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Index Page</title>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    <script th:src="@{/js/jquery-3.4.1-min.js}"></script>
-    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <link rel="stylesheet" th:href="@{/css/index.css}"/>
 </head>
 <body>
     <h3>热点聚合</h3>
-
+    <!--<span th:text="${domain}"></span>-->
     <div id="menu-bar"></div>
     <div id="content"></div>
     <div id="footer"></div>
-    <script>
-        var domain = "https://hot.const520.com";
-        // var domain = "http://localhost:8080";
-        var getTypesUrl = domain + "/api/v1/types";
-        var infoTypes;
-        $.ajax({
-            url: getTypesUrl,
-            type: "get",
-            async: false,
-            dataType: "json",
-            success: function(res){
-                //console.log(JSON.stringify(res));
-                infoTypes = res.data;
-                for (var i = 0; i < infoTypes.length; i++)
-                {
-                    var menuItem = "<div class='menu-item pointer' id='"+infoTypes[i].id+"'>" + infoTypes[i].name + "</div>";
-                    $("#menu-bar").append(menuItem);
-                    var contentBlock = "<div id='content-block'></div>";
-                    $("#content").append(contentBlock)
-                }
-                // initial get infos
-                getInfos(infoTypes[0].id);
-            },
-            error: function(res){
-                alert(JSON.stringify(res))
-            }
-        });
 
-        $(".menu-item").click(function () {
-            var typeId = $(this).attr("id");
-            getInfos(typeId);
-            //console.log(infos);
-        });
-
-        function getInfos(typeId)
-        {
-            var infos;
-            var getInfoUrl = domain + "/api/v1/types/" + typeId + "/infos";
-            $.ajax({
-                url: getInfoUrl,
-                type: "get",
-                async: true,
-                dataType: "json",
-                success: function(res){
-                    infos = res.data;
-                    putInfos("#content-block", infos);
-                },
-                error: function(res){
-                    alert(JSON.stringify(res))
-                }
-            });
-            return infos;
-        }
-        
-        function putInfos(elementId, infos) {
-            $(elementId).empty();
-            for (var j = 0; j < infos.length; j++)
-            {
-                var infoItem = "<div class='info-item'><a href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
-                $(elementId).append(infoItem);
-            }
-        }
+    <!-- Scripts -->
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <script th:src="@{/js/jquery-3.4.1-min.js}"></script>
+    <script th:inline="javascript">
+        var domain =  /*[[${domain}]]*/ "default";
+        // console.log("domain: " + domain);
     </script>
+    <script th:src="@{/js/index.js}"></script>
+    <!-- Scripts end -->
 </body>
 </html>

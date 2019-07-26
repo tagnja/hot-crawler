@@ -1,0 +1,39 @@
+#menu-bar{
+    width: 60%;
+    height:50px;
+    margin: 0px 0px 0px 3%;
+    background-color: cadetblue;
+}
+.menu-item{
+    height: 50px;
+    line-height: 50px;
+    /*width: 80px;*/
+    float: left;
+    text-align: center;
+    /*background-color: aquamarine;*/
+    margin: 0px 0px 0px 20px;
+    font-size: 25px;
+    font-family: FangSong;
+    font-weight: bold;
+}
+.menu-item-selected{
+    /*TODO*/
+    border-bottom: 2px solid #009688;
+}
+#content{
+    /*background-color: antiquewhite;*/
+    margin: 20px 0 0 3% ;
+    width: 60%;
+}
+.info-item{
+    /*height: 35px;*/
+    line-height: 35px;
+    /*background-color: darkseagreen;*/
+    margin: 0px 0px 0px 0px;
+    padding: 0 0 0 15px;
+    border: 1px solid darkgray;
+}
+
+#footer{
+    height: 100px;
+}
