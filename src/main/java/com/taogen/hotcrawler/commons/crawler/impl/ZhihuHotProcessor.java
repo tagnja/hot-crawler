@@ -22,23 +22,11 @@ public class ZhihuHotProcessor implements HotProcessor
     private static final Logger log = LoggerFactory.getLogger(ZhihuHotProcessor.class);
 
     @Autowired
-    private SiteProperties siteProperties;
-
-    @Autowired
     private BaseHotProcessor baseHotProcessor;
 
-    private String DOMAIN;
-    private String HOT_API_URL;
-    private String ITEM_KEY;
-
-    @PostConstruct
-    public void init()
-    {
-        SiteProperties.SiteInfo siteInfo = siteProperties.findByProcessorName(this.getClass().getSimpleName());
-        this.DOMAIN = siteInfo.getDomain();
-        this.HOT_API_URL = siteInfo.getHotApiUrl();
-        this.ITEM_KEY = siteInfo.getItemKey();
-    }
+    public static final String DOMAIN = "https://zhihu.com";
+    public static final String HOT_API_URL = "https://www.zhihu.com/api/v3/feed/topstory/hot-lists/total?limit=50&desktop=true";
+//    public static final String ITEM_KEY = "HotItem";
 
     @Override
     public List<Info> crawlHotList()

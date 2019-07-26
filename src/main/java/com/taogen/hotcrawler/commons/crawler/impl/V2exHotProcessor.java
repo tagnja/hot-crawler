@@ -1,20 +1,15 @@
 package com.taogen.hotcrawler.commons.crawler.impl;
 
-import com.taogen.hotcrawler.api.constant.SiteProperties;
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,24 +19,11 @@ public class V2exHotProcessor implements HotProcessor
     private static final Logger log = LoggerFactory.getLogger(V2exHotProcessor.class);
 
     @Autowired
-    private SiteProperties siteProperties;
-
-    @Autowired
     private BaseHotProcessor baseHotProcessor;
 
-    private String DOMAIN;
-    private String HOT_PAGE_URL;
-    private String ITEM_KEY;
-
-    @PostConstruct
-    public void init()
-    {
-        SiteProperties.SiteInfo siteInfo = siteProperties.findByProcessorName(this.getClass().getSimpleName());
-        this.DOMAIN = siteInfo.getDomain();
-        this.HOT_PAGE_URL = siteInfo.getHotPageUrl();
-        this.ITEM_KEY = siteInfo.getItemKey();
-    }
-
+    public static final String DOMAIN = "https://v2ex.com";
+    public static final String HOT_PAGE_URL = "https://v2ex.com/?tab=hot";
+    public static final String ITEM_KEY = "item_title";
 
     @Override
     public List<Info> crawlHotList()
