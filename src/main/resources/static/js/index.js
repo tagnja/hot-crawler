@@ -1,5 +1,4 @@
 var getTypesUrl = domain + "/api/v1/types";
-var infoTypes;
 $.ajax({
     url: getTypesUrl,
     type: "get",
@@ -7,16 +6,27 @@ $.ajax({
     dataType: "json",
     success: function(res){
         //console.log(JSON.stringify(res));
-        infoTypes = res.data;
-        for (var i = 0; i < infoTypes.length; i++)
+        var infoCates = res.data;
+        for (var j = 0; j < infoCates.length; j++)
         {
-            var menuItem = "<div class='menu-item pointer' id='"+infoTypes[i].id+"'>" + infoTypes[i].name + "</div>";
-            $("#menu-bar").append(menuItem);
-            var contentBlock = "<div id='content-block'></div>";
-            $("#content").append(contentBlock)
+            var infoCate = infoCates[j];
+            var  menuRowId = "menu-row-"+j;
+            var menuRow = '<div class="menu-row" id="'+menuRowId+'"></div>'
+            $("#menu-bar").append(menuRow)
+            var infoCateCol = '<div class="menu-item-cate">'+infoCate.name+'</div>';
+            $("#"+menuRowId).append(infoCateCol);
+            var infoTypes = infoCate.infoTypes;
+            for (var i = 0; i < infoTypes.length; i++)
+            {
+                var menuItem = "<div class='menu-item pointer' cateId='"+infoCate.id+"' typeId='"+infoTypes[i].id+"'>" + infoTypes[i].name + "</div>";
+                $("#"+ menuRowId).append(menuItem);
+            }
         }
+        var contentBlock = "<div id='content-block'></div>";
+        $("#content").append(contentBlock)
+
         // initial get infos
-        getInfos(infoTypes[0].id);
+        getInfos(infoCates[0].id, infoCates[0].infoTypes[0].id);
     },
     error: function(res){
         alert(JSON.stringify(res))
@@ -24,15 +34,16 @@ $.ajax({
 });
 
 $(".menu-item").click(function () {
-    var typeId = $(this).attr("id");
-    getInfos(typeId);
+    var typeId = $(this).attr("typeId");
+    var cateId = $(this).attr("cateId");
+    getInfos(cateId, typeId);
     //console.log(infos);
 });
 
-function getInfos(typeId)
+function getInfos(cateId, typeId)
 {
     var infos;
-    var getInfoUrl = domain + "/api/v1/types/" + typeId + "/infos";
+    var getInfoUrl = domain + "/api/v1/cates/"+cateId+"/types/" + typeId + "/infos";
     $.ajax({
         url: getInfoUrl,
         type: "get",
