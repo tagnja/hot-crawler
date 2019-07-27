@@ -85,7 +85,9 @@
     /*background-color: aquamarine;*/
     display: inline;
     text-align: center;
-    margin: 0px 20px 0px 0px ;
+    margin: 0px 10px 0px 0px ;
+    padding: 3px 8px 3px 8px;
+    border-radius: 5px;
     font-size: 15px;
     /*font-family: FangSong;*/
     font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", "Microsoft Yahei", sans-serif;

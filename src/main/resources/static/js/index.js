@@ -52,14 +52,24 @@ $(".menu-item").click(function () {
     //console.log(infos);
 });
 
+function selected(cateId, typeId)
+{
+    $(".menu-item").each(function() {
+        if ($(this).attr("cateId") == cateId & $(this).attr("typeId") == typeId) {
+            $(this).css({"background-color": "#445", "color": "#FFFFFF"});
+
+        }
+    });
+}
 function getInfos(cateId, typeId)
 {
+    selected(cateId, typeId);
     var infos;
     var getInfoUrl = domain + "/api/v1/cates/"+cateId+"/types/" + typeId + "/infos";
     $.ajax({
         url: getInfoUrl,
         type: "get",
-        async: true,
+        async: false,
         dataType: "json",
         success: function(res){
             infos = res.data;
