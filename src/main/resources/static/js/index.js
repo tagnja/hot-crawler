@@ -87,7 +87,11 @@ function putInfos(elementId, infos) {
     if (infos.length > 0){
         for (var j = 0; j < infos.length; j++)
         {
-            var infoItem = "<div class='info-item'><a  target='_blank' href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
+            if (typeof window.orientation !== 'undefined') {
+                var infoItem = "<div class='info-item'><a href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
+            }else {
+                var infoItem = "<div class='info-item'><a target='_blank' href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
+            }
             $(elementId).append(infoItem);
         }
     }else {
