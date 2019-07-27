@@ -22,8 +22,8 @@ $.ajax({
                 $("#"+ menuRowId).append(menuItem);
             }
         }
-        var contentBlock = "<div id='content-block'></div>";
-        $("#content").append(contentBlock)
+        /*var contentBlock = "<div id='content-block'></div>";
+        $("#content").append(contentBlock);*/
 
         // initial get infos
         var hash = window.location.hash.substr(1);
@@ -35,7 +35,7 @@ $.ajax({
             cateId = infoCates[0].id;
             typeId = infoCates[0].infoTypes[0].id;
         }
-        console.log("cateId: " + cateId + ", typeId: " + typeId);
+        // console.log("cateId: " + cateId + ", typeId: " + typeId);
         getInfos(cateId, typeId);
     },
     error: function(res){
@@ -73,7 +73,7 @@ function getInfos(cateId, typeId)
         dataType: "json",
         success: function(res){
             infos = res.data;
-            putInfos("#content-block", infos);
+            putInfos("#main", infos);
         },
         error: function(res){
             alert(JSON.stringify(res))
