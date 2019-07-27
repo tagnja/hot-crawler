@@ -91,7 +91,7 @@ function putInfos(elementId, infos) {
             $(elementId).append(infoItem);
         }
     }else {
-        var blankTip = "<div style='text-align: center;'>该主题暂无数据！</div>";
+        var blankTip = "<div style='text-align: center;'>该站点暂无数据！</div>";
         $(elementId).append(blankTip);
     }
 }
