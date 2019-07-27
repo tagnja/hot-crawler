@@ -47,29 +47,33 @@ public class CrawlerTask
     {
         if (ENABLE)
         {
-            List<SiteProperties.SiteInfo> siteList = siteProperties.getSites();
-            if (siteList != null)
+            log.info("Crawler task begin...");
+            List<SiteProperties.SiteInfo> sites = siteProperties.sites();
+            List<SiteProperties.SiteCate> cateList = siteProperties.getCates();
+            log.info("site list: " + cateList.toString());
+
+            if (cateList != null)
             {
-                int threadPoolNum = THREAD_POOL_NUM < siteList.size() ? THREAD_POOL_NUM : siteList.size();
+                int threadPoolNum = THREAD_POOL_NUM < cateList.size() ? THREAD_POOL_NUM : sites.size();
                 ExecutorService executorService = Executors.newFixedThreadPool(threadPoolNum);
-                for (SiteProperties.SiteInfo site : siteList)
+
+                for (SiteProperties.SiteCate cate : cateList)
                 {
-                    executorService.submit(() -> {
-                        HotProcessor hotProcessor = null;
-                        try
-                        {
-                            hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
-                        }
-                        catch (BeansException e)
-                        {
-                            log.error(e.getMessage());
-                            return;
-                        }
-                        List<Info> infoList = hotProcessor.crawlHotList();
-//                        log.info("crawler " + site.getName() + " hot list size: " + infoList.size());
-                        infoRepository.removeByTypeId(site.getId());
-                        infoRepository.saveAll(infoList, site.getId());
-                    });
+                    for (SiteProperties.SiteInfo site : cate.getSites()) {
+                        executorService.submit(() -> {
+                            HotProcessor hotProcessor = null;
+                            try {
+                                hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
+                            } catch (BeansException e) {
+                                log.error(e.getMessage());
+                                return;
+                            }
+                            List<Info> infoList = hotProcessor.crawlHotList();
+                            log.info("crawler " + site.getName() + " hot list size: " + infoList.size());
+                            infoRepository.removeByTypeId(cate.getId(), site.getId());
+                            infoRepository.saveAll(infoList, cate.getId(), site.getId());
+                        });
+                    }
                 }
             }
         }

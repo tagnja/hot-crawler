@@ -29,33 +29,45 @@ public class InfoRepository
         listOps = redisTemplate.opsForList();
     }
 
-    public void save(Info info, String typeId)
+    private String getKeyByCateIdAndTypeId(String cateId, String typeId)
     {
-        String key = "site:" + typeId.trim() + ":info";
+        StringBuffer stringBuffer = new StringBuffer();
+        stringBuffer.append("site:");
+        stringBuffer.append(cateId.trim());
+        stringBuffer.append("-");
+        stringBuffer.append(typeId.trim());
+        stringBuffer.append(":info");
+        log.debug("redis key: " + stringBuffer.toString());
+        return stringBuffer.toString();
+    }
+    public void save(Info info, String cateId, String typeId)
+    {
+
+        String key = getKeyByCateIdAndTypeId(cateId, typeId);
         hashOps.putIfAbsent(key, info.getId(), info);
         return;
     }
 
-    public void saveAll(List<Info> infoList, String typeId)
+    public void saveAll(List<Info> infoList, String cateId, String typeId)
     {
-        String key = "site:" + typeId.trim() + ":info";
+        String key = getKeyByCateIdAndTypeId(cateId, typeId);
         Map<String, Info> map = new HashMap<>();
         infoList.forEach(info -> {map.put(info.getId(), info);});
         hashOps.putAll(key, map);
     }
 
-    public void update(Info info, String typeId)
+    public void update(Info info, String cateId, String typeId)
     {
         System.out.println();
-        String key = "site:" + typeId.trim() + ":info";
+        String key = getKeyByCateIdAndTypeId(cateId, typeId);
         hashOps.put(key, info.getId(), info);
         return;
     }
 
-    public List<Info> findByTypeId(String typeId)
+    public List<Info> findByCateIdAndTypeId(String cateId, String typeId)
     {
         Map<String, Info> infoMap = new HashMap<>();
-        String key = "site:" + typeId.trim() + ":info";
+        String key = getKeyByCateIdAndTypeId(cateId, typeId);
         if (redisTemplate.hasKey(key))
         {
             infoMap = hashOps.entries(key);
@@ -63,13 +75,14 @@ public class InfoRepository
         List<Info> infoList = new ArrayList<>();
         infoMap.forEach((k, v) -> {infoList.add(v);} );
         Collections.sort(infoList);
+        log.info("redis info list size: " + infoList.size());
         return infoList;
     }
 
-    public Info findByInfoId(String typeId, String infoId)
+    public Info findByInfoId(String cateId, String typeId, String infoId)
     {
         Info info = null;
-        String key = "site:" + typeId.trim() + ":info";
+        String key = getKeyByCateIdAndTypeId(cateId, typeId);
         if (redisTemplate.hasKey(key))
         {
             info = hashOps.get(key, infoId);
@@ -77,16 +90,16 @@ public class InfoRepository
         return info;
     }
 
-    public long countByTypeId(String typeId)
+    public long countByTypeId(String cateId, String typeId)
     {
-        String key = "site:" + typeId.trim() + ":info";
+        String key = getKeyByCateIdAndTypeId(cateId, typeId);
         Long count = hashOps.size(key);
         return count == null ? 0 : count;
     }
 
-    public void removeByTypeId(String typeId)
+    public void removeByTypeId(String cateId, String typeId)
     {
-        String key = "site:" + typeId.trim() + ":info";
+        String key = getKeyByCateIdAndTypeId(cateId, typeId);
         redisTemplate.delete(key);
     }
 }

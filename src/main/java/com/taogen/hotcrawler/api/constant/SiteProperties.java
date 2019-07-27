@@ -1,5 +1,6 @@
 package com.taogen.hotcrawler.api.constant;
 
+import com.taogen.hotcrawler.commons.entity.InfoCate;
 import com.taogen.hotcrawler.commons.entity.InfoType;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -17,7 +18,16 @@ import java.util.List;
 @ConfigurationProperties
 public class SiteProperties
 {
-    List<SiteInfo> sites;
+
+    List<SiteCate> cates;
+
+    @Data
+    public static class SiteCate
+    {
+        private String id;
+        private String name;
+        private List<SiteInfo> sites;
+    }
 
     @Data
     public static class SiteInfo
@@ -25,31 +35,56 @@ public class SiteProperties
         private String id;
         private String name;
         private String processorName;
-        private String domain;
-        private String hotPageUrl;
-        private String hotApiUrl;
-        private String itemKey;
     }
 
-    public List<InfoType> convertToInfoTypeList()
+    public List<InfoCate> convertToInfoCateList()
     {
-        List<InfoType> infoTypes = new ArrayList<>();
-        if (this.sites != null)
-        {
-            this.sites.forEach(site -> { infoTypes.add(new InfoType(site.getId(), site.getName()));});
+        List<InfoCate> infoCates = new ArrayList<>();
+            if (this.cates != null)
+            {
+                for (SiteCate cate : cates)
+                {
+                    List<InfoType> infoTypes = new ArrayList<>();
+                    if (cate.getSites() != null)
+                    {
+                        cate.getSites().forEach(site -> { infoTypes.add(new InfoType(site.getId(), site.getName()));});
+                    }
+                    infoCates.add(new InfoCate(cate.getId(), cate.getName(), infoTypes));
+                }
         }
-        return infoTypes;
+        return infoCates;
     }
 
+    public List<SiteInfo> sites()
+    {
+        List<SiteInfo> siteInfos = new ArrayList<>();
+        if (this.cates != null)
+        {
+            for (SiteCate siteCate : cates)
+            {
+                if (siteCate.getSites() != null)
+                {
+                    siteCate.getSites().forEach(siteInfo -> { siteInfos.add(siteInfo);});
+                }
+            }
+        }
+        return siteInfos;
+    }
     public SiteInfo findByProcessorName(String proceesorName)
     {
-        if (this.sites != null)
+        if (this.cates != null)
         {
-            for (SiteInfo siteInfo : this.sites)
+            for (SiteCate siteCate : this.cates)
             {
-                if (siteInfo.getProcessorName().equals(proceesorName))
+                if (siteCate.getSites() != null)
                 {
-                    return siteInfo;
+                    for (SiteInfo siteInfo : siteCate.getSites())
+                    {
+                        if (siteInfo.getProcessorName().equals(proceesorName))
+                        {
+                            return siteInfo;
+                        }
+                    }
                 }
             }
         }

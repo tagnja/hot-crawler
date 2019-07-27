@@ -23,36 +23,47 @@ public class InfoService extends BaseService
     @Autowired
     private SiteProperties siteProperties;
 
-    public List<Info> findListByTypeId(String typeId)
+    public List<Info> findListByCateIdAndTypeId(String cateId, String typeId)
     {
-        List<Info> infoList = infoRepository.findByTypeId(typeId);
+        List<Info> infoList = infoRepository.findByCateIdAndTypeId(cateId, typeId);
+        log.debug("info list size: " + infoList.size());
         if (infoList == null || infoList.size() <= 0)
         {
-            infoList = crawlHotList(typeId);
+            infoList = crawlHotList(cateId, typeId);
             // update to redis
             if (infoList != null && infoList.size() > 0)
             {
-                infoRepository.saveAll(infoList, typeId);
+                infoRepository.saveAll(infoList, cateId, typeId);
             }
         }
         return infoList;
     }
 
-    private List<Info> crawlHotList(String typeId)
+    private List<Info> crawlHotList(String cateId, String typeId)
     {
         List<Info> hotList = new ArrayList<>();
         HotProcessor hotProcess = null;
-        List<SiteProperties.SiteInfo> siteList = siteProperties.getSites();
-        if (siteList != null)
+        List<SiteProperties.SiteCate> cateList = siteProperties.getCates();
+        if (cateList != null)
         {
-            for (SiteProperties.SiteInfo site : siteList)
+            for (SiteProperties.SiteCate cate : cateList)
             {
-                if (site.getId().equals(typeId))
+                if (cate.getId().equals(cateId))
                 {
-                    hotProcess = (HotProcessor) getBean(site.getProcessorName());
-                    break;
+                    if (cate.getSites() != null)
+                    {
+                        for (SiteProperties.SiteInfo site : cate.getSites())
+                        {
+                            if (site.getId().equals(typeId))
+                            {
+                                hotProcess = (HotProcessor) getBean(site.getProcessorName());
+                                break;
+                            }
+                        }
+                    }
                 }
             }
+            log.debug("hot process: " + hotProcess.getClass().getSimpleName());
         }
         if (hotProcess != null)
         {

@@ -30,8 +30,8 @@ public class HotProcessorTest
     @Test
     public void getHotInfoTest()
     {
-        List<SiteProperties.SiteInfo> siteInfos = siteProperties.getSites();
-
+        List<SiteProperties.SiteInfo> siteInfos = siteProperties.sites();
+        log.info("site list: " + siteInfos);
         if (siteInfos != null)
         {
             for (SiteProperties.SiteInfo site : siteInfos)
