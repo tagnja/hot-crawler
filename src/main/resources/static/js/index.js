@@ -84,9 +84,14 @@ function getInfos(cateId, typeId)
 
 function putInfos(elementId, infos) {
     $(elementId).empty();
-    for (var j = 0; j < infos.length; j++)
-    {
-        var infoItem = "<div class='info-item'><a href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
-        $(elementId).append(infoItem);
+    if (infos.length > 0){
+        for (var j = 0; j < infos.length; j++)
+        {
+            var infoItem = "<div class='info-item'><a href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
+            $(elementId).append(infoItem);
+        }
+    }else {
+        var blankTip = "<div style='text-align: center;'>该主题暂无数据！</div>";
+        $(elementId).append(blankTip);
     }
 }
