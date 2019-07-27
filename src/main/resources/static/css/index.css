@@ -4,16 +4,36 @@
 }
 
 #top-content{
-    /*background-color: beige;*/
+   /* background-color: red;*/
     line-height: 44px;
     min-width: 600px;
     max-width: 1100px;
     margin: 0 auto;
     font-size: 20px;
     font-weight: bold;
-    padding: 0px 10px 0px 10px;
+    /*float: left;*/
+    padding: 0px 20px 0px 0px;
 }
-
+#top-content img{
+    height: 44px;
+}
+#top-logo {
+    /*background-color: darkolivegreen;*/
+    height: 44px;
+    width: 44px;
+    line-height: 44px;
+    margin-right: 10px;
+    float: left;
+    /*display: inline;*/
+}
+#top-title{
+    /*background-color: darkolivegreen;*/
+    height: 44px;
+    line-height: 44px;
+    /*float: left;*/
+    margin-right: 10px;
+    display: inline;
+}
 #footer{
     height: 100px;
     background-color: #e2e2e2;

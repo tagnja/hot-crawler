@@ -21,6 +21,9 @@ a:visited {
 a:hover {
     color: gray;
 }
+#top a:hover{
+    color: #000000;
+}
 a:active {
     color: gray;
 }

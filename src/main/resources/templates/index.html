@@ -4,13 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index Page</title>
+    <title>const520</title>
+    <link rel="icon" th:href="@{/img/const520.ico}">
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" th:href="@{/css/index.css}"/>
 </head>
 <body>
     <div id="top">
-        <div id="top-content">热点聚合</div>
+
+        <div id="top-content">
+            <a th:href="${domain}">
+            <div id="top-logo"><img id="logo" alt="logo" th:src="@{/img/const520-logo_200x200.png}"></div>
+            <div id="top-title">热点聚合</div>
+            </a>
+        </div>
+
     </div>
 
     <div id="wrapper">
