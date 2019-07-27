@@ -26,7 +26,17 @@ $.ajax({
         $("#content").append(contentBlock)
 
         // initial get infos
-        getInfos(infoCates[0].id, infoCates[0].infoTypes[0].id);
+        var hash = window.location.hash.substr(1);
+        var cateId, typeId;
+        if (hash) {
+            cateId = hash.split('-')[0];
+            typeId = hash.split('-')[1];
+        } else {
+            cateId = infoCates[0].id;
+            typeId = infoCates[0].infoTypes[0].id;
+        }
+        console.log("cateId: " + cateId + ", typeId: " + typeId);
+        getInfos(cateId, typeId);
     },
     error: function(res){
         alert(JSON.stringify(res))
@@ -34,9 +44,11 @@ $.ajax({
 });
 
 $(".menu-item").click(function () {
-    var typeId = $(this).attr("typeId");
     var cateId = $(this).attr("cateId");
-    getInfos(cateId, typeId);
+    var typeId = $(this).attr("typeId");
+    window.location = window.location.href.split('#')[0] + "#" + cateId +"-"+typeId;
+    window.location.reload();
+    //getInfos(cateId, typeId);
     //console.log(infos);
 });
 
