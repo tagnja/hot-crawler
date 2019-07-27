@@ -75,7 +75,7 @@ public class InfoRepository
         List<Info> infoList = new ArrayList<>();
         infoMap.forEach((k, v) -> {infoList.add(v);} );
         Collections.sort(infoList);
-        log.info("redis info list size: " + infoList.size());
+        log.debug("redis info list size: " + infoList.size());
         return infoList;
     }
 

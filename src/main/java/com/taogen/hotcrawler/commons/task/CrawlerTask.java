@@ -50,7 +50,7 @@ public class CrawlerTask
             log.info("Crawler task begin...");
             List<SiteProperties.SiteInfo> sites = siteProperties.sites();
             List<SiteProperties.SiteCate> cateList = siteProperties.getCates();
-            log.info("site list: " + cateList.toString());
+            log.info("site list site: " + cateList.size());
 
             if (cateList != null)
             {
@@ -69,7 +69,7 @@ public class CrawlerTask
                                 return;
                             }
                             List<Info> infoList = hotProcessor.crawlHotList();
-                            log.info("crawler " + site.getName() + " hot list size: " + infoList.size());
+                            log.debug("crawler " + site.getName() + " hot list size: " + infoList.size());
                             infoRepository.removeByTypeId(cate.getId(), site.getId());
                             infoRepository.saveAll(infoList, cate.getId(), site.getId());
                         });
