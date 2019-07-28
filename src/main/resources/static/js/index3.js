@@ -64,7 +64,6 @@ function selected(cateId, typeId)
 }
 function getInfos(cateId, typeId)
 {
-    selected(cateId, typeId);
     var infos;
     var getInfoUrl = domain + "/api/v1/cates/"+cateId+"/types/" + typeId + "/infos";
     $.ajax({
@@ -73,6 +72,7 @@ function getInfos(cateId, typeId)
         async: false,
         dataType: "json",
         success: function(res){
+            selected(cateId, typeId);
             infos = res.data;
             putInfos("#main", infos);
         },
