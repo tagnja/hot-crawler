@@ -8,14 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.info.InfoProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -32,16 +29,22 @@ public class IndexController
     @Value("${domain}")
     private String domain;
 
-//    @GetMapping("/")
-//    public String toIndexPage(Model model)
-//    {
-//        log.debug("Go to index page: " + domain);
-//        model.addAttribute("domain", domain);
-//        return "index"; //view
-//    }
+    /**
+     * v1
+     */
+    @GetMapping("/v1")
+    public String toIndexPageV1(Model model)
+    {
+        log.debug("Go to index page: " + domain);
+        model.addAttribute("domain", domain);
+        return "index"; //view
+    }
 
-    @GetMapping("/")
-    public String toIndex2Page(@RequestParam(name = "tab", required = false) String tab, Model model)
+    /**
+     * v2
+     */
+    @GetMapping("/v2")
+    public String toIndexPageV2(@RequestParam(name = "tab", required = false) String tab, Model model)
     {
         log.debug("Go to index page: " + domain);
         /*String tab = request.getRequestURL().toString();
@@ -67,5 +70,16 @@ public class IndexController
         model.addAttribute("cates", cates);
         model.addAttribute("infos", infos);
         return "index2"; //view
+    }
+
+    /**
+     * v3
+     */
+    @GetMapping("/")
+    public String toIndexPageV3(Model model)
+    {
+        log.debug("Go to index page: " + domain);
+        model.addAttribute("domain", domain);
+        return "index3"; //view
     }
 }
