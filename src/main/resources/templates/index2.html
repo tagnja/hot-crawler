@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>const520</title>
+    <link rel="icon" th:href="@{/img/const520.ico}">
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/index.css}"/>
+</head>
+<body>
+    <div id="top">
+
+        <div id="top-content">
+            <a th:href="${domain}">
+            <div id="top-logo"><img id="logo" alt="logo" th:src="@{/img/const520-logo_200x200.png}"></div>
+            <div id="top-title">热点聚合</div>
+            </a>
+        </div>
+
+    </div>
+
+    <div id="wrapper">
+        <div id="content">
+            <div id="menu-bar">
+                <!--<div th:each="cate : ${cates}" class="menu-row">
+                    <div class="menu-item-cate" th:text="${cate.name}"></div>
+                    <div th:each="infoType : ${cate.infoTypes}" class="menu-item pointer" th:text="${infoType.name}"></div>
+                </div>-->
+            </div>
+            <div id="menu-split"></div>
+            <div id="main">
+                <!--<div th:each="info : ${infos}" class='info-item'><a th:href="${info.url}" th:text='${info.id +". "+ info.title}'></a></div>-->
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+
+    <!-- Scripts -->
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+    <script th:src="@{/js/jquery-3.4.1-min.js}"></script>
+    <script th:inline="javascript">
+        var domain =  /*[[${domain}]]*/ "default";
+        var infoCates = /*[[${cates}]]*/ "default";
+        var infos = /*[[${infos}]]*/ "default";
+        // console.log("domain: " + domain);
+        // console.log("cates:" + infoCates);
+        // console.log("infos: " + infos);
+    </script>
+    <script th:src="@{/js/index2.js}"></script>
+    <!-- Scripts end -->
+</body>
+</html>
