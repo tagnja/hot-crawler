@@ -72,9 +72,8 @@ function getInfos(cateId, typeId)
         async: false,
         dataType: "json",
         success: function(res){
-            selected(cateId, typeId);
             infos = res.data;
-            putInfos("#main", infos);
+            putInfos("#main", infos, cateId, typeId);
         },
         error: function(res){
             alert(JSON.stringify(res))
@@ -83,7 +82,7 @@ function getInfos(cateId, typeId)
     return infos;
 }
 
-function putInfos(elementId, infos) {
+function putInfos(elementId, infos, cateId, typeId) {
     $(elementId).empty();
     if (infos.length > 0){
         for (var j = 0; j < infos.length; j++)
@@ -99,4 +98,5 @@ function putInfos(elementId, infos) {
         var blankTip = "<div style='text-align: center;'>该站点暂无数据！</div>";
         $(elementId).append(blankTip);
     }
+    selected(cateId, typeId);
 }
