@@ -43,7 +43,7 @@ public class IndexController
     /**
      * v2
      */
-    @GetMapping("/v2")
+    @GetMapping("/")
     public String toIndexPageV2(@RequestParam(name = "tab", required = false) String tab, Model model)
     {
         log.debug("Go to index page: " + domain);
@@ -75,7 +75,7 @@ public class IndexController
     /**
      * v3
      */
-    @GetMapping("/")
+    @GetMapping("/v3")
     public String toIndexPageV3(Model model)
     {
         log.debug("Go to index page: " + domain);
