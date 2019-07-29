@@ -1,5 +1,10 @@
 # Update Log
 
+2019.07.27
+
+- Frontend HTML page fit mobile device.
+- Optimize frontend home page style.
+
 2019.07.25
 
 - Enable HTTPS by Certbot.
@@ -8,7 +13,7 @@
 2019.07.24
 
 - Implements crawler of GitHub, Weibo, Douban, Tianya, Cloud music, Hacker News websites.
-- Write README
+- Write README.
 
 2019.07.23
 
