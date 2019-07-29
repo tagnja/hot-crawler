@@ -1,9 +1,8 @@
 # Hot Crawler
 
+**const520 热点聚合**
 
-[Const520·热点聚合](http://hot.const520.com)
-
-汇集优质内容，轻松掌握热点话题。
+汇集热点内容，一站式阅读体验。
 
 ![网站首页图](home-page.png)
 
@@ -57,7 +56,7 @@
 
 部署
 
-- Nginx 代理
+- Nginx proxy
 - Spring Boot embedded server - Jetty
 
 ### 如何运行
@@ -87,15 +86,11 @@ $ mvn spring-boot:run
 
    ```
    #example
-   sites[0].id = 1
-   sites[0].name = example
-   sites[0].processorName: ExampleHotProcessor
-   sites[0].domain: https://example.com
-   sites[0].hotPageUrl: https://example.com/xxx
-   sites[0].hotApiUrl: xxx
-   sites[0].itemKey: xxx
+   cates[0].sites[0].id = 1
+   cates[0].sites[0].name = example
+   cates[0].sites[0].processorName: ExampleHotProcessor
    ```
-
+   
 2. 添加热点爬取处理器，如 hot-crawler/src/main/java/com/taogen/hotcrawler/commons/crawler/impl/ExampleHotProcessor.java
 
    ```java
