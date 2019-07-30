@@ -18,7 +18,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <java.version>1.8</java.version>
         <springfox.version>2.9.2</springfox.version>
-       <!-- <junit.version>5.3.2</junit.version>-->
+        <!-- <junit.version>5.3.2</junit.version>-->
     </properties>
 
     <parent>
@@ -140,16 +140,22 @@
             <plugins>
                 <!-- Package as an executable jar/war. $ mvn package spring-boot:repackage -->
                 <plugin>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-maven-plugin</artifactId>
-					<executions>
-						<execution>
-							<goals>
-								<goal>repackage</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <jvmArguments>
+                            -Dapp.name=hot-crawler
+                            -Duser.timezone=Asia/Shanghai
+                        </jvmArguments>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
         <!-- static resource visit by url -->
