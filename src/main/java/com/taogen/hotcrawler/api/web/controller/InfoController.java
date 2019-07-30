@@ -6,7 +6,6 @@ import com.taogen.hotcrawler.api.service.InfoService;
 import com.taogen.hotcrawler.api.web.model.response.GenericResponseModel;
 import com.taogen.hotcrawler.commons.entity.Info;
 import com.taogen.hotcrawler.commons.entity.InfoCate;
-import com.taogen.hotcrawler.commons.entity.InfoType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;

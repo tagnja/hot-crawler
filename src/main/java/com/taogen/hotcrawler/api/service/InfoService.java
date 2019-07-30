@@ -9,7 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,10 +27,11 @@ public class InfoService extends BaseService
     @Autowired
     private SiteProperties siteProperties;
 
+    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
+
     public List<Info> findListByCateIdAndTypeId(String cateId, String typeId)
     {
         List<Info> infoList = infoRepository.findByCateIdAndTypeId(cateId, typeId);
-        log.debug("info list size: " + infoList.size());
         if (infoList == null || infoList.size() <= 0)
         {
             infoList = crawlHotList(cateId, typeId);
@@ -70,5 +75,18 @@ public class InfoService extends BaseService
             hotList = hotProcess.crawlHotList();
         }
         return hotList;
+    }
+
+    public void statVisitUser(HttpServletRequest request)
+    {
+        String ip = request.getRemoteAddr();
+        String today = DATE_FORMAT.format(new Date());
+        infoRepository.statVisitUser(ip, today);
+    }
+
+    public long countVisitUser()
+    {
+        String today = DATE_FORMAT.format(new Date());
+        return infoRepository.countVisitUser(today);
     }
 }

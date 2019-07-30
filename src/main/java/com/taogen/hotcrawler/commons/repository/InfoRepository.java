@@ -1,6 +1,7 @@
 package com.taogen.hotcrawler.commons.repository;
 
 import com.taogen.hotcrawler.commons.entity.Info;
+import com.taogen.hotcrawler.commons.entity.UserVisitStat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.HashOperations;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Repository
 public class InfoRepository
@@ -22,11 +24,15 @@ public class InfoRepository
     private HashOperations<String, String, Info> hashOps;
     private ListOperations<String, Info> listOps;
 
+    public static String VISIT_USER_KEY = "visit_user:{date}";
+    private HashOperations<String, String, UserVisitStat> userVisitCountHashOps;
+
     @PostConstruct
     public void init()
     {
         hashOps = redisTemplate.opsForHash();
         listOps = redisTemplate.opsForList();
+        userVisitCountHashOps = redisTemplate.opsForHash();
     }
 
     private String getKeyByCateIdAndTypeId(String cateId, String typeId)
@@ -102,4 +108,58 @@ public class InfoRepository
         String key = getKeyByCateIdAndTypeId(cateId, typeId);
         redisTemplate.delete(key);
     }
+
+    public void statVisitUser(String ip, String today)
+    {
+        UserVisitStat userVisitStat = findVisitUser(ip, today);
+        if (userVisitStat != null)
+        {
+            updateVisitUser(userVisitStat);
+        }
+        else
+        {
+            insertVisitUser(ip, today);
+        }
+    }
+
+    public long countVisitUser(String date)
+    {
+        String key = getUserVisitCountKey(date);
+        long result = userVisitCountHashOps.entries(key).size();
+        return result;
+    }
+
+    private void updateVisitUser(UserVisitStat userVisitStat)
+    {
+        String date = userVisitStat.getDate();
+        String ip = userVisitStat.getIp();
+        userVisitCountHashOps.put(getUserVisitCountKey(date), ip,
+            new UserVisitStat(date, ip, getCurrentTime(), userVisitStat.getTodayVisitTimes() + 1));
+    }
+
+    private void insertVisitUser(String ip, String date)
+    {
+        String key = getUserVisitCountKey(date);
+        userVisitCountHashOps.put(key, ip,
+                new UserVisitStat(date, ip, getCurrentTime(), 1L));
+        userVisitCountHashOps.getOperations().expire(key, 24, TimeUnit.HOURS);
+    }
+
+    public UserVisitStat findVisitUser(String ip, String today)
+    {
+        String key = getUserVisitCountKey(today);
+        UserVisitStat userVisitStat = userVisitCountHashOps.get(key, ip);
+        return userVisitStat;
+    }
+
+    public String getUserVisitCountKey(String date)
+    {
+        return "user_visit:" + date;
+    }
+
+    public static long getCurrentTime()
+    {
+        return System.currentTimeMillis();
+    }
+
 }

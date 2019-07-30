@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -44,31 +45,28 @@ public class IndexController
      * v2
      */
     @GetMapping("/")
-    public String toIndexPageV2(@RequestParam(name = "tab", required = false) String tab, Model model)
+    public String toIndexPageV2(@RequestParam(name = "tab", required = false) String tab, Model model,
+        HttpServletRequest request)
     {
         log.debug("Go to index page: " + domain);
-        /*String tab = request.getRequestURL().toString();
-        log.debug("url:" + tab);
-        tab = tab.substring(tab.indexOf("#") + 1);*/
         log.debug("tab: " + tab);
-        String cateId = "1";
-        String typeId = "1";
+        String cateId = "1", typeId = "1";
         if (tab != null && tab.split("-").length == 2)
         {
             tab = tab.trim();
             cateId = tab.split("-")[0];
             typeId = tab.split("-")[1];
         }
-        log.debug("cateId: " + cateId);
-        log.debug("typeId: " + typeId);
         List<InfoCate> cates = siteProperties.convertToInfoCateList();
         List<Info> infos = infoService.findListByCateIdAndTypeId(cateId, typeId);
-        log.debug("cates size: " + cates.size());
-        log.debug("infos size: " + infos.size());
 
         model.addAttribute("domain", domain);
         model.addAttribute("cates", cates);
         model.addAttribute("infos", infos);
+
+        infoService.statVisitUser(request);
+        log.debug("Current visit by: " + request.getRemoteAddr());
+        log.info("Today visit user size: " + infoService.countVisitUser());
         return "index2"; //view
     }
 
