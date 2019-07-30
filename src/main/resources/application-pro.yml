@@ -24,9 +24,9 @@ spring:
         max-wait: -1ms
 logging:
   level:
-    root: ERROR
-    org.springframework.web: ERROR
-    com.taogen.hotcrawler: INFO
-    org.hibernate: ERROR
+    root: error
+    org.springframework.web: error
+    com.taogen.hotcrawler: info
+    org.hibernate: error
   path: /var/log/hot.const520.com
   file: ${logging.path}/${spring.application.name}.log
