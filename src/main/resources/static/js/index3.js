@@ -18,7 +18,7 @@ $.ajax({
             var infoTypes = infoCate.infoTypes;
             for (var i = 0; i < infoTypes.length; i++)
             {
-                var menuItem = "<div class='menu-item pointer' cateId='"+infoCate.id+"' typeId='"+infoTypes[i].id+"'>" + infoTypes[i].name + "</div>";
+                var menuItem = "<a class='menu-item pointer' cateId='"+infoCate.id+"' typeId='"+infoTypes[i].id+"'>" + infoTypes[i].name + "</a>";
                 $("#"+ menuRowId).append(menuItem);
             }
         }
@@ -39,7 +39,7 @@ $.ajax({
         getInfos(infoCates[0].id, infoCates[0].infoTypes[0].id);
     },
     error: function(res){
-        alert(JSON.stringify(res))
+        console.log(JSON.stringify(res))
     }
 });
 
@@ -55,7 +55,7 @@ $(".menu-item").click(function () {
 function selected(cateId, typeId)
 {
     $(".menu-item").each(function() {
-        if ($(this).attr("cateId") == cateId & $(this).attr("typeId") == typeId) {
+        if ($(this).attr("cateId") == cateId && $(this).attr("typeId") == typeId) {
             $(this).css({"background-color": "#445", "color": "#FFFFFF"});
         }else{
             $(this).css({"background-color": "#FFFFFF", "color": "#000000"});
@@ -64,7 +64,6 @@ function selected(cateId, typeId)
 }
 function getInfos(cateId, typeId)
 {
-    selected(cateId, typeId);
     var infos;
     var getInfoUrl = domain + "/api/v1/cates/"+cateId+"/types/" + typeId + "/infos";
     $.ajax({
@@ -74,24 +73,25 @@ function getInfos(cateId, typeId)
         dataType: "json",
         success: function(res){
             infos = res.data;
-            putInfos("#main", infos);
+            putInfos("#main", infos, cateId, typeId);
         },
         error: function(res){
-            alert(JSON.stringify(res))
+            console.log(JSON.stringify(res))
         }
     });
     return infos;
 }
 
-function putInfos(elementId, infos) {
+function putInfos(elementId, infos, cateId, typeId) {
     $(elementId).empty();
     if (infos.length > 0){
+        var infoItem;
         for (var j = 0; j < infos.length; j++)
         {
             if (typeof window.orientation !== 'undefined') {
-                var infoItem = "<div class='info-item'><a href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
+                infoItem = "<div class='info-item'><a href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
             }else {
-                var infoItem = "<div class='info-item'><a target='_blank' href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
+                infoItem = "<div class='info-item'><a target='_blank' href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
             }
             $(elementId).append(infoItem);
         }
@@ -99,4 +99,5 @@ function putInfos(elementId, infos) {
         var blankTip = "<div style='text-align: center;'>该站点暂无数据！</div>";
         $(elementId).append(blankTip);
     }
+    selected(cateId, typeId);
 }

@@ -36,24 +36,24 @@ public class V2exHotProcessor implements HotProcessor
         {
             return list;
         }
-        log.debug("Title: " + doc.title());
 
         // elements
         Elements elements = doc.getElementsByClass(ITEM_KEY);
-        log.debug("elements size: " + elements.size());
 
         int i = 0;
         for (Element element : elements)
         {
             Elements elements1 = element.getElementsByTag("a");
             String infoTitle = elements1.html();
-            String infoUrl = DOMAIN + elements1.attr("href");
-            infoUrl = infoUrl.substring(0, infoUrl.indexOf("#"));
+            StringBuilder infoUrl = new StringBuilder();
+            infoUrl.append(DOMAIN);
+            infoUrl.append(elements1.attr("href"));
             String id = String.valueOf(++i);
-            list.add(new Info(id, infoTitle, infoUrl));
+            String url = infoUrl.substring(0, infoUrl.indexOf("#"));
+            list.add(new Info(id, infoTitle, url));
         }
 
-        log.debug("return list size: " + list.size());
+        log.debug("return list size is {}", list.size());
         return list;
     }
 }

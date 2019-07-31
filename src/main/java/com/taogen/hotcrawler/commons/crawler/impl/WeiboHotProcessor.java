@@ -21,9 +21,9 @@ public class WeiboHotProcessor implements HotProcessor
     @Autowired
     private BaseHotProcessor baseHotProcessor;
 
-    private String DOMAIN = "https://s.weibo.com";
-    private String HOT_PAGE_URL = "https://s.weibo.com/top/summary?cate=realtimehot";
-    private String ITEM_KEY = "tr";
+    public static final String DOMAIN = "https://s.weibo.com";
+    public static final String HOT_PAGE_URL = "https://s.weibo.com/top/summary?cate=realtimehot";
+    public static final String ITEM_KEY = "tr";
 
     @Override
     public List<Info> crawlHotList() {
@@ -35,14 +35,12 @@ public class WeiboHotProcessor implements HotProcessor
         {
             return list;
         }
-        log.debug("Title: " + doc.title());
 
         // elements
         Elements elements = doc.getElementsByTag(ITEM_KEY);
         // remove two tr elements
         elements.remove(0);
         elements.remove(0);
-        log.debug("elements size: " + elements.size());
 
         int i = 0;
         for (Element element : elements)
@@ -62,7 +60,7 @@ public class WeiboHotProcessor implements HotProcessor
             list.add(new Info(id, infoTitle, infoUrl));
         }
 
-        log.debug("return list size: " + list.size());
+        log.debug("return list size is {}", list.size());
         return list;
     }
 }

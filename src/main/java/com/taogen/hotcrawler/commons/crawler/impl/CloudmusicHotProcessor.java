@@ -23,12 +23,13 @@ public class CloudmusicHotProcessor implements HotProcessor
     @Autowired
     private BaseHotProcessor baseHotProcessor;
 
-    private String DOMAIN = "https://music.163.com";
-    private String HOT_PAGE_URL = "https://music.163.com/discover/toplist?id=3778678";
-    private String ITEM_KEY = "song-list-pre-cache";
+    public static final String DOMAIN = "https://music.163.com";
+    public static final String HOT_PAGE_URL = "https://music.163.com/discover/toplist?id=3778678";
+    public static final String ITEM_KEY = "song-list-pre-cache";
 
     @Override
-    public List<Info> crawlHotList() {
+    public List<Info> crawlHotList()
+    {
         List<Info> list = new ArrayList<>();
 
         // document
@@ -40,7 +41,6 @@ public class CloudmusicHotProcessor implements HotProcessor
         {
             return list;
         }
-        log.debug("Title: " + doc.title());
 
         // elements
         Elements elements = null;
@@ -49,7 +49,12 @@ public class CloudmusicHotProcessor implements HotProcessor
         {
             elements = contentElement.getElementsByTag("li");
         }
-        log.debug("elements size: " + elements.size());
+        if (elements == null)
+        {
+            return list;
+        }
+
+        log.debug("elements size is {}", elements.size());
 
         int i = 0;
         for (Element element : elements)
@@ -61,8 +66,7 @@ public class CloudmusicHotProcessor implements HotProcessor
             }
             catch (NullPointerException | IndexOutOfBoundsException e)
             {
-                log.error("Can't found item element by attribute!");
-                log.error(e.getClass().getName() + ": " + e.getMessage());
+                log.error("Can't found item element by attribute!", e);
                 continue;
             }
 
@@ -72,16 +76,18 @@ public class CloudmusicHotProcessor implements HotProcessor
                 String id = String.valueOf(++i);
 
                 // url
-                String infoUrl = itemElement.attr("href");
+                StringBuilder infoUrl = new StringBuilder();
+                infoUrl.append(DOMAIN);
+                infoUrl.append("#");
+                infoUrl.append(itemElement.attr("href"));
 
                 // title
                 String infoTitle = itemElement.html();
 
-                infoUrl = DOMAIN + "#" + infoUrl;
-                list.add(new Info(id, infoTitle, infoUrl));
+                list.add(new Info(id, infoTitle, infoUrl.toString()));
             }
         }
-        log.debug("return list size: " + list.size());
+        log.debug("return list size is {}", list.size());
         return list;
     }
 }

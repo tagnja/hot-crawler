@@ -1,11 +1,10 @@
-domain: http://localhost:8080
-#domain: http://192.168.1.15:8080
+domain: https://test.hot.const520.com
 crawler:
   task:
     enable: false
     threadPoolNum: 5
     initialDelay: 60000
-    fixedRate: 60000
+    fixedRate: 180000
     cron: "*/5 * * * * ?"
   chromeDriver:
     enable: true
@@ -16,7 +15,7 @@ spring:
   cache:
     type: redis
   redis:
-    database: 0
+    database: 1
     host: localhost
     port: 6379
     password:
@@ -30,8 +29,8 @@ spring:
 logging:
   level:
     root: error
-    org.springframework.web: info
+    org.springframework.web: error
     com.taogen.hotcrawler: debug
-    org.hibernate: info
+    org.hibernate: error
 server:
-  port: 8080
+  port: 8081
