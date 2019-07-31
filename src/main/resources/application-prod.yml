@@ -34,6 +34,3 @@ logging:
     org.hibernate: error
 #  path: /var/log/hot.const520.com
 #  file: ${logging.path}/${spring.application.name}.log
-server:
-  address: hot.const520.com
-  port: 8080

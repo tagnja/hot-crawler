@@ -33,5 +33,4 @@ logging:
     com.taogen.hotcrawler: debug
     org.hibernate: error
 server:
-  address: test.hot.const520.com
   port: 8081

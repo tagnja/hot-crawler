@@ -34,5 +34,4 @@ logging:
     com.taogen.hotcrawler: debug
     org.hibernate: info
 server:
-  address: localhost
   port: 8080
