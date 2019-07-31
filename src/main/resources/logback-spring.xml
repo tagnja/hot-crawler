@@ -4,8 +4,9 @@
     <!-- file -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>/var/log/hot.const520.com/hotcrawler.log</file>
+        <!--<file>D:/logs/hot.const520.com/hotcrawler.log</file>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>hotcrawler.%d{"yyyy-MM-dd'T'HH:mm:ss,SSSXXX",UTC}.%i.log</fileNamePattern>
+            <fileNamePattern>hotcrawler.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>50MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -26,7 +27,7 @@
     </appender>
 
     <!-- profile -->
-    <springProfile name="pro">
+    <springProfile name="prod">
         <root level="INFO">
             <appender-ref ref="FILE" />
         </root>
