@@ -45,12 +45,12 @@ public class V2exHotProcessor implements HotProcessor
         {
             Elements elements1 = element.getElementsByTag("a");
             String infoTitle = elements1.html();
-            StringBuilder infoUrl = new StringBuilder(DOMAIN);
+            StringBuilder infoUrl = new StringBuilder();
             infoUrl.append(DOMAIN);
             infoUrl.append(elements1.attr("href"));
-            infoUrl.substring(0, infoUrl.indexOf("#"));
             String id = String.valueOf(++i);
-            list.add(new Info(id, infoTitle, infoUrl.toString()));
+            String url = infoUrl.substring(0, infoUrl.indexOf("#"));
+            list.add(new Info(id, infoTitle, url));
         }
 
         log.debug("return list size is {}", list.size());
