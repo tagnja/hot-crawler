@@ -2,6 +2,8 @@ package com.taogen.hotcrawler.commons.crawler.impl;
 
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +33,17 @@ public class DoubanHotProcessor implements HotProcessor
         List<Info> list = new ArrayList<>();
 
         // document
-        Document doc = baseHotProcessor.getDoc(HOT_PAGE_URL, null, log);
+        Document doc = null;
+        Connection connection = Jsoup.connect(HOT_PAGE_URL);
+        try
+        {
+            doc = connection.timeout(10 * 1000).get();
+        }
+        catch (IOException e)
+        {
+            log.error("Fail to connect!", e);
+        }
+
         if (doc == null)
         {
             return list;
