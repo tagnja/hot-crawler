@@ -22,10 +22,10 @@ public abstract class AbstractApiController
     @Order(Integer.MIN_VALUE)
     public ResponseModel dataNotFoundExceptionHandler(HttpServletRequest request)
     {
-        return getResponseModel(request, 404, "无法找到指定的数据。");
+        return getResponseModel(/*request, */404, "无法找到指定的数据。");
     }
 
-    private ResponseModel getResponseModel(HttpServletRequest request, int code, String message)
+    private ResponseModel getResponseModel(/*HttpServletRequest request,*/ int code, String message)
     {
         ResponseModel result = new ResponseModel();
         result.setErrCode(Integer.valueOf(code));

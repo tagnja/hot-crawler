@@ -36,11 +36,10 @@ public class GithubHotProcessor implements HotProcessor
         {
             return list;
         }
-        log.debug("Title: " + doc.title());
 
         // elements
         Elements elements = doc.getElementsByClass(ITEM_KEY);
-        log.debug("elements size: " + elements.size());
+        log.debug("elements size is {}", elements.size());
 
         int i = 0;
         for (Element element : elements)
@@ -55,27 +54,26 @@ public class GithubHotProcessor implements HotProcessor
                 // url
                 urlElement = element.getElementsByTag("h1").get(0).getElementsByTag("a").get(0);
                 // title-desc
-                if (element.getElementsByTag("p").size() > 0)
+                if (! element.getElementsByTag("p").isEmpty())
                 {
                     descElement = element.getElementsByTag("p").get(0);
                 }
             }
             catch (NullPointerException | IndexOutOfBoundsException e)
             {
-                log.error("Can't found item element by attribute!");
-                log.error(e.getClass().getName() + ": " + e.getMessage());
-                log.debug("error element: " + i);
+                log.error("Can't found item element by attribute!", e);
+                log.debug("index of error element is {}.", i);
                 continue;
             }
 
             String infoUrl = urlElement.attr("href");
-            String infoTitle = infoUrl.substring(infoUrl.indexOf("/", 1) + 1) + ". ";
+            String infoTitle = infoUrl.substring(infoUrl.indexOf('/', 1) + 1) + ". ";
             String desc = descElement == null ? "" : descElement.html();
             infoTitle = infoTitle + desc;
             infoUrl = DOMAIN + infoUrl;
             list.add(new Info(id, infoTitle, infoUrl));
         }
-        log.debug("return list size: " + list.size());
+        log.debug("return list size is {}.", list.size());
         return list;
     }
 }

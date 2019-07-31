@@ -20,12 +20,13 @@ public class HackernewsHotProcessor implements HotProcessor
     @Autowired
     private BaseHotProcessor baseHotProcessor;
 
-    private String DOMAIN = "https://news.ycombinator.com";
-    private String HOT_PAGE_URL = "https://news.ycombinator.com";
-    private String ITEM_KEY = "storylink";
+    public static final String DOMAIN = "https://news.ycombinator.com";
+    public static final String HOT_PAGE_URL = "https://news.ycombinator.com";
+    public static final String ITEM_KEY = "storylink";
 
     @Override
-    public List<Info> crawlHotList() {
+    public List<Info> crawlHotList()
+    {
         List<Info> list = new ArrayList<>();
 
         // document
@@ -34,12 +35,11 @@ public class HackernewsHotProcessor implements HotProcessor
         {
             return list;
         }
-        log.debug("Title: " + doc.title());
 
         // elements
         Elements titleElements = doc.getElementsByClass(ITEM_KEY);
         Elements urlElements = doc.getElementsByClass("subtext");
-        log.debug("elements size: " + titleElements.size());
+        log.debug("elements size is {}.", titleElements.size());
 
         for (int i = 0; i < titleElements.size(); i++)
         {
@@ -56,7 +56,7 @@ public class HackernewsHotProcessor implements HotProcessor
 
             list.add(new Info(id, infoTitle, infoUrl));
         }
-        log.debug("return list size: " + list.size());
+        log.debug("return list size is {}.", list.size());
         return list;
     }
 }

@@ -1,4 +1,4 @@
-package com.taogen.hotcrawler.api.constant;
+package com.taogen.hotcrawler.commons.config;
 
 import com.taogen.hotcrawler.commons.entity.InfoCate;
 import com.taogen.hotcrawler.commons.entity.InfoType;
@@ -10,6 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Configuration
@@ -47,7 +48,7 @@ public class SiteProperties
                     List<InfoType> infoTypes = new ArrayList<>();
                     if (cate.getSites() != null)
                     {
-                        cate.getSites().forEach(site -> { infoTypes.add(new InfoType(site.getId(), site.getName()));});
+                        cate.getSites().forEach(site -> infoTypes.add(new InfoType(site.getId(), site.getName())));
                     }
                     infoCates.add(new InfoCate(cate.getId(), cate.getName(), infoTypes));
                 }
@@ -64,26 +65,28 @@ public class SiteProperties
             {
                 if (siteCate.getSites() != null)
                 {
-                    siteCate.getSites().forEach(siteInfo -> { siteInfos.add(siteInfo);});
+                    siteInfos.addAll(siteCate.getSites().stream().collect(Collectors.toList()));
                 }
             }
         }
         return siteInfos;
     }
-    public SiteInfo findByProcessorName(String proceesorName)
+
+    public SiteInfo findByCateIdAndTypeId(String cateId, String typeId)
     {
-        if (this.cates != null)
+        if (this.cates == null)
         {
-            for (SiteCate siteCate : this.cates)
+            return null;
+        }
+        for (SiteCate siteCate : this.cates)
+        {
+            if (siteCate.getSites() != null && siteCate.getId().equals(cateId))
             {
-                if (siteCate.getSites() != null)
+                for (SiteInfo siteInfo : siteCate.getSites())
                 {
-                    for (SiteInfo siteInfo : siteCate.getSites())
+                    if (siteInfo.getId().equals(typeId))
                     {
-                        if (siteInfo.getProcessorName().equals(proceesorName))
-                        {
-                            return siteInfo;
-                        }
+                        return siteInfo;
                     }
                 }
             }

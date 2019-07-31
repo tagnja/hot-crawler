@@ -21,9 +21,9 @@ public class TianyaHotProcessor implements HotProcessor
     @Autowired
     private BaseHotProcessor baseHotProcessor;
 
-    private String DOMAIN = "http://bbs.tianya.cn";
-    private String HOT_PAGE_URL = "http://bbs.tianya.cn/hotArticle.jsp";
-    private String ITEM_KEY = "td-title";
+    public static final String DOMAIN = "http://bbs.tianya.cn";
+    public static final String HOT_PAGE_URL = "http://bbs.tianya.cn/hotArticle.jsp";
+    public static final String ITEM_KEY = "td-title";
 
     @Override
     public List<Info> crawlHotList() {
@@ -35,11 +35,9 @@ public class TianyaHotProcessor implements HotProcessor
         {
             return list;
         }
-        log.debug("Title: " + doc.title());
 
         // elements
         Elements elements = doc.getElementsByClass(ITEM_KEY);
-        log.debug("elements size: " + elements.size());
 
         int i = 0;
         for (Element element : elements)
@@ -51,8 +49,7 @@ public class TianyaHotProcessor implements HotProcessor
             }
             catch (IndexOutOfBoundsException e)
             {
-                log.error("Can't found item element by attribute!");
-                log.error(e.getClass().getName() + ": " + e.getMessage());
+                log.error("Can't found item element by attribute!", e);
                 continue;
             }
             // id
@@ -67,7 +64,7 @@ public class TianyaHotProcessor implements HotProcessor
             infoUrl = DOMAIN + infoUrl;
             list.add(new Info(id, infoTitle, infoUrl));
         }
-        log.debug("return list size: " + list.size());
+        log.debug("return list size is {}", list.size());
         return list;
     }
 }

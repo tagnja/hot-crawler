@@ -1,9 +1,8 @@
 package com.taogen.hotcrawler.commons.crawler;
 
-import com.taogen.hotcrawler.api.constant.SiteProperties;
+import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.api.service.BaseService;
 import com.taogen.hotcrawler.commons.entity.Info;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

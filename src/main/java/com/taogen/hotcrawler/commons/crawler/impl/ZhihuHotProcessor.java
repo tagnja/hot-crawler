@@ -1,18 +1,13 @@
 package com.taogen.hotcrawler.commons.crawler.impl;
 
 import com.jayway.jsonpath.JsonPath;
-import com.taogen.hotcrawler.api.constant.SiteProperties;
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
-import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +21,6 @@ public class ZhihuHotProcessor implements HotProcessor
 
     public static final String DOMAIN = "https://zhihu.com";
     public static final String HOT_API_URL = "https://www.zhihu.com/api/v3/feed/topstory/hot-lists/total?limit=50&desktop=true";
-//    public static final String ITEM_KEY = "HotItem";
 
     @Override
     public List<Info> crawlHotList()
@@ -44,7 +38,6 @@ public class ZhihuHotProcessor implements HotProcessor
         // items
         List<String> titles = JsonPath.read(json, "$.data.[*].target.title");
         List<String> urls = JsonPath.read(json, "$.data.[*].target.url");
-        log.debug("elements size: " + titles.size());
 
         for (int i = 0; i < urls.size(); i++)
         {
@@ -56,7 +49,7 @@ public class ZhihuHotProcessor implements HotProcessor
             list.add(new Info(String.valueOf(i), titles.get(i), urls.get(i)));
         }
 
-        log.debug("return list size: " + list.size());
+        log.debug("return list size is {}", list.size());
         return list;
     }
 }

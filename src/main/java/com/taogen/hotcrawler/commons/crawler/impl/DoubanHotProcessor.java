@@ -21,12 +21,12 @@ public class DoubanHotProcessor implements HotProcessor
     @Autowired
     private BaseHotProcessor baseHotProcessor;
 
-    private String DOMAIN = "https://douban.com";
-    private String HOT_PAGE_URL = "https://www.douban.com/group/explore";
-    private String ITEM_KEY = "channel-item";
+    public static final String HOT_PAGE_URL = "https://www.douban.com/group/explore";
+    public static final String ITEM_KEY = "channel-item";
 
     @Override
-    public List<Info> crawlHotList() {
+    public List<Info> crawlHotList()
+    {
         List<Info> list = new ArrayList<>();
 
         // document
@@ -35,11 +35,9 @@ public class DoubanHotProcessor implements HotProcessor
         {
             return list;
         }
-        log.debug("Title: " + doc.title());
-
         // elements
         Elements elements = doc.getElementsByClass(ITEM_KEY);
-        log.debug("elements size: " + elements.size());
+        log.debug("elements size is {}", elements.size());
 
         int i = 0;
         for (Element element : elements)
@@ -51,8 +49,7 @@ public class DoubanHotProcessor implements HotProcessor
             }
             catch (NullPointerException | IndexOutOfBoundsException e)
             {
-                log.error("Can't found item element by attribute!");
-                log.error(e.getClass().getName() + ": " + e.getMessage());
+                log.error("Can't found item element by attribute!", e);
                 continue;
             }
             // id
@@ -66,7 +63,7 @@ public class DoubanHotProcessor implements HotProcessor
 
             list.add(new Info(id, infoTitle, infoUrl));
         }
-        log.debug("return list size: " + list.size());
+        log.debug("return list size is {}.", list.size());
         return list;
     }
 }

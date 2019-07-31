@@ -38,12 +38,13 @@ putInfos("#main", infos);
 function putInfos(elementId, infos) {
     $(elementId).empty();
     if (infos.length > 0){
+        var infoItem;
         for (var j = 0; j < infos.length; j++)
         {
             if (typeof window.orientation !== 'undefined') {
-                var infoItem = "<div class='info-item'><a href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
+                infoItem = "<div class='info-item'><a href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
             }else {
-                var infoItem = "<div class='info-item'><a target='_blank' href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
+                infoItem = "<div class='info-item'><a target='_blank' href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
             }
             $(elementId).append(infoItem);
         }
@@ -67,7 +68,7 @@ function selected(cateId, typeId)
 {
     // console.log("selected: cateId=" + cateId + ", typeId=" + typeId)
     $(".menu-item").each(function() {
-        if ($(this).attr("cateId") == cateId & $(this).attr("typeId") == typeId) {
+        if ($(this).attr("cateId") == cateId && $(this).attr("typeId") == typeId) {
             $(this).css({"background-color": "#445", "color": "#FFFFFF"});
         }
     });

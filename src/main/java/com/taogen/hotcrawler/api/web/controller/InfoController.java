@@ -1,6 +1,6 @@
 package com.taogen.hotcrawler.api.web.controller;
 
-import com.taogen.hotcrawler.api.constant.SiteProperties;
+import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.api.exception.DataNotFoundException;
 import com.taogen.hotcrawler.api.service.InfoService;
 import com.taogen.hotcrawler.api.web.model.response.GenericResponseModel;
@@ -11,14 +11,11 @@ import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(description = "Information API")
+@Api("Information API")
 @RestController("InfoController")
 @RequestMapping({"/api/v1"})
 public class InfoController extends BaseV1Controller
@@ -33,7 +30,7 @@ public class InfoController extends BaseV1Controller
     private InfoService infoService;
 
 
-    @RequestMapping(value = "/types", method = RequestMethod.GET, produces = PRODUCES_JSON)
+    @GetMapping(value = "/types", produces = PRODUCES_JSON)
     @ApiOperation("Get All Type of Information.")
     public GenericResponseModel<InfoCate> getTypes()
     {
@@ -42,11 +39,11 @@ public class InfoController extends BaseV1Controller
         return result;
     }
 
-    @RequestMapping(value = "/cates/{cid}/types/{tid}/infos", method = RequestMethod.GET, produces = PRODUCES_JSON)
+    @GetMapping(value = "/cates/{cid}/types/{tid}/infos", produces = PRODUCES_JSON)
     @ApiOperation("Get All Information of specified type.")
     public GenericResponseModel<Info> getTypeInfos(@PathVariable(value = "cid") String cateId, @PathVariable(value = "tid") String typeId)
     {
-        log.debug("cateId: " + cateId +", typeId; " + typeId);
+        log.debug("cateId is {}, typeId is  {}", cateId, typeId);
         GenericResponseModel result = new GenericResponseModel();
         List<Info> infoList = infoService.findListByCateIdAndTypeId(cateId, typeId);
         if (infoList != null)

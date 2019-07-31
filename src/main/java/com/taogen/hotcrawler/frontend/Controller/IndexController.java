@@ -1,6 +1,6 @@
 package com.taogen.hotcrawler.frontend.controller;
 
-import com.taogen.hotcrawler.api.constant.SiteProperties;
+import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.api.service.InfoService;
 import com.taogen.hotcrawler.commons.entity.Info;
 import com.taogen.hotcrawler.commons.entity.InfoCate;
@@ -30,14 +30,16 @@ public class IndexController
     @Value("${domain}")
     private String domain;
 
+    public static final String KEY_DOMAIN = "domain";
+    public static final String DOMAIN_DESC = "The domain is {}";
     /**
      * v1
      */
     @GetMapping("/v1")
     public String toIndexPageV1(Model model)
     {
-        log.debug("Go to index page: " + domain);
-        model.addAttribute("domain", domain);
+        log.debug(DOMAIN_DESC, domain);
+        model.addAttribute(KEY_DOMAIN, domain);
         return "index"; //view
     }
 
@@ -48,9 +50,10 @@ public class IndexController
     public String toIndexPageV2(@RequestParam(name = "tab", required = false) String tab, Model model,
         HttpServletRequest request)
     {
-        log.debug("Go to index page: " + domain);
-        log.debug("tab: " + tab);
-        String cateId = "1", typeId = "1";
+        log.debug(DOMAIN_DESC, domain);
+        log.debug("tab: {}", tab);
+        String cateId = "1";
+        String typeId = "1";
         if (tab != null && tab.split("-").length == 2)
         {
             tab = tab.trim();
@@ -60,13 +63,12 @@ public class IndexController
         List<InfoCate> cates = siteProperties.convertToInfoCateList();
         List<Info> infos = infoService.findListByCateIdAndTypeId(cateId, typeId);
 
-        model.addAttribute("domain", domain);
+        model.addAttribute(KEY_DOMAIN, domain);
         model.addAttribute("cates", cates);
         model.addAttribute("infos", infos);
 
         infoService.statVisitUser(request);
-        log.debug("Current visit by: " + request.getRemoteAddr());
-        log.info("Today visit user size: " + infoService.countVisitUser());
+        log.debug("Current visit by {}. Today visited user size is {}", request.getRemoteAddr(), infoService.countVisitUser());
         return "index2"; //view
     }
 
@@ -76,8 +78,8 @@ public class IndexController
     @GetMapping("/v3")
     public String toIndexPageV3(Model model)
     {
-        log.debug("Go to index page: " + domain);
-        model.addAttribute("domain", domain);
+        log.debug(DOMAIN_DESC, domain);
+        model.addAttribute(KEY_DOMAIN, domain);
         return "index3"; //view
     }
 }

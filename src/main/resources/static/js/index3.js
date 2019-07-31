@@ -39,7 +39,7 @@ $.ajax({
         getInfos(infoCates[0].id, infoCates[0].infoTypes[0].id);
     },
     error: function(res){
-        alert(JSON.stringify(res))
+        console.log(JSON.stringify(res))
     }
 });
 
@@ -55,7 +55,7 @@ $(".menu-item").click(function () {
 function selected(cateId, typeId)
 {
     $(".menu-item").each(function() {
-        if ($(this).attr("cateId") == cateId & $(this).attr("typeId") == typeId) {
+        if ($(this).attr("cateId") == cateId && $(this).attr("typeId") == typeId) {
             $(this).css({"background-color": "#445", "color": "#FFFFFF"});
         }else{
             $(this).css({"background-color": "#FFFFFF", "color": "#000000"});
@@ -76,7 +76,7 @@ function getInfos(cateId, typeId)
             putInfos("#main", infos, cateId, typeId);
         },
         error: function(res){
-            alert(JSON.stringify(res))
+            console.log(JSON.stringify(res))
         }
     });
     return infos;
@@ -85,12 +85,13 @@ function getInfos(cateId, typeId)
 function putInfos(elementId, infos, cateId, typeId) {
     $(elementId).empty();
     if (infos.length > 0){
+        var infoItem;
         for (var j = 0; j < infos.length; j++)
         {
             if (typeof window.orientation !== 'undefined') {
-                var infoItem = "<div class='info-item'><a href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
+                infoItem = "<div class='info-item'><a href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
             }else {
-                var infoItem = "<div class='info-item'><a target='_blank' href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
+                infoItem = "<div class='info-item'><a target='_blank' href='"+infos[j].url+"'>" + (j+1) + ". " + infos[j].title  + "</a></div>";
             }
             $(elementId).append(infoItem);
         }

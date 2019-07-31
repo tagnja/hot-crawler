@@ -3,6 +3,8 @@ package com.taogen.hotcrawler.commons.entity;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 public class Info implements Serializable, Comparable<Info>
@@ -12,8 +14,7 @@ public class Info implements Serializable, Comparable<Info>
     private String title;
     private String url;
 
-    public Info() {
-    }
+    public Info() {}
 
     public Info(String id, String title, String url)
     {
@@ -23,18 +24,20 @@ public class Info implements Serializable, Comparable<Info>
     }
 
     @Override
-    public int compareTo(Info info)
-    {
+    public int compareTo(Info info) {
         return Integer.valueOf(this.id).compareTo(Integer.valueOf(info.id));
     }
 
 
-//   public Map<Object, Object> getMap()
-//   {
-//       Map<Object, Object> map = new HashMap<>();
-//       map.put("id", this.id);
-//       map.put("title", this.title);
-//       map.put("url", this.url);
-//       return map;
-//   }
+    /**
+     * @SuppressWarnings("unused")
+     */
+    public Map<Object, Object> getMap()
+    {
+        Map<Object, Object> map = new HashMap<>();
+        map.put("id", this.id);
+        map.put("title", this.title);
+        map.put("url", this.url);
+        return map;
+    }
 }

@@ -15,7 +15,7 @@ public class BaseHotProcessor
     public Document getDoc(String url, Map<String, String> headers, Logger log)
     {
         Document doc = null;
-        Connection connection = Jsoup.connect(url); //connect(HOT_PAGE_URL).get();
+        Connection connection = Jsoup.connect(url);
         addBasicHeaders(connection);
         if (headers != null)
         {
@@ -27,8 +27,7 @@ public class BaseHotProcessor
         }
         catch (IOException e)
         {
-            log.error("Fail to connect!");
-            log.error(e.getClass().getName() + ": " +  e.getMessage());
+            log.error("Fail to connect!", e);
         }
         return doc;
     }
@@ -42,8 +41,7 @@ public class BaseHotProcessor
         }
         catch (IOException e)
         {
-            log.error("Fail to connect!");
-            log.error(e.getClass().getName() + ": " +  e.getMessage());
+            log.error("Fail to connect the website!", e);
         }
         return json;
     }

@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Hello world!
  */
 @SpringBootApplication
-@Api(description = "This is a hello API")
+@Api("This is a hello API")
 public class App
 {
     public static void main(String[] args)
