@@ -6,6 +6,10 @@ crawler:
     initialDelay: 60000
     fixedRate: 180000
     cron: "*/5 * * * * ?"
+  chromeDriver:
+    enable: true
+    linuxPath: /hotcrawler/chromedriver
+    winPath: D:/chromedriver-75.exe
 #--------------------------------------------
 spring:
   cache:
@@ -28,5 +32,5 @@ logging:
     org.springframework.web: error
     com.taogen.hotcrawler: info
     org.hibernate: error
-  path: /var/log/hot.const520.com
-  file: ${logging.path}/${spring.application.name}.log
+#  path: /var/log/hot.const520.com
+#  file: ${logging.path}/${spring.application.name}.log
