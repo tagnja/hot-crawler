@@ -3,9 +3,9 @@
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
     <!-- file -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_FILE}</file>
+        <file>/var/log/hot.const520.com/hotcrawler.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>hotcrawler.%d{"yyyy-MM-dd'T'HH:mm:ss,SSSXXX",UTC}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>50MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -27,7 +27,7 @@
 
     <!-- profile -->
     <springProfile name="pro">
-        <root level="DEBUG">
+        <root level="INFO">
             <appender-ref ref="FILE" />
         </root>
     </springProfile>
