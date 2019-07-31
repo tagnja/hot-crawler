@@ -74,7 +74,7 @@ public class CrawlerTask
                         return;
                     }
                     List<Info> infoList = hotProcessor.crawlHotList();
-                    log.debug("crawl hot list from {}, list size is {}", site.getName(), infoList.size());
+                    log.info("crawl hot list from {}, list size is {}", site.getName(), infoList.size());
                     infoRepository.removeByTypeId(cate.getId(), site.getId());
                     infoRepository.saveAll(infoList, cate.getId(), site.getId());
                 });

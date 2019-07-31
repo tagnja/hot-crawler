@@ -50,24 +50,23 @@ public class BilibiliHotProcessor implements HotProcessor
         {
             return list;
         }
-        String driverPath = null;
         String osType = OsUtils.getOsType();
         log.info("os type is {}", osType);
         if (OsUtils.OS_TYPE_WINDOWS.equals(osType))
         {
-            driverPath = winPath;
+            System.setProperty("webdriver.chrome.driver", winPath);
+            log.info("driver path: {}", winPath);
         }
         else
         {
-            driverPath = linuxPath;
+            System.setProperty("webdriver.chrome.driver", linuxPath);
+            log.info("driver path: {}", linuxPath);
         }
-        log.info("driver path: {}", driverPath);
 
         // doc
         Document doc = null;
         try
         {
-            System.setProperty("webdriver.chrome.driver", driverPath);
             WebDriver driver = new ChromeDriver();
             driver.get(HOT_PAGE_URL);
             String pageSource = driver.getPageSource();
