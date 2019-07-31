@@ -3,7 +3,6 @@ package com.taogen.hotcrawler.commons.crawler.impl;
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import com.taogen.hotcrawler.commons.util.OsUtils;
-import org.apache.tomcat.util.net.openssl.OpenSSLUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,20 +57,16 @@ public class BilibiliHotProcessor implements HotProcessor
         {
             driverPath = winPath;
         }
-        else if (OsUtils.OS_TYPE_LINUX.equals(osType))
+        else
         {
             driverPath = linuxPath;
         }
-        else
-        {
-            return list;
-        }
+        log.info("driver path: {}", driverPath);
 
         // doc
         Document doc = null;
         try
         {
-            log.info("driver path: {}", driverPath);
             System.setProperty("webdriver.chrome.driver", driverPath);
             WebDriver driver = new ChromeDriver();
             driver.get(HOT_PAGE_URL);
