@@ -1,12 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
-    <!-- file -->
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+    <!-- product file -->
+    <appender name="PRODUCT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>/var/log/hot.const520.com/hotcrawler.log</file>
         <!--<file>D:/logs/hot.const520.com/hotcrawler.log</file>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>hotcrawler.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <!-- test file -->
+    <appender name="TEST_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/var/log/hot.const520.com/hotcrawler-test.log</file>
+        <!--<file>D:/logs/hot.const520.com/hotcrawler.log</file>-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>hotcrawler-test.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <!-- develop file -->
+    <appender name="DEVELOP_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>D:/logs/hot.const520.com/hotcrawler-dev.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>hotcrawler-dev.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>50MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -29,12 +63,18 @@
     <!-- profile -->
     <springProfile name="prod">
         <root level="INFO">
-            <appender-ref ref="FILE" />
+            <appender-ref ref="PRODUCT_FILE" />
         </root>
     </springProfile>
-    <springProfile name="dev,test">
+    <springProfile name="test">
+        <root level="DEBUG">
+            <appender-ref ref="TEST_FILE" />
+        </root>
+    </springProfile>
+    <springProfile name="dev">
         <root level="DEBUG">
             <appender-ref ref="STDOUT" />
+            <appender-ref ref="DEVELOP_FILE" />
         </root>
     </springProfile>
 </configuration>

@@ -33,5 +33,6 @@ logging:
     org.springframework.web: info
     com.taogen.hotcrawler: debug
     org.hibernate: info
-#  path: D:/logs
-#  file: ${logging.path}/${spring.application.name}.log
+server:
+  address: localhost
+  port: 8080

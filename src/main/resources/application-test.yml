@@ -1,7 +1,7 @@
-domain: https://hot.const520.com
+domain: https://test.hot.const520.com
 crawler:
   task:
-    enable: true
+    enable: false
     threadPoolNum: 5
     initialDelay: 60000
     fixedRate: 180000
@@ -15,7 +15,7 @@ spring:
   cache:
     type: redis
   redis:
-    database: 0
+    database: 1
     host: localhost
     port: 6379
     password:
@@ -30,10 +30,8 @@ logging:
   level:
     root: error
     org.springframework.web: error
-    com.taogen.hotcrawler: info
+    com.taogen.hotcrawler: debug
     org.hibernate: error
-#  path: /var/log/hot.const520.com
-#  file: ${logging.path}/${spring.application.name}.log
 server:
-  address: hot.const520.com
-  port: 8080
+  address: test.hot.const520.com
+  port: 8081
