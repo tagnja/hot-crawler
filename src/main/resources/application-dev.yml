@@ -9,8 +9,8 @@ crawler:
     cron: "*/5 * * * * ?"
   chromeDriver:
     enable: true
-    linuxPath: /hotcrawler/chromedriver
-    winPath: D:/chromedriver-75.exe
+    linuxPath: "/hotcrawler/chromedriver"
+    winPath: "D:/chromedriver-75.exe"
 #--------------------------------------------
 spring:
   cache:
