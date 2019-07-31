@@ -3,6 +3,8 @@ package com.taogen.hotcrawler.commons.crawler.impl;
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import com.taogen.hotcrawler.commons.util.OsUtils;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -52,21 +54,23 @@ public class BilibiliHotProcessor implements HotProcessor
         }
         String osType = OsUtils.getOsType();
         log.info("os type is {}", osType);
-        if (OsUtils.OS_TYPE_WINDOWS.equals(osType))
-        {
-            System.setProperty("webdriver.chrome.driver", winPath);
-            log.info("driver path: {}", winPath);
-        }
-        else
-        {
-            System.setProperty("webdriver.chrome.driver", linuxPath);
-            log.info("driver path: {}", linuxPath);
-        }
+//        if (OsUtils.OS_TYPE_WINDOWS.equals(osType))
+//        {
+//            System.setProperty("webdriver.chrome.driver", winPath);
+//            log.info("driver path: {}", winPath);
+//        }
+//        else
+//        {
+//            System.setProperty("webdriver.chrome.driver", linuxPath);
+//            log.info("driver path: {}", linuxPath);
+//        }
 
         // doc
         Document doc = null;
         try
         {
+            ChromeDriverManager.chromedriver().setup();
+            WebDriverManager.chromedriver().config().setProperties("classpath: webdrivermanager.properties");
             WebDriver driver = new ChromeDriver();
             driver.get(HOT_PAGE_URL);
             String pageSource = driver.getPageSource();
