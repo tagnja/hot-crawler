@@ -62,6 +62,10 @@ public class HotProcessorTest
                     Assert.assertTrue(index1 == 0);
                     Assert.assertTrue(index2 == -1);
                 }
+                else
+                {
+                    log.info("crawl {} hot list is null", site.getName());
+                }
             }
         }
     }
