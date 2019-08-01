@@ -25,7 +25,8 @@ public class BBCNewsHotProcessor implements HotProcessor
 
     public static final String DOMAIN = "https://www.bbc.com";
     public static final String HOT_PAGE_URL = "https://www.bbc.com/news";
-    public static final String ITEM_KEY = "nw-c-top-stories--standard"; // block: .nw-c-top-stories--standard, title: .gs-c-promo-heading__title,url: .gs-c-promo-heading
+    public static final String ITEM_KEY = "gs-c-promo-heading";
+    //  nw-o-link-split__anchor block: .nw-c-top-stories--standard, title: .gs-c-promo-heading__title,url: .gs-c-promo-heading
 
     @Override
     public List<Info> crawlHotList()
@@ -40,7 +41,8 @@ public class BBCNewsHotProcessor implements HotProcessor
         }
 
         // elements
-        Elements elements = doc.getElementsByClass(ITEM_KEY);
+
+        Elements elements = doc.getElementsByClass("nw-c-top-stories--standard").get(0).getElementsByClass("gs-c-promo-heading");
 
         int i = 0;
         for (Element element : elements)
@@ -61,8 +63,6 @@ public class BBCNewsHotProcessor implements HotProcessor
         }
 
         log.debug("return list size is {}", list.size());
-        // TODO
-//        log.debug("list is {}", list);
         return list;
     }
 }
