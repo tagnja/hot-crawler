@@ -6,6 +6,10 @@
 
 ![网站首页图](home-page.png)
 
+主分支网址：<https://hot.const520.com>
+
+测试分支网址：<https://hot-test.const520.com>
+
 ### 已展示站点
 
 - V2EX
