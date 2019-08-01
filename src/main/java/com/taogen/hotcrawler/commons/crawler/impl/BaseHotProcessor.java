@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -17,14 +18,23 @@ import java.util.Map;
 @Component
 public class BaseHotProcessor
 {
+    public static final Logger log = LoggerFactory.getLogger(BaseHotProcessor.class);
+
     WebDriver driver;
 
     @PostConstruct
     public void init()
     {
-        ChromeDriverManager.chromedriver().setup();
-        WebDriverManager.chromedriver().config().setProperties("classpath: webdrivermanager.properties");
-        driver = new ChromeDriver();
+        try
+        {
+            ChromeDriverManager.chromedriver().setup();
+            WebDriverManager.chromedriver().config().setProperties("classpath: webdrivermanager.properties");
+            driver = new ChromeDriver();
+        }
+        catch (RuntimeException e)
+        {
+            log.error("Something error!", e);
+        }
     }
 
     public Document getDoc(String url, Map<String, String> headers, Logger log)
