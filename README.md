@@ -20,7 +20,7 @@
 - 天涯
 - 网易云音乐
 - Hacker News
-- Bilibili
+- SegmentFault
 
 ### 待处理站点 TODO
 
@@ -31,12 +31,12 @@
   - 果壳网. `https://www.guokr.com/science/category/all`
 - 技术
   - 掘金. `https://juejin.im/`
-  - SegmentFault. `https://segmentfault.com/hottest/weekly`
   - InfoQ. `https://www.infoq.cn/hotlist?tag=day`
   - 云栖社区. `https://yq.aliyun.com/`
   - 开发者头条. `https://toutiao.io/`
 - 影音
   - YouTube. `https://www.youtube.com/feed/trending`
+  - Bilibili
 
 ### 使用技术
 后端
