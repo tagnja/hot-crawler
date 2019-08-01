@@ -66,22 +66,7 @@ public class BilibiliHotProcessor implements HotProcessor
 //        }
 
         // doc
-        Document doc = null;
-        try
-        {
-            ChromeDriverManager.chromedriver().setup();
-            WebDriverManager.chromedriver().config().setProperties("classpath: webdrivermanager.properties");
-            WebDriver driver = new ChromeDriver();
-            driver.get(HOT_PAGE_URL);
-            String pageSource = driver.getPageSource();
-            doc = Jsoup.parse(pageSource);
-            driver.close();
-        }
-        catch (RuntimeException e)
-        {
-            log.error("Something error!", e);
-        }
-
+        Document doc = baseHotProcessor.getDocByWebDriver(HOT_PAGE_URL, log);
         if (doc == null)
         {
             return list;

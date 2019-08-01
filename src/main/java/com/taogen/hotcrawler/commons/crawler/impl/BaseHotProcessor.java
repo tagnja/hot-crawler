@@ -1,17 +1,32 @@
 package com.taogen.hotcrawler.commons.crawler.impl;
 
+import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.Map;
 
 @Component
 public class BaseHotProcessor
 {
+    WebDriver driver;
+
+    @PostConstruct
+    public void init()
+    {
+        ChromeDriverManager.chromedriver().setup();
+        WebDriverManager.chromedriver().config().setProperties("classpath: webdrivermanager.properties");
+        driver = new ChromeDriver();
+    }
+
     public Document getDoc(String url, Map<String, String> headers, Logger log)
     {
         Document doc = null;
@@ -52,5 +67,27 @@ public class BaseHotProcessor
         connection.header("Accept-Encoding", "gzip, deflate, br");
         connection.header("Accept-Language", "en-US,en;q=0.5");
         connection.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0");
+    }
+
+    public Document getDocByWebDriver(String hotPageUrl, Logger log)
+    {
+        Document doc = null;
+        try
+        {
+            driver.get(hotPageUrl);
+            try {
+                Thread.sleep(2 * 1000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            String pageSource = driver.getPageSource();
+            doc = Jsoup.parse(pageSource);
+//            driver.close();
+        }
+        catch (RuntimeException e)
+        {
+            log.error("Web driver occur error!", e);
+        }
+        return doc;
     }
 }
