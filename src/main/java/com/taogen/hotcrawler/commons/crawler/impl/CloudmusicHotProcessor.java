@@ -24,7 +24,7 @@ public class CloudmusicHotProcessor implements HotProcessor
     private BaseHotProcessor baseHotProcessor;
 
     public static final String DOMAIN = "https://music.163.com";
-    public static final String HOT_PAGE_URL = "https://music.163.com/discover/toplist?id=3778678";
+    public static final String HOT_PAGE_URL = "https://music.163.com/discover/toplist?id=19723756";
     public static final String ITEM_KEY = "song-list-pre-cache";
 
     @Override
