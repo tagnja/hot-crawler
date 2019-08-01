@@ -12,8 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Component("BBCNewsHotProcessor")
 public class BBCNewsHotProcessor implements HotProcessor
@@ -43,7 +42,7 @@ public class BBCNewsHotProcessor implements HotProcessor
         // elements
 
         Elements elements = doc.getElementsByClass("nw-c-top-stories--standard").get(0).getElementsByClass("gs-c-promo-heading");
-
+        Map<String, Info> infoMap = new HashMap<>();
         int i = 0;
         for (Element element : elements)
         {
@@ -54,14 +53,14 @@ public class BBCNewsHotProcessor implements HotProcessor
                 infoUrl.append(DOMAIN);
                 infoUrl.append(element.attr("href"));
                 String id = String.valueOf(++i);
-                list.add(new Info(id, infoTitle, infoUrl.toString()));
+                infoMap.put(infoUrl.toString(), new Info(id, infoTitle, infoUrl.toString()));
             }
             catch(IndexOutOfBoundsException e)
             {
                 log.error("Can't find attribute!", e);
             }
         }
-
+        infoMap.forEach((key,value) -> list.add(value));
         log.debug("return list size is {}", list.size());
         return list;
     }
