@@ -1,16 +1,12 @@
-package com.taogen.hotcrawler.commons.crawler.impl;
+package com.taogen.hotcrawler.commons.crawler.impl.stream;
 
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
+import com.taogen.hotcrawler.commons.crawler.impl.BaseHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import com.taogen.hotcrawler.commons.util.OsUtils;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

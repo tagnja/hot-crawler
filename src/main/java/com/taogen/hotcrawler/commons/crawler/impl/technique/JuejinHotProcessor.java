@@ -1,6 +1,7 @@
-package com.taogen.hotcrawler.commons.crawler.impl;
+package com.taogen.hotcrawler.commons.crawler.impl.technique;
 
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
+import com.taogen.hotcrawler.commons.crawler.impl.BaseHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

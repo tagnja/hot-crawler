@@ -1,7 +1,8 @@
-package com.taogen.hotcrawler.commons.crawler.impl;
+package com.taogen.hotcrawler.commons.crawler.impl.slack;
 
 import com.jayway.jsonpath.JsonPath;
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
+import com.taogen.hotcrawler.commons.crawler.impl.BaseHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,7 @@
-package com.taogen.hotcrawler.commons.crawler.impl;
+package com.taogen.hotcrawler.commons.crawler.impl.technique;
 
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
+import com.taogen.hotcrawler.commons.crawler.impl.BaseHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,17 +14,17 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component("AliyunHotProcessor")
-public class AliyunHotProcessor implements HotProcessor
+@Component("SegmentFaultHotProcessor")
+public class SegmentFaultHotProcessor implements HotProcessor
 {
-    private static final Logger log = LoggerFactory.getLogger(AliyunHotProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(SegmentFaultHotProcessor.class);
 
     @Autowired
     private BaseHotProcessor baseHotProcessor;
 
-    public static final String DOMAIN = "https://yq.aliyun.com";
-    public static final String HOT_PAGE_URL = "https://yq.aliyun.com";
-    public static final String ITEM_KEY = "normal-item";
+    public static final String DOMAIN = "https://segmentfault.com";
+    public static final String HOT_PAGE_URL = "https://segmentfault.com/hottest/weekly";
+    public static final String ITEM_KEY = "news-item"; // title: .news__item-title url: domain + .news-img
 
     @Override
     public List<Info> crawlHotList()
@@ -39,24 +40,17 @@ public class AliyunHotProcessor implements HotProcessor
 
         // elements
         Elements elements = doc.getElementsByClass(ITEM_KEY);
-
         int i = 0;
         for (Element element : elements)
         {
             try
             {
                 // title
-                String infoTitle = element.getElementsByTag("h3").get(0).html();
-                String removeTag = "</span>";
-                int index = infoTitle.indexOf(removeTag);
-                if (index > 0)
-                {
-                    infoTitle = infoTitle.substring(index + removeTag.length());
-                }
+                String infoTitle = element.getElementsByClass("news__item-title").get(0).html();
                 // url
                 StringBuilder infoUrl = new StringBuilder();
                 infoUrl.append(DOMAIN);
-                infoUrl.append(element.getElementsByClass("alllink").get(0).attr("href"));
+                infoUrl.append(element.getElementsByTag("a").get(1).attr("href"));
                 String id = String.valueOf(++i);
                 list.add(new Info(id, infoTitle, infoUrl.toString()));
             }
@@ -69,4 +63,5 @@ public class AliyunHotProcessor implements HotProcessor
         log.debug("return list size is {}", list.size());
         return list;
     }
+
 }

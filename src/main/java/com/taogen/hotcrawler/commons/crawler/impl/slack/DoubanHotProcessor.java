@@ -1,7 +1,10 @@
-package com.taogen.hotcrawler.commons.crawler.impl;
+package com.taogen.hotcrawler.commons.crawler.impl.slack;
 
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
+import com.taogen.hotcrawler.commons.crawler.impl.BaseHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -10,34 +13,45 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component("TianyaHotProcessor")
-public class TianyaHotProcessor implements HotProcessor
+@Component("DoubanHotProcessor")
+public class DoubanHotProcessor implements HotProcessor
 {
-    private static final Logger log = LoggerFactory.getLogger(TianyaHotProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(DoubanHotProcessor.class);
 
     @Autowired
     private BaseHotProcessor baseHotProcessor;
 
-    public static final String DOMAIN = "http://bbs.tianya.cn";
-    public static final String HOT_PAGE_URL = "http://bbs.tianya.cn/hotArticle.jsp";
-    public static final String ITEM_KEY = "td-title";
+    public static final String HOT_PAGE_URL = "https://www.douban.com/group/explore";
+    public static final String ITEM_KEY = "channel-item";
 
     @Override
-    public List<Info> crawlHotList() {
+    public List<Info> crawlHotList()
+    {
         List<Info> list = new ArrayList<>();
 
         // document
-        Document doc = baseHotProcessor.getDoc(HOT_PAGE_URL, null, log);
+        Document doc = null;
+        Connection connection = Jsoup.connect(HOT_PAGE_URL);
+        try
+        {
+            doc = connection.timeout(10 * 1000).get();
+        }
+        catch (IOException e)
+        {
+            log.error("Fail to connect!", e);
+        }
+
         if (doc == null)
         {
             return list;
         }
-
         // elements
         Elements elements = doc.getElementsByClass(ITEM_KEY);
+        log.debug("elements size is {}", elements.size());
 
         int i = 0;
         for (Element element : elements)
@@ -45,9 +59,9 @@ public class TianyaHotProcessor implements HotProcessor
             Element itemElement = null;
             try
             {
-                itemElement = element.getElementsByTag("a").get(0);
+                itemElement = element.getElementsByClass("bd").get(0).getElementsByTag("a").get(0);
             }
-            catch (IndexOutOfBoundsException e)
+            catch (NullPointerException | IndexOutOfBoundsException e)
             {
                 log.error("Can't found item element by attribute!", e);
                 continue;
@@ -61,10 +75,9 @@ public class TianyaHotProcessor implements HotProcessor
             // title
             String infoTitle = itemElement.html();
 
-            infoUrl = DOMAIN + infoUrl;
             list.add(new Info(id, infoTitle, infoUrl));
         }
-        log.debug("return list size is {}", list.size());
+        log.debug("return list size is {}.", list.size());
         return list;
     }
 }
