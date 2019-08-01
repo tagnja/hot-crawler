@@ -1,7 +1,7 @@
 domain: https://test.hot.const520.com
 crawler:
   task:
-    enable: false
+    enable: true
     threadPoolNum: 5
     initialDelay: 60000
     fixedRate: 180000
