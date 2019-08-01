@@ -9,7 +9,8 @@ for (var j = 0; j < infoCates.length; j++)
     var infoTypes = infoCate.infoTypes;
     for (var i = 0; i < infoTypes.length; i++)
     {
-        var menuItem = "<a class='menu-item pointer' cateId='"+infoCate.id+"' typeId='"+infoTypes[i].id+"'>" + infoTypes[i].name + "</a>";
+        var menuItem = "<a class='menu-item pointer' cateId='"+infoCate.id+"' typeId='"+infoTypes[i].id+"'><span class='no-break-word'>" +
+            infoTypes[i].name + "</span></a>";
         $("#"+ menuRowId).append(menuItem);
     }
 }
