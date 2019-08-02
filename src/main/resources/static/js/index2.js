@@ -73,4 +73,26 @@ function selected(cateId, typeId)
             $(this).css({"background-color": "#445", "color": "#FFFFFF"});
         }
     });
+    if (cateId == 4)
+    {
+        checkNetwork();
+    }
+}
+
+function checkNetwork() {
+    var request = $.ajax({
+        url: "https://google.com",
+        type: "get",
+        cache: false,
+        dataType: "jsonp",
+        processData: false,
+        timeout: 3000,
+        complete: function (data) {
+            if (data.status != 200)
+            {
+                alert("访问该网站需要科学上网！");
+                request.abort();
+            }
+        }
+    });
 }
