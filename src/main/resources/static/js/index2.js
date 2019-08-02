@@ -10,7 +10,7 @@ for (var j = 0; j < infoCates.length; j++)
     for (var i = 0; i < infoTypes.length; i++)
     {
         var menuItem = "<a class='menu-item pointer' cateId='"+infoCate.id+"' typeId='"+infoTypes[i].id+"'><span class='no-break-word'>" +
-            infoTypes[i].name + "</span></a>";
+            infoTypes[i].name + "</span></a><div class='menu-item-split'></div>";
         $("#"+ menuRowId).append(menuItem);
     }
 }
