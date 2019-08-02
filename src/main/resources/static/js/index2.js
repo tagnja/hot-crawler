@@ -86,7 +86,7 @@ function checkNetwork() {
         cache: false,
         dataType: "jsonp",
         processData: false,
-        timeout: 3000,
+        timeout: 10000,
         complete: function (data) {
             if (data.status != 200)
             {
