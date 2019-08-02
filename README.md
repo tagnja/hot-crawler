@@ -6,44 +6,37 @@
 
 ![网站首页图](home-page.png)
 
-主分支网址：<https://hot.const520.com>
+### 展示站点
 
-测试分支网址：<https://hot-test.const520.com>
-
-### 已展示站点
-
-- V2EX
-- 知乎
-- GitHub
-- 新浪微博
-- 豆瓣
-- 天涯
-- 网易云音乐
-- Hacker News
-- SegmentFault
-- 云栖社区. 
-- 开发者头条. 
-
-### 待处理站点 TODO
-
-- 社交媒体
-  - Twitter. GET trends/place — Twitter Developers 
-  - Medium. `https://medium.com/topic/popular`
-  - Reddit. `https://www.reddit.com/hot/`
-- 新闻科技
-  - The Economist 
-  - BBC News
-  - Nature. International journal science. `https://www.nature.com/`
-  - ..?果壳网. `https://www.guokr.com/science/category/all`
-  - 煎蛋. `http://jandan.net/`
-  - 极客公园
-  - 百度热搜
-- 技术
-  - ..掘金. `https://juejin.im/`
-  - InfoQ. `https://www.infoq.cn/hotlist?tag=day`
-- 影音
-  - YouTube. `https://www.youtube.com/feed/trending`
-  - ..Bilibili
+- 社交媒体 🐟
+  - [x] V2EX
+  - [x] 知乎
+  - [x] 新浪微博
+  - [x] 豆瓣
+  - [x] 天涯
+- 科技新闻 🚀
+  - [ ] 极客公园
+  - [ ] 虎嗅. `https://www.huxiu.com/article`
+  - [ ] ..果壳网. `https://www.guokr.com/science/category/all`
+  - [ ] 煎蛋. `http://jandan.net/`
+  - [ ] Techmeme. `https://www.techmeme.com/`
+  - [ ] Nature. International journal science. `https://www.nature.com/`
+- 开发者 🦁
+  - [x] GitHub
+  - [x] Hacker News
+  - [x] SegmentFault
+  - [x] 开发者头条. 
+  - [ ] ..掘金. `https://juejin.im/`
+  - [ ] InfoQ.cn .com. `https://www.infoq.cn/hotlist?tag=day`, `https://www.infoq.com/news/`
+  - [ ] DZone. `https://dzone.com/list`
+- 影音 🎵
+  - [x] 网易云音乐
+  - [ ] ..Bilibili
+  - [ ] ..YouTube. `https://www.youtube.com/feed/trending`
+- 科学上网 ✈️
+  - [x] Medium. 
+  - [x] The Economist. 
+  - [x] BBC News. 
 
 ### 使用技术
 后端
