@@ -73,26 +73,29 @@ function selected(cateId, typeId)
             $(this).css({"background-color": "#445", "color": "#FFFFFF"});
         }
     });
+    $("#tip").empty();
     if (cateId == 4)
     {
-        checkNetwork();
+        networkTip();
     }
 }
 
-function checkNetwork() {
-    var request = $.ajax({
-        url: "https://google.com",
-        type: "get",
-        cache: false,
-        dataType: "jsonp",
-        processData: false,
-        timeout: 10000,
-        complete: function (data) {
-            if (data.status != 200)
-            {
-                alert("访问该网站需要科学上网！");
-                request.abort();
-            }
-        }
-    });
+function networkTip(){
+    $("#tip").html("（该网站需要科学上网！）");
 }
+// function checkNetwork() {
+//     var request = $.ajax({
+//         url: "https://google.com",
+//         type: "get",
+//         cache: false,
+//         dataType: "jsonp",
+//         processData: false,
+//         timeout: 10000,
+//         complete: function (data) {
+//             if (data.status != 200) {
+//                 $("#tip").html("访问该网站需要科学上网!");
+//                 request.abort();
+//             }
+//         }
+//     });
+// }

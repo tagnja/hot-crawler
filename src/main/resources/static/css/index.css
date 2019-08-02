@@ -100,6 +100,12 @@
     margin-right: -10px;
     margin-left: -10px;
 }
+#tip{
+    /*background-color: #009688;*/
+    color: darkgrey;
+    margin-top: 5px;
+    margin-bottom: -5px;
+}
 
 #main{
     /*background-color: red;*/
@@ -113,4 +119,5 @@
     padding: 7px 0px 7px 0px;
     border-bottom: 1px solid darkgray;
 }
+
 
