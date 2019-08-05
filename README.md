@@ -14,13 +14,13 @@
   - [x] 新浪微博
   - [x] 豆瓣
   - [x] 天涯
-- 科技新闻 🚀
-  - [ ] 极客公园
-  - [ ] 虎嗅. `https://www.huxiu.com/article`
+  - [x] 煎蛋. `http://jandan.net/`
   - [ ] ..果壳网. `https://www.guokr.com/science/category/all`
-  - [ ] 煎蛋. `http://jandan.net/`
-  - [ ] Techmeme. `https://www.techmeme.com/`
-  - [ ] Nature. International journal science. `https://www.nature.com/`
+- 科技新闻 🌎
+  - [x] 极客公园
+  - [x] 虎嗅. `https://www.huxiu.com/article`
+  - [x] Techmeme. `https://www.techmeme.com/`
+  - [x] Nature. International journal science. `https://www.nature.com/latest-news`
 - 开发者 🦁
   - [x] GitHub
   - [x] Hacker News
