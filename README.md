@@ -14,18 +14,19 @@
   - [x] 新浪微博
   - [x] 豆瓣
   - [x] 天涯
-  - [x] 煎蛋. `http://jandan.net/`
+  - [x] 煎蛋
   - [ ] ..果壳网. `https://www.guokr.com/science/category/all`
 - 科技新闻 🌎
   - [x] 极客公园
-  - [x] 虎嗅. `https://www.huxiu.com/article`
-  - [x] Techmeme. `https://www.techmeme.com/`
-  - [x] Nature. International journal science. `https://www.nature.com/latest-news`
+  - [x] 虎嗅
+  - [x] Techmeme
+  - [x] Nature
+  - [ ] Science. `https://www.sciencemag.org/news/latest-news`
 - 开发者 🦁
   - [x] GitHub
   - [x] Hacker News
   - [x] SegmentFault
-  - [x] 开发者头条. 
+  - [x] 开发者头条
   - [ ] ..掘金. `https://juejin.im/`
   - [ ] InfoQ.cn .com. `https://www.infoq.cn/hotlist?tag=day`, `https://www.infoq.com/news/`
   - [ ] DZone. `https://dzone.com/list`
@@ -34,9 +35,9 @@
   - [ ] ..Bilibili
   - [ ] ..YouTube. `https://www.youtube.com/feed/trending`
 - 科学上网 ✈️
-  - [x] Medium. 
-  - [x] The Economist. 
-  - [x] BBC News. 
+  - [x] Medium
+  - [x] The Economist
+  - [x] BBC News
 
 ### 使用技术
 后端
