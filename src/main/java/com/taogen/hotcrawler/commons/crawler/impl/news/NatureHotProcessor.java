@@ -23,7 +23,7 @@ public class NatureHotProcessor implements HotProcessor
     @Autowired
     private BaseHotProcessor baseHotProcessor;
 
-    public static final String DOMAIN = "https://www.nature.com/latest-news";
+    public static final String DOMAIN = "https://www.nature.com";
     public static final String HOT_PAGE_URL = "https://www.nature.com/latest-news";
     public static final String ITEM_KEY = "c-article-item__wrapper";
 
