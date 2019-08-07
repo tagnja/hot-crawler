@@ -50,7 +50,6 @@ public class HuxiuHotProcessor implements HotProcessor
                 Element item = element.getElementsByClass("article-item__content").get(0);
                 String infoTitle = item.getElementsByClass("article-item__content__title").get(0).html();
                 StringBuilder infoUrl = new StringBuilder();
-                infoUrl.append(DOMAIN);
                 infoUrl.append(item.getElementsByTag("a").get(0).attr("href"));
                 String id = String.valueOf(++i);
                 list.add(new Info(id, infoTitle, infoUrl.toString()));
