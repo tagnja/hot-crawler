@@ -20,22 +20,22 @@ public class BaseHotProcessor
 {
     public static final Logger log = LoggerFactory.getLogger(BaseHotProcessor.class);
 
-    WebDriver driver;
+//    WebDriver driver;
 
-    @PostConstruct
-    public void init()
-    {
-        try
-        {
-            ChromeDriverManager.chromedriver().setup();
-            WebDriverManager.chromedriver().config().setProperties("classpath: webdrivermanager.properties");
-            driver = new ChromeDriver();
-        }
-        catch (RuntimeException e)
-        {
-            log.error("Something error!", e);
-        }
-    }
+//    @PostConstruct
+//    public void init()
+//    {
+//        try
+//        {
+//            ChromeDriverManager.chromedriver().setup();
+//            WebDriverManager.chromedriver().config().setProperties("classpath: webdrivermanager.properties");
+//            driver = new ChromeDriver();
+//        }
+//        catch (RuntimeException e)
+//        {
+//            log.error("Something error!", e);
+//        }
+//    }
 
     public Document getDoc(String url, Map<String, String> headers, Logger log)
     {
@@ -84,6 +84,9 @@ public class BaseHotProcessor
         Document doc = null;
         try
         {
+            ChromeDriverManager.chromedriver().setup();
+            WebDriverManager.chromedriver().config().setProperties("classpath: webdrivermanager.properties");
+            WebDriver driver = new ChromeDriver();
             driver.get(hotPageUrl);
             try {
                 Thread.sleep(2 * 1000L);
@@ -92,7 +95,7 @@ public class BaseHotProcessor
             }
             String pageSource = driver.getPageSource();
             doc = Jsoup.parse(pageSource);
-//            driver.close();
+            driver.close();
         }
         catch (RuntimeException e)
         {
