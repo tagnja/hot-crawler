@@ -59,6 +59,10 @@ public class HotProcessorTest
                     Assert.assertNotNull(info.getUrl());
                     int index1 = info.getUrl().indexOf("http");
                     int index2 = info.getUrl().indexOf("http", index1 + 1);
+                    if (index1 != 0 || index2 != -1)
+                    {
+                        log.error("error url is {}", info.getUrl());
+                    }
                     Assert.assertTrue(index1 == 0);
                     Assert.assertTrue(index2 == -1);
                 }
