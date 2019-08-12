@@ -9,8 +9,12 @@ for (var j = 0; j < infoCates.length; j++)
     var infoTypes = infoCate.infoTypes;
     for (var i = 0; i < infoTypes.length; i++)
     {
-        var menuItem = "<a class='menu-item pointer' cateId='"+infoCate.id+"' typeId='"+infoTypes[i].id+"'><span class='no-break-word'>" +
-            infoTypes[i].name + "</span></a><div class='menu-item-split'></div>";
+        var menuItem = "<a class='menu-item pointer' cateId='"+infoCate.id+"' typeId='"+infoTypes[i].id+"'><span class='no-break-word'>"
+            + infoTypes[i].name + "</span></a>";
+        if (i < infoTypes.length - 1)
+        {
+            menuItem = menuItem + "<div class='menu-item-split'></div>";
+        }
         $("#"+ menuRowId).append(menuItem);
     }
 }
