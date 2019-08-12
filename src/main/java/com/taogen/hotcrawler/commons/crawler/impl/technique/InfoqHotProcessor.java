@@ -118,6 +118,13 @@ public class InfoqHotProcessor implements HotProcessor
             list.addAll(hotInfoList);
             log.debug("hot infoList size is {}", hotInfoList.size());
         }
+
+        // update all id
+        for (int i = 0; i < list.size(); i++)
+        {
+            list.get(i).setId(String.valueOf(i+1));
+        }
+
         return list;
     }
 
