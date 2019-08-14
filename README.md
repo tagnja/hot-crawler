@@ -32,10 +32,10 @@
   - [ ] InfoQ.com. `https://www.infoq.com/news/`
   - [ ] DZone. `https://dzone.com/list`
 - 科学上网 ✈️
-  - [x] Medium
-  - [x] The Economist
   - [x] BBC News
+  - [x] The Economist
   - [x] Hacker News
+  - [ ] Medium
 
 ### 使用技术
 后端
