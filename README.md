@@ -15,6 +15,7 @@
   - [x] 豆瓣
   - [x] 天涯
   - [x] 煎蛋
+  - [x] 网易云音乐
   - [ ] ..果壳网. `https://www.guokr.com/science/category/all`
 - 科技新闻 🌎
   - [x] 极客公园
@@ -24,20 +25,17 @@
   - [ ] Science. `https://www.sciencemag.org/news/latest-news`
 - 开发者 🦁
   - [x] GitHub
-  - [x] Hacker News
-  - [x] SegmentFault
   - [x] 开发者头条
+  - [x] SegmentFault
+  - [x] InfoQ.cn 
   - [ ] ..掘金. `https://juejin.im/`
-  - [ ] InfoQ.cn .com. `https://www.infoq.cn/hotlist?tag=day`, `https://www.infoq.com/news/`
+  - [ ] InfoQ.com. `https://www.infoq.com/news/`
   - [ ] DZone. `https://dzone.com/list`
-- 影音 🎵
-  - [x] 网易云音乐
-  - [ ] ..Bilibili
-  - [ ] ..YouTube. `https://www.youtube.com/feed/trending`
 - 科学上网 ✈️
   - [x] Medium
   - [x] The Economist
   - [x] BBC News
+  - [x] Hacker News
 
 ### 使用技术
 后端
@@ -85,15 +83,7 @@ $ cd hot-crawler
 $ mvn spring-boot:run
 ```
 
-### 如何贡献
-
-可对本项目做以下贡献
-
-1. 添加有价值的网站到“待处理站点” 的 todo list 中。
-2. 实现“待处理站点”爬虫。
-3. 修复 issues。
-
-添加一个页面爬虫快速指南
+### 添加一个页面爬虫快速指南
 
 1. 添加站点信息在 hot-crawler/src/main/resources/sites.properties。注意，序号 sites[0] 不能和已存在的重复。
 
@@ -135,6 +125,14 @@ $ mvn spring-boot:run
      ```
 
    - 访问 http://localhost:8080 ，即可看到你添加的爬虫 example 的页面。
+
+### 如何贡献
+
+可对本项目做以下贡献
+
+1. 添加有价值的网站到“待处理站点” 的 todo list 中。
+2. 实现“待处理站点”爬虫。
+3. 修复 issues。
 
 ### 其它
 
