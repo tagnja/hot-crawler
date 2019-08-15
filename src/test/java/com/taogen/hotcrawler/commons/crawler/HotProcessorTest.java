@@ -52,7 +52,6 @@ public class HotProcessorTest
                 List<Info> hotList = hotProcessor.crawlHotList();
                 if (hotList != null && ! hotList.isEmpty())
                 {
-                    log.info("crawl {} hot list size is {}", site.getName(), hotList.size());
                     Info info = hotList.get(0);
                     log.debug("first item is {}", info);
                     Assert.assertNotNull(info.getTitle());
@@ -65,10 +64,6 @@ public class HotProcessorTest
                     }
                     Assert.assertTrue(index1 == 0);
                     Assert.assertTrue(index2 == -1);
-                }
-                else
-                {
-                    log.info("crawl {} hot list is null", site.getName());
                 }
             }
         }

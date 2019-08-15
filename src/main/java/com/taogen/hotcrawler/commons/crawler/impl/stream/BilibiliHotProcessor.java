@@ -97,7 +97,7 @@ public class BilibiliHotProcessor implements HotProcessor
 
             list.add(new Info(id, infoTitle, infoUrl));
         }
-        log.debug("list size is {}", list.size());
+
         return list;
     }
 }

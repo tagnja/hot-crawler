@@ -54,7 +54,6 @@ public class V2exHotProcessor implements HotProcessor
             list.add(new Info(id, infoTitle, url));
         }
 
-        log.debug("return list size is {}", list.size());
         return list;
     }
 }

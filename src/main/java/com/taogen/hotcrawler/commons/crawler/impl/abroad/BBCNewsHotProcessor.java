@@ -61,7 +61,6 @@ public class BBCNewsHotProcessor implements HotProcessor
             }
         }
         infoMap.forEach((key,value) -> list.add(value));
-        log.debug("return list size is {}", list.size());
         return list;
     }
 }

@@ -61,7 +61,6 @@ public class HuxiuHotProcessor implements HotProcessor
             }
         }
 
-        log.debug("return list size is {}", list.size());
         return list;
     }
 }

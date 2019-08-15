@@ -60,7 +60,7 @@ public class JuejinHotProcessor implements HotProcessor
                 break;
             }
         }
-        log.debug("list size is {}", list.size());
+
         return list;
     }
 }

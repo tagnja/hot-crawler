@@ -65,7 +65,7 @@ public class TianyaHotProcessor implements HotProcessor
             infoUrl = DOMAIN + infoUrl;
             list.add(new Info(id, infoTitle, infoUrl));
         }
-        log.debug("return list size is {}", list.size());
+
         return list;
     }
 }

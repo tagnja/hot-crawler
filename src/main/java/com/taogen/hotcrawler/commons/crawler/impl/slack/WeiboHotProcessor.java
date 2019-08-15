@@ -61,7 +61,6 @@ public class WeiboHotProcessor implements HotProcessor
             list.add(new Info(id, infoTitle, infoUrl));
         }
 
-        log.debug("return list size is {}", list.size());
         return list;
     }
 }

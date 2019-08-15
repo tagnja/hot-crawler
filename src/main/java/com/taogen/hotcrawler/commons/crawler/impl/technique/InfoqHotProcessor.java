@@ -44,7 +44,6 @@ public class InfoqHotProcessor implements HotProcessor
             indexJson = Jsoup.connect(HOT_API_URL_INDEX).ignoreContentType(true).headers(getHeaders()).method(Connection.Method.GET).execute().body();
             recommendJson = Jsoup.connect(HOT_API_URL_RECOMMEND).ignoreContentType(true).headers(getHeaders()).requestBody(REQUEST_BODY).method(Connection.Method.POST).execute().body();
             Long socre = JsonPath.read(recommendJson, "$.data.[-1].score");
-            log.debug("score is {}", socre);
             if (socre != null && socre > 0)
             {
                 recommendJson2 = Jsoup.connect(HOT_API_URL_RECOMMEND).ignoreContentType(true).headers(getHeaders()).requestBody(getBody(socre)).method(Connection.Method.POST).execute().body();
@@ -56,7 +55,6 @@ public class InfoqHotProcessor implements HotProcessor
             log.error("Something error {}", e.getMessage(), e);
         }
 
-        log.debug("return list size is {}", list.size());
         return list;
     }
 
@@ -116,7 +114,7 @@ public class InfoqHotProcessor implements HotProcessor
             List<String> urls = JsonPath.read(indexJson, "$.data.hot_day_list.[*].uuid");
             List<Info> hotInfoList = getInfoListByTitlesAndUrls(titles, urls);
             list.addAll(hotInfoList);
-            log.debug("hot infoList size is {}", hotInfoList.size());
+            log.debug("day hot infoList size is {}", hotInfoList.size());
         }
 
         // update all id

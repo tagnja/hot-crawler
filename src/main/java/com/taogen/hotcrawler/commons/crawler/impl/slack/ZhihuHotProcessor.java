@@ -50,7 +50,6 @@ public class ZhihuHotProcessor implements HotProcessor
             list.add(new Info(String.valueOf(i), titles.get(i), urls.get(i)));
         }
 
-        log.debug("return list size is {}", list.size());
         return list;
     }
 }
