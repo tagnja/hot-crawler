@@ -2,13 +2,13 @@ package com.taogen.hotcrawler.commons.util;
 
 public class OsUtils
 {
-    public static String OS_TYPE_LINUX = "LINUX";
-    public static String OS_TYPE_WINDOWS = "WIN";
-    public static String OS_TYPE_MAC = "MAC";
-    public static String OS_TYPE_UNIX = "UNIX";
-    public static String OS_TYPE_SOLARIS = "SOLARIS";
+    public static final String OS_TYPE_LINUX = "LINUX";
+    public static final String OS_TYPE_WINDOWS = "WIN";
+    public static final String OS_TYPE_MAC = "MAC";
+    public static final String OS_TYPE_UNIX = "UNIX";
+    public static final String OS_TYPE_SOLARIS = "SOLARIS";
 
-    private static String OS = System.getProperty("os.name").toLowerCase();
+    private static final String OS = System.getProperty("os.name").toLowerCase();
 
     public static String getOsType()
     {

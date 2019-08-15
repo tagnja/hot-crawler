@@ -18,7 +18,10 @@ public class HotCrawlerAspect
     private Logger log = LoggerFactory.getLogger(HotCrawlerAspect.class);
 
     @Pointcut("execution(* com.taogen.hotcrawler.commons.crawler.impl.*.*.crawlHotList(..))")
-    public void crawlerPointCut() {}
+    public void crawlerPointCut()
+    {
+        // define PointCut not need method body
+    }
 
     @Before("crawlerPointCut()")
     public void before(JoinPoint joinPoint){

@@ -50,22 +50,32 @@ public class HotProcessorTest
                     continue;
                 }
                 List<Info> hotList = hotProcessor.crawlHotList();
-                if (hotList != null && ! hotList.isEmpty())
-                {
-                    Info info = hotList.get(0);
-                    log.debug("first item is {}", info);
-                    Assert.assertNotNull(info.getTitle());
-                    Assert.assertNotNull(info.getUrl());
-                    int index1 = info.getUrl().indexOf("http");
-                    int index2 = info.getUrl().indexOf("http", index1 + 1);
-                    if (index1 != 0 || index2 != -1)
-                    {
-                        log.error("error url is {}", info.getUrl());
-                    }
-                    Assert.assertTrue(index1 == 0);
-                    Assert.assertTrue(index2 == -1);
-                }
+                checkHotInfoList(hotList);
             }
+        }
+    }
+
+    public void checkHotInfoList(List<Info> hotList)
+    {
+        if (hotList != null && ! hotList.isEmpty())
+        {
+            for (int i = 0; i < hotList.size(); i++)
+            {
+                Info info = hotList.get(i);
+                Assert.assertEquals(String.valueOf(i+1), info.getId());
+                Assert.assertNotNull(info.getTitle());
+                Assert.assertNotNull(info.getUrl());
+
+                int index1 = info.getUrl().indexOf("http");
+                int index2 = info.getUrl().indexOf("http", index1 + 1);
+                if (index1 != 0 || index2 != -1)
+                {
+                    log.error("error url is {}", info.getUrl());
+                }
+                Assert.assertTrue(index1 == 0);
+                Assert.assertTrue(index2 == -1);
+            }
+
         }
     }
 }
