@@ -1,5 +1,6 @@
 package com.taogen.hotcrawler.commons.crawler.impl;
 
+import com.taogen.hotcrawler.commons.entity.Info;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.jsoup.Connection;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class BaseHotProcessor
@@ -88,19 +89,46 @@ public class BaseHotProcessor
             WebDriverManager.chromedriver().config().setProperties("classpath: webdrivermanager.properties");
             WebDriver driver = new ChromeDriver();
             driver.get(hotPageUrl);
-            try {
-                Thread.sleep(2 * 1000L);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Thread.sleep(2 * 1000L);
             String pageSource = driver.getPageSource();
             doc = Jsoup.parse(pageSource);
             driver.close();
         }
-        catch (RuntimeException e)
+        catch (InterruptedException | RuntimeException  e)
         {
             log.error("Web driver occur error!", e);
         }
         return doc;
+    }
+
+    public List<Info> handleData(List<Info> infoList)
+    {
+        return removeRepeat(infoList);
+    }
+
+    private List<Info> removeRepeat(List<Info> infoList)
+    {
+        List<Info> resultList = new ArrayList<>();
+        if (infoList == null)
+        {
+            return resultList;
+        }
+
+        Set<String> infoUrlSet = new HashSet<>();
+        int subtract = 0;
+        for (int i = 0; i < infoList.size(); i++)
+        {
+            Info info = infoList.get(i);
+            if (infoUrlSet.contains(info.getUrl()))
+            {
+                subtract++;
+                continue;
+            }
+
+            infoUrlSet.add(info.getUrl());
+            info.setId(String.valueOf(i + 1 - subtract));
+            resultList.add(info);
+        }
+        return resultList;
     }
 }

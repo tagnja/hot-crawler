@@ -3,11 +3,13 @@ package com.taogen.hotcrawler.commons.crawler.impl.technique;
 
 import com.jayway.jsonpath.JsonPath;
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
+import com.taogen.hotcrawler.commons.crawler.impl.BaseHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -20,6 +22,9 @@ import java.util.Map;
 public class InfoqHotProcessor implements HotProcessor
 {
     private static final Logger log = LoggerFactory.getLogger(InfoqHotProcessor.class);
+
+    @Autowired
+    private BaseHotProcessor baseHotProcessor;
 
     public static final String DOMAIN = "https://www.infoq.cn";
     public static final String HOT_PAGE_URL = "https://www.infoq.cn";
@@ -43,10 +48,10 @@ public class InfoqHotProcessor implements HotProcessor
             // selected 4 + recommend 24 + hot_day 8
             indexJson = Jsoup.connect(HOT_API_URL_INDEX).ignoreContentType(true).headers(getHeaders()).method(Connection.Method.GET).execute().body();
             recommendJson = Jsoup.connect(HOT_API_URL_RECOMMEND).ignoreContentType(true).headers(getHeaders()).requestBody(REQUEST_BODY).method(Connection.Method.POST).execute().body();
-            Long socre = JsonPath.read(recommendJson, "$.data.[-1].score");
-            if (socre != null && socre > 0)
+            Long score = JsonPath.read(recommendJson, "$.data.[-1].score");
+            if (score != null && score > 0)
             {
-                recommendJson2 = Jsoup.connect(HOT_API_URL_RECOMMEND).ignoreContentType(true).headers(getHeaders()).requestBody(getBody(socre)).method(Connection.Method.POST).execute().body();
+                recommendJson2 = Jsoup.connect(HOT_API_URL_RECOMMEND).ignoreContentType(true).headers(getHeaders()).requestBody(getBody(score)).method(Connection.Method.POST).execute().body();
             }
             list = getResultList(indexJson, recommendJson, recommendJson2);
         }
@@ -55,7 +60,7 @@ public class InfoqHotProcessor implements HotProcessor
             log.error("Something error {}", e.getMessage(), e);
         }
 
-        return list;
+        return baseHotProcessor.handleData(list);
     }
 
     private Map getHeaders()

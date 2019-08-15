@@ -2,7 +2,6 @@ package com.taogen.hotcrawler.commons.crawler.impl.news;
 
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.crawler.impl.BaseHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.impl.technique.DeveloperHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -66,6 +65,6 @@ public class GeekParkHotProcessor implements HotProcessor
             }
         }
 
-        return list;
+        return baseHotProcessor.handleData(list);
     }
 }

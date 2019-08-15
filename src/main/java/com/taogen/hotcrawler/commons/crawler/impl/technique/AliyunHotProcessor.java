@@ -67,6 +67,6 @@ public class AliyunHotProcessor implements HotProcessor
             }
         }
 
-        return list;
+        return baseHotProcessor.handleData(list);
     }
 }

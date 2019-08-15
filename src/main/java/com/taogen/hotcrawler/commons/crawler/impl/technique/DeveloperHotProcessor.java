@@ -60,6 +60,6 @@ public class DeveloperHotProcessor implements HotProcessor
             }
         }
 
-        return list;
+        return baseHotProcessor.handleData(list);
     }
 }

@@ -2,7 +2,6 @@ package com.taogen.hotcrawler.commons.crawler.impl.abroad;
 
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.crawler.impl.BaseHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.impl.technique.DeveloperHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -73,6 +72,6 @@ public class YouTubeHotProcessor implements HotProcessor
             }
         }
 
-        return list;
+        return baseHotProcessor.handleData(list);
     }
 }

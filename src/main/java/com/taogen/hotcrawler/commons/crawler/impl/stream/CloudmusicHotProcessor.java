@@ -89,6 +89,6 @@ public class CloudmusicHotProcessor implements HotProcessor
             }
         }
 
-        return list;
+        return baseHotProcessor.handleData(list);
     }
 }
