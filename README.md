@@ -22,7 +22,6 @@
   - [x] 虎嗅
   - [x] Techmeme
   - [x] Nature
-  - [ ] Science. `https://www.sciencemag.org/news/latest-news`
 - 开发者 🦁
   - [x] GitHub
   - [x] 开发者头条
@@ -36,6 +35,7 @@
   - [x] The Economist
   - [x] Hacker News
   - [ ] Medium
+  - [ ] Bloomberg
 
 ### 使用技术
 后端
