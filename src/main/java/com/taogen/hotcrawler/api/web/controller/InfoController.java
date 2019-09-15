@@ -18,6 +18,7 @@ import java.util.List;
 @Api("Information API")
 @RestController("InfoController")
 @RequestMapping({"/api/v1"})
+//@CrossOrigin
 public class InfoController extends BaseV1Controller
 {
     private static final Logger log = LoggerFactory.getLogger(InfoController.class);
