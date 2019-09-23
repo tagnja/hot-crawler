@@ -22,6 +22,8 @@
   - [x] 虎嗅
   - [x] Techmeme
   - [x] Nature
+  - [ ] Solidot. `https://www.solidot.org/`
+  - [ ] cnbeta. `https://www.cnbeta.com/`
 - 开发者 🦁
   - [x] GitHub
   - [x] 开发者头条
