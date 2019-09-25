@@ -31,8 +31,8 @@
   - [x] SegmentFault
   - [x] InfoQ.cn 
   - [x] 掘金
-  - [ ] InfoQ.com. `https://www.infoq.com/news/`
-  - [ ] DZone. `https://dzone.com/list`
+  - [x] InfoQ.com
+  - [x] DZone
 - 科学上网 ✈️
   - [x] BBC News
   - [x] The Economist
