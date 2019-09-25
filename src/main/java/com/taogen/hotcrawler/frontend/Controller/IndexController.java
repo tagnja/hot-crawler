@@ -62,14 +62,15 @@ public class IndexController
         }
         List<InfoCate> cates = siteProperties.convertToInfoCateList();
         List<Info> infos = infoService.findListByCateIdAndTypeId(cateId, typeId);
+        Long visitUserCount = infoService.countVisitUser();
 
         model.addAttribute(KEY_DOMAIN, domain);
         model.addAttribute("cates", cates);
         model.addAttribute("infos", infos);
-
+        model.addAttribute("visitUserCount", visitUserCount);
         infoService.statVisitUser(request);
         log.info("Current visit by {}", InfoService.getRealIpAddress(request));
-        log.info("Today visited user size is {}", infoService.countVisitUser());
+        log.info("Today visited user size is {}", visitUserCount);
         return "index2"; //view
     }
 

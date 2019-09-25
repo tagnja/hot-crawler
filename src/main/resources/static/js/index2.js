@@ -18,6 +18,12 @@ for (var j = 0; j < infoCates.length; j++)
         $("#"+ menuRowId).append(menuItem);
     }
 }
+
+var visitUserCountDiv = '<div style="margin: 0 auto;height: 50px; min-width: 200px; max-width: 1100px;">\n' +
+	'            <div style="margin-left: 10px; color: darkgray;">今日访问人数：'+visitUserCount+'</div>\n' +
+	'        </div>';
+$("#footer").html(visitUserCountDiv);
+
 /*var contentBlock = "<div id='content-block'></div>";
 $("#content").append(contentBlock);*/
 
