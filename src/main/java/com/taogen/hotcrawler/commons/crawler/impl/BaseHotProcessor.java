@@ -12,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.*;
 
@@ -130,5 +129,35 @@ public class BaseHotProcessor
             resultList.add(info);
         }
         return resultList;
+    }
+
+    public List<Info> getInfoListByTitlesAndUrls(List<String> titles, List<String> urls)
+    {
+        List<Info> infoList = new ArrayList<>();
+        if (titles == null || urls == null)
+        {
+            return infoList;
+        }
+
+        for (int i = 0; i < titles.size(); i++)
+        {
+            infoList.add(new Info(String.valueOf(i+1), titles.get(i), urls.get(i)));
+        }
+        return infoList;
+    }
+
+    public List<String> urlsAddPrefix(String prefix, List<String> urls)
+    {
+        if (urls == null)
+        {
+            return urls;
+        }
+
+        for (int i = 0; i < urls.size(); i++)
+        {
+            urls.set(i, prefix + urls.get(i));
+        }
+
+        return urls;
     }
 }

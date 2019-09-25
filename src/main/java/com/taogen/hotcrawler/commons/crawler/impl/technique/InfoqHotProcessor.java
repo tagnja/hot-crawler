@@ -93,7 +93,8 @@ public class InfoqHotProcessor implements HotProcessor
         {
             List<String> titles = JsonPath.read(indexJson, "$.data.recommend_list.[*].article_sharetitle");
             List<String> urls = JsonPath.read(indexJson, "$.data.recommend_list.[*].uuid");
-            List<Info> indexInfoList = getInfoListByTitlesAndUrls(titles, urls);
+            urls = baseHotProcessor.urlsAddPrefix(ARTICLE_PREFIX, urls);
+            List<Info> indexInfoList = baseHotProcessor.getInfoListByTitlesAndUrls(titles, urls);
             list.addAll(indexInfoList);
             log.debug("index infoList size is {}", indexInfoList.size());
         }
@@ -101,7 +102,8 @@ public class InfoqHotProcessor implements HotProcessor
         {
             List<String> titles = JsonPath.read(recommendJson, "$.data.[*].article_sharetitle");
             List<String> urls = JsonPath.read(recommendJson, "$.data.[*].uuid");
-            List<Info> recommend1InfoList = getInfoListByTitlesAndUrls(titles, urls);
+            urls = baseHotProcessor.urlsAddPrefix(ARTICLE_PREFIX, urls);
+            List<Info> recommend1InfoList = baseHotProcessor.getInfoListByTitlesAndUrls(titles, urls);
             list.addAll(recommend1InfoList);
             log.debug("recommend infoList size is {}", recommend1InfoList.size());
         }
@@ -109,7 +111,8 @@ public class InfoqHotProcessor implements HotProcessor
         {
             List<String> titles = JsonPath.read(recommendJson2, "$.data.[*].article_sharetitle");
             List<String> urls = JsonPath.read(recommendJson2, "$.data.[*].uuid");
-            List<Info> recommend2InfoList = getInfoListByTitlesAndUrls(titles, urls);
+            urls = baseHotProcessor.urlsAddPrefix(ARTICLE_PREFIX, urls);
+            List<Info> recommend2InfoList = baseHotProcessor.getInfoListByTitlesAndUrls(titles, urls);
             list.addAll(recommend2InfoList);
             log.debug("recommend2 infoList size is {}", recommend2InfoList.size());
         }
@@ -117,7 +120,8 @@ public class InfoqHotProcessor implements HotProcessor
         {
             List<String> titles = JsonPath.read(indexJson, "$.data.hot_day_list.[*].article_sharetitle");
             List<String> urls = JsonPath.read(indexJson, "$.data.hot_day_list.[*].uuid");
-            List<Info> hotInfoList = getInfoListByTitlesAndUrls(titles, urls);
+            urls = baseHotProcessor.urlsAddPrefix(ARTICLE_PREFIX, urls);
+            List<Info> hotInfoList = baseHotProcessor.getInfoListByTitlesAndUrls(titles, urls);
             list.addAll(hotInfoList);
             log.debug("day hot infoList size is {}", hotInfoList.size());
         }
@@ -131,23 +135,5 @@ public class InfoqHotProcessor implements HotProcessor
         return list;
     }
 
-    private List<Info> getInfoListByTitlesAndUrls(List<String> titles, List<String> urls)
-    {
-        List<Info> infoList = new ArrayList<>();
-        if (titles == null || urls == null)
-        {
-            return infoList;
-        }
-        for (int i = 0; i < urls.size(); i++)
-        {
-            urls.set(i, ARTICLE_PREFIX + urls.get(i));
-        }
 
-        for (int i = 0; i < titles.size(); i++)
-        {
-
-            infoList.add(new Info(String.valueOf(i+1), titles.get(i), urls.get(i)));
-        }
-        return infoList;
-    }
 }
