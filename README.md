@@ -22,14 +22,15 @@
   - [x] 虎嗅
   - [x] Techmeme
   - [x] Nature
-  - [ ] Solidot. `https://www.solidot.org/`
+  - [x] Solidot
+  - [x] Readhub
   - [ ] cnbeta. `https://www.cnbeta.com/`
 - 开发者 🦁
   - [x] GitHub
   - [x] 开发者头条
   - [x] SegmentFault
   - [x] InfoQ.cn 
-  - [ ] ..掘金. `https://juejin.im/`
+  - [x] 掘金
   - [ ] InfoQ.com. `https://www.infoq.com/news/`
   - [ ] DZone. `https://dzone.com/list`
 - 科学上网 ✈️
