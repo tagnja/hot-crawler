@@ -11,7 +11,8 @@ Local test and commit
 - Check code specification by sonar.
 - Code format.
 - Pass unit test.
-- commit code to develop branch.
+- Check function and style on client (PC, mobile).
+- Commit code to develop branch.
 
 Pre-release Test
 
