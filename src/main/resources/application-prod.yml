@@ -4,7 +4,7 @@ crawler:
     enable: true
     threadPoolNum: 5
     initialDelay: 60000
-    fixedRate: 180000
+    fixedRate: 300000
     cron: "*/5 * * * * ?"
   chromeDriver:
     enable: true
