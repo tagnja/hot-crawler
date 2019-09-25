@@ -68,7 +68,7 @@ public class IndexController
         model.addAttribute("infos", infos);
 
         infoService.statVisitUser(request);
-        log.info("Current visit by {}", request.getRemoteAddr());
+        log.info("Current visit by {}", InfoService.getRealIpAddress(request));
         log.info("Today visited user size is {}", infoService.countVisitUser());
         return "index2"; //view
     }

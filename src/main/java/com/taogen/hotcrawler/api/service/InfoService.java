@@ -59,7 +59,7 @@ public class InfoService extends BaseService
 
     public void statVisitUser(HttpServletRequest request)
     {
-        String ip = request.getRemoteAddr();
+        String ip = getRealIpAddress(request);
         String today = dateFormatter.format(new Date());
         infoRepository.statVisitUser(ip, today);
     }
@@ -69,4 +69,37 @@ public class InfoService extends BaseService
         String today = dateFormatter.format(new Date());
         return infoRepository.countVisitUser(today);
     }
+
+    public static String getIpAddr(HttpServletRequest request)
+    {
+        String ip = request.getHeader("x-forwarded-for");
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
+        {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
+        {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
+        {
+            ip = request.getRemoteAddr();
+        }
+        return ip;
+    }
+
+    public static String getRealIpAddress(HttpServletRequest request)
+    {
+        String ip = getIpAddr(request);
+        int ipIndex = ip.indexOf(IP_HEADER);
+        if (ipIndex >= 0)
+        {
+            return IP_ADDRESS;
+        }
+        return ip;
+    }
+
+    private static final String IP_ADDRESS = "58.212.237.176";
+    private static final String IP_HEADER = "192.168.";
+
 }
