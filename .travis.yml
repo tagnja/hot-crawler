@@ -6,4 +6,5 @@ jdk:
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script:
+  - mkdir -p /var/log/hot.const520.com
   - mvn test -B
