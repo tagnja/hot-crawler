@@ -1,6 +1,6 @@
 # Hot Crawler
 
-**const520 热点聚合**
+[![Build Status](https://travis-ci.com/tagnja/hot-crawler.svg?branch=master)](https://travis-ci.com/tagnja/hot-crawler)
 
 汇集热点内容，一站式阅读体验。
 
