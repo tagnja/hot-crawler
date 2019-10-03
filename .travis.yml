@@ -3,8 +3,9 @@ dist: trusty
 withIntermediateDirectories: YES
 jdk:
   - oraclejdk8
+before_install:
+  - sudo mkdir -p /var/log/hot.const520.com
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script:
-  - mkdir -p /var/log/hot.const520.com
   - mvn test -B
