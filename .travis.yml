@@ -7,6 +7,8 @@ before_install:
   - sudo mkdir -p /var/log/hot.const520.com
   - sudo touch /var/log/hot.const520.com/hotcrawler.log
   - sudo touch /var/log/hot.const520.com/hotcrawler-test.log
+  - sudo chmod 777 /var/log/hot.const520.com/hotcrawler.log
+  - sudo chmod 777 /var/log/hot.const520.com/hotcrawler-test.log
 install:
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script:
