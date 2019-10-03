@@ -1,5 +1,6 @@
 language: java
 dist: trusty
+withIntermediateDirectories: YES
 jdk:
   - oraclejdk8
 install:
