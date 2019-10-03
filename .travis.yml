@@ -3,6 +3,8 @@ dist: trusty
 withIntermediateDirectories: YES
 jdk:
   - oraclejdk8
+services:
+  - redis-server
 before_install:
   - sudo mkdir -p /var/log/hot.const520.com
   - sudo touch /var/log/hot.const520.com/hotcrawler.log
