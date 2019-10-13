@@ -2,9 +2,9 @@
 
 [![java](https://img.shields.io/static/v1?label=java&message=^1.8&color=blue)](https://github.com/tagnja/hot-crawler)
 [![springboot](https://img.shields.io/static/v1?label=springboot&message=2.1.6&color=blue)](https://github.com/tagnja/hot-crawler)
+[![GitHub issues](https://img.shields.io/github/issues/tagnja/hot-crawler)](https://github.com/tagnja/hot-crawler/issues)
 [![GitHub stars](https://img.shields.io/github/stars/tagnja/hot-crawler)](https://github.com/tagnja/hot-crawler/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/tagnja/hot-crawler)](https://github.com/tagnja/hot-crawler/network)
-[![GitHub issues](https://img.shields.io/github/issues/tagnja/hot-crawler)](https://github.com/tagnja/hot-crawler/issues)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d25aed8571b944e6838686d96ea3873f)](https://www.codacy.com/manual/tagnja/hot-crawler?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tagnja/hot-crawler&amp;utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/tagnja/hot-crawler/branch/master/graph/badge.svg)](https://codecov.io/gh/tagnja/hot-crawler)
 [![Build Status](https://travis-ci.com/tagnja/hot-crawler.svg?branch=master)](https://travis-ci.com/tagnja/hot-crawler)
