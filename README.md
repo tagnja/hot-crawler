@@ -11,7 +11,7 @@ Languages: [English](README.md) | [中文简体](README_zh_CN.md)
 
 ## What's hot-crawler
 
-**hot-crawler** is a web crawler about hot information on excellent websites. It can help you quickly access valuable information on many websites. It is compatible with multiple terminal devices, such as personal computers, mobile phones, and tablets. These websites are mainly composed of two languages, Chinese and English. As shown in the figure below.
+**hot-crawler** is a web crawler about hot information on excellent websites. It can help you quickly access valuable information on many websites. It is compatible with multiple devices, such as personal computers, mobile phones, and tablets. These websites are mainly composed of two languages, Chinese and English. As shown in the figure below.
 
 ![homepage](documents/hotcrawler-homepage-v2-pc.png)
 
