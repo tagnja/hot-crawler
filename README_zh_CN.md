@@ -5,7 +5,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/tagnja/hot-crawler)](https://github.com/tagnja/hot-crawler/network)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d25aed8571b944e6838686d96ea3873f)](https://www.codacy.com/manual/tagnja/hot-crawler?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tagnja/hot-crawler&amp;utm_campaign=Badge_Grade)
 [![codecov](https://codecov.io/gh/tagnja/hot-crawler/branch/master/graph/badge.svg)](https://codecov.io/gh/tagnja/hot-crawler)
-[![Build Status](https://travis-ci.com/tagnja/hot-crawler.svg?branch=master)](https://travis-ci.com/tagnja/hot-crawler)
+[![Build Status](https://travis-ci.com/tagnja/hot-crawler.svg?branch=test)](https://travis-ci.com/tagnja/hot-crawler)
 
 语言: [English](README.md) | [中文简体](README_zh_CN.md)
 
