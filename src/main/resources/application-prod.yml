@@ -16,9 +16,9 @@ spring:
     type: redis
   redis:
     database: 0
-    host: ENC(L9UlLbZZr8ueHpqGe9RYJzYIRQjCXhai)
+    host: ENC(mr2PNDKFaXHiTr4A/DwFeLB2d/DaeQPr)
     port: 6379
-    password: ENC(73XMAweMQdmNI3wpvsgN8sRIenVd6DUgKsd0E+EjT0Y=)
+    password: ENC(AB7cHmgCzhI1RvUFaNj8Is5KJ6pLqnQ95mFSB0bXsFI=)
     ssl: false
     jedis:
       pool:
