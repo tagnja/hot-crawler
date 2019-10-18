@@ -34,15 +34,34 @@
 ## How to run
 ### 通过 Maven 命令行运行
 
-```shell
-# Download
-$ git clone https://github.com/tagnja/hot-crawler.git
-# Running redis in your computer
-$ ./redis-server
-# Running project
-$ cd hot-crawler
-$ mvn spring-boot:run
-```
+1. 克隆项目到本地
+
+   ```
+   $ git clone https://github.com/tagnja/hot-crawler.git
+   ```
+
+2. 设置使用开发环境的配置，修改 `src/main/resources/application.yml` 的配置如下：
+
+   ```
+   spring:
+     profiles:
+       active: dev
+   ```
+
+3. 启动本地的 Redis 服务
+
+   ```
+   $ ./redis-server
+   ```
+
+4. 使用 Maven 命令运行项目
+
+   ```
+   $ cd hot-crawler
+   $ mvn spring-boot:run
+   ```
+
+5. 本地访问项目链接 http://localhost:8080
 
 ## Document
 

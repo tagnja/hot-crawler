@@ -32,16 +32,30 @@ We strongly suggest using [IntelliJ IDEA](https://www.jetbrains.com/idea/?fromMe
 
 ### How to run with Maven command line
 
-1. Startup your Redis Server firstly.
+1. Clone project source to your local computer
 
-2. Running the project with Spring Boot maven plugin.
+    ```
+    $ git clone https://github.com/tagnja/hot-crawler.git
+    ```
+
+2. Active develop configuration in `src/main/resources/application.yml`
+
+    ```
+    spring:
+      profiles:
+        active: dev
+    ```
+
+3. Startup your local Redis Server before running the project.
+
+4. Running the project with Spring Boot maven plugin.
 
     ```
     cd hot-crawler
     mvn spring-boot:run
     ```
 
-3. Visting the website by http://localhost:8080
+5. Visting the website by http://localhost:8080
 
 ## Document
 
