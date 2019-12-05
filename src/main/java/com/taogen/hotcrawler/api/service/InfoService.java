@@ -21,9 +21,6 @@ public class InfoService extends BaseService
     @Autowired
     private InfoRepository infoRepository;
 
-    /*@Autowired
-    private SiteProperties siteProperties;*/
-
     private final DateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd");
 
     public List<Info> findListByCateIdAndTypeId(String cateId, String typeId)
