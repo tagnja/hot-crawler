@@ -2,10 +2,10 @@ domain: http://localhost:${server.port}
 #domain: http://192.168.1.15:${server.port}
 crawler:
   task:
-    enable: false
+    enable: true
     threadPoolNum: 5
-    initialDelay: 60000
-    fixedRate: 60000
+    initialDelay: 3000
+    fixedRate: 300000
     cron: "*/5 * * * * ?"
   chromeDriver:
     enable: true

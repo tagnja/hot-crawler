@@ -3,7 +3,7 @@ crawler:
   task:
     enable: true
     threadPoolNum: 5
-    initialDelay: 60000
+    initialDelay: 3000
     fixedRate: 300000
     cron: "*/5 * * * * ?"
   chromeDriver:
