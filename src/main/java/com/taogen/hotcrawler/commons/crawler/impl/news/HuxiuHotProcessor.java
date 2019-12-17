@@ -21,7 +21,6 @@ public class HuxiuHotProcessor implements HotProcessor
 
     @Autowired
     private BaseHotProcessor baseHotProcessor;
-
     public static final String DOMAIN = "https://www.huxiu.com";
     public static final String HOT_PAGE_URL = "https://www.huxiu.com/article";
     public static final String ITEM_KEY = "article-items";
@@ -29,18 +28,21 @@ public class HuxiuHotProcessor implements HotProcessor
     @Override
     public List<Info> crawlHotList()
     {
+        Document doc = baseHotProcessor.getDoc(HOT_PAGE_URL, null, log);
+        List<Info> list = getInfoListByDoc(doc);
+        return baseHotProcessor.handleData(list);
+    }
+
+    private List<Info> getInfoListByDoc(Document doc)
+    {
         List<Info> list = new ArrayList<>();
 
-        // document
-        Document doc = baseHotProcessor.getDoc(HOT_PAGE_URL, null, log);
         if (doc == null)
         {
             return list;
         }
 
-        // elements
         Elements elements = doc.getElementsByClass(ITEM_KEY);
-
         int i = 0;
         for (Element element : elements)
         {
@@ -48,9 +50,9 @@ public class HuxiuHotProcessor implements HotProcessor
             {
                 Element titleItem = element.getElementsByClass("article-item__content__title").get(0);
                 String infoTitle = titleItem.html();
-                StringBuilder infoUrl = new StringBuilder();
-                infoUrl.append(DOMAIN);
-                infoUrl.append(titleItem.parent().attr("href"));
+                Element urlItem = element.getElementsByClass("article-item__img").get(0).parent();
+                StringBuilder infoUrl = new StringBuilder(DOMAIN);
+                infoUrl.append(urlItem.attr("href"));
                 String id = String.valueOf(++i);
                 list.add(new Info(id, infoTitle, infoUrl.toString()));
             }
@@ -59,7 +61,6 @@ public class HuxiuHotProcessor implements HotProcessor
                 log.error("Can't find attribute!", e);
             }
         }
-
-        return baseHotProcessor.handleData(list);
+        return list;
     }
 }
