@@ -1,5 +1,6 @@
 package com.taogen.hotcrawler.commons.crawler.impl.news;
 
+import com.jayway.jsonpath.JsonPath;
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.crawler.impl.BaseHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
@@ -21,45 +22,38 @@ public class ReadhubHotProcessor implements HotProcessor
 
     @Autowired
     private BaseHotProcessor baseHotProcessor;
-
-    public static final String DOMAIN = "https://readhub.cn";
-    public static final String HOT_PAGE_URL = "https://readhub.cn/topics";
-    public static final String ITEM_KEY = "topicItem___1B0j1";
+    public static final String API_URL = "https://api.readhub.cn/topic?lastCursor=&pageSize=20";
+    public static final String ITEM_URL_PREFIX = "https://readhub.cn/topic";
 
     @Override
     public List<Info> crawlHotList()
     {
+        String json = baseHotProcessor.getJson(API_URL, log);
+        List<Info> list = getInfoListByJson(json);
+        return baseHotProcessor.handleData(list);
+    }
+
+    public List<Info> getInfoListByJson(String json)
+    {
         List<Info> list = new ArrayList<>();
 
-        // document
-        Document doc = baseHotProcessor.getDoc(HOT_PAGE_URL, null, log);
-        if (doc == null)
+        if (json == null)
         {
             return list;
         }
 
-        // elements
-        Elements elements = doc.getElementsByClass(ITEM_KEY);
+        List<String> titles = JsonPath.read(json, "$.data.[*].title");
+        List<String> urls = JsonPath.read(json, "$.data.[*].id");
 
-        int i = 0;
-        for (Element element : elements)
+        for (int i = 0; i < urls.size(); i++)
         {
-            try
-            {
-                Element item = element.getElementsByClass("content___3EhkM link___1df9x").get(0);
-                String infoTitle = item.html();
-                StringBuilder infoUrl = new StringBuilder();
-                infoUrl.append(DOMAIN);
-                infoUrl.append(item.attr("href"));
-                String id = String.valueOf(++i);
-                list.add(new Info(id, infoTitle, infoUrl.toString()));
-            }
-            catch(IndexOutOfBoundsException e)
-            {
-                log.error("Can't find attribute!", e);
-            }
+            urls.set(i, new StringBuilder(ITEM_URL_PREFIX).append("/").append(urls.get(i)).toString());
         }
 
-        return baseHotProcessor.handleData(list);
+        for (int i = 0; i < titles.size(); i++)
+        {
+            list.add(new Info(String.valueOf(i), titles.get(i), urls.get(i)));
+        }
+        return list;
     }
 }
