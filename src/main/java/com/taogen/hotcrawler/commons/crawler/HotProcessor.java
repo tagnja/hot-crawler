@@ -4,7 +4,6 @@ import com.taogen.hotcrawler.commons.entity.Info;
 
 import java.util.List;
 
-public interface HotProcessor
-{
-    public List<Info> crawlHotList();
+public interface HotProcessor {
+    List<Info> crawlHotList();
 }

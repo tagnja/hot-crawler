@@ -1,13 +1,12 @@
 package com.taogen.hotcrawler.commons.task;
 
-import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.api.service.BaseService;
+import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import com.taogen.hotcrawler.commons.repository.InfoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -66,17 +65,15 @@ public class CrawlerTask
         {
             for (SiteProperties.SiteInfo site : cate.getSites()) {
                 executorService.submit(() -> {
-                    HotProcessor hotProcessor = null;
                     try {
+                        HotProcessor hotProcessor = null;
                         hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
-                    } catch (BeansException e) {
-                        log.error(e.getMessage());
-                        return;
+                        List<Info> infoList = hotProcessor.crawlHotList();
+                        infoRepository.removeByTypeId(cate.getId(), site.getId());
+                        infoRepository.saveAll(infoList, cate.getId(), site.getId());
+                    } catch (RuntimeException e) {
+                        log.error(e.getMessage(), e);
                     }
-                    List<Info> infoList = hotProcessor.crawlHotList();
-                    log.info("crawl hot list from {}, list size is {}", site.getName(), infoList.size());
-                    infoRepository.removeByTypeId(cate.getId(), site.getId());
-                    infoRepository.saveAll(infoList, cate.getId(), site.getId());
                 });
             }
         }

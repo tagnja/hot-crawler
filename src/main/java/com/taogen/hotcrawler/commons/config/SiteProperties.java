@@ -3,11 +3,15 @@ package com.taogen.hotcrawler.commons.config;
 import com.taogen.hotcrawler.commons.entity.InfoCate;
 import com.taogen.hotcrawler.commons.entity.InfoType;
 import lombok.Data;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +23,7 @@ import java.util.stream.Collectors;
 @ConfigurationProperties
 public class SiteProperties
 {
+    Logger log = LoggerFactory.getLogger(SiteProperties.class);
 
     List<SiteCate> cates;
 
@@ -36,6 +41,14 @@ public class SiteProperties
         private String id;
         private String name;
         private String processorName;
+        private String url;
+    }
+
+    @PostConstruct
+    public void argumentsCheck(){
+        log.debug("begin argument check in property file...");
+        // Is url right? Does processName exist?
+        // TODO
     }
 
     public List<InfoCate> convertToInfoCateList()

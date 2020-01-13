@@ -62,6 +62,9 @@ public class HotProcessorTest
             for (int i = 0; i < hotList.size(); i++)
             {
                 Info info = hotList.get(i);
+                if (! String.valueOf(i+1).equals(info.getId())){
+                    log.debug("error info: {}, {}, {}", info.getId(), info.getTitle(), info.getUrl());
+                }
                 Assert.assertEquals(String.valueOf(i+1), info.getId());
                 Assert.assertNotNull(info.getTitle());
                 Assert.assertNotNull(info.getUrl());

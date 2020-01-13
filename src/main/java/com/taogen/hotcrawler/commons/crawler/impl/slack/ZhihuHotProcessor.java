@@ -1,55 +1,73 @@
 package com.taogen.hotcrawler.commons.crawler.impl.slack;
 
 import com.jayway.jsonpath.JsonPath;
-import com.taogen.hotcrawler.commons.crawler.HotProcessor;
-import com.taogen.hotcrawler.commons.crawler.impl.BaseHotProcessor;
+import com.taogen.hotcrawler.commons.config.SiteProperties;
+import com.taogen.hotcrawler.commons.constant.RequestMethod;
+import com.taogen.hotcrawler.commons.crawler.APIHotProcessor;
+import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
 import com.taogen.hotcrawler.commons.entity.Info;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Component("ZhihuHotProcessor")
-public class ZhihuHotProcessor implements HotProcessor
+public class ZhihuHotProcessor extends APIHotProcessor
 {
-    private static final Logger log = LoggerFactory.getLogger(ZhihuHotProcessor.class);
+    @Autowired
+    private SiteProperties siteProperties;
 
     @Autowired
-    private BaseHotProcessor baseHotProcessor;
-
-    public static final String DOMAIN = "https://zhihu.com";
-    public static final String HOT_API_URL = "https://www.zhihu.com/api/v3/feed/topstory/hot-lists/total?limit=50&desktop=true";
+    private ApplicationContext context;
 
     @Override
-    public List<Info> crawlHotList()
-    {
-        List<Info> list = new ArrayList<>();
-        // login
+    @PostConstruct
+    protected void initialize(){
+        injectBeans(context);
+        setFieldsByProperties(siteProperties);
+        this.log = LoggerFactory.getLogger(ZhihuHotProcessor.class);
+        this.header = generateHeader();
+        this.requestBody = generateRequestBody();
+        this.requestMethod = RequestMethod.GET;
+    }
 
-        // json by API
-        String json = baseHotProcessor.getJson(HOT_API_URL, log);
+    @Override
+    protected Map<String, String> generateHeader() {
+        // not need
+        return null;
+    }
+
+    @Override
+    protected String generateRequestBody() {
+        // not need
+        return null;
+    }
+
+    @Override
+    public List<Info> getInfoDataByJson(String json) {
+        List<Info> list = new ArrayList<>();
         if (json == null)
         {
             return list;
         }
 
-        // items
         List<String> titles = JsonPath.read(json, "$.data.[*].target.title");
         List<String> urls = JsonPath.read(json, "$.data.[*].target.url");
 
         for (int i = 0; i < urls.size(); i++)
         {
-            urls.set(i, urls.get(i).replace("https://api.zhihu.com/questions", DOMAIN + "/question"));
+            urls.set(i, urls.get(i).replace("https://api.zhihu.com/questions", getDomainByUrl(this.url) + "/question"));
         }
 
         for (int i = 1; i < titles.size(); i++)
         {
             list.add(new Info(String.valueOf(i), titles.get(i), urls.get(i)));
         }
-
-        return baseHotProcessor.handleData(list);
+        return this.handlerCenter.handleData(list);
     }
 }

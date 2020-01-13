@@ -14,5 +14,9 @@ public class BaseService
     {
         return context.getBean(beanName);
     }
+    public Object getBean(Class clazz)
+    {
+        return context.getBean(clazz);
+    }
 
 }

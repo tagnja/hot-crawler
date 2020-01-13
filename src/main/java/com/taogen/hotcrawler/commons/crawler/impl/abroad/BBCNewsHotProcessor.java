@@ -1,7 +1,10 @@
 package com.taogen.hotcrawler.commons.crawler.impl.abroad;
 
+import com.taogen.hotcrawler.commons.config.SiteProperties;
+import com.taogen.hotcrawler.commons.constant.RequestMethod;
+import com.taogen.hotcrawler.commons.crawler.DocumentHotProcessor;
 import com.taogen.hotcrawler.commons.crawler.HotProcessor;
-import com.taogen.hotcrawler.commons.crawler.impl.BaseHotProcessor;
+import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -9,56 +12,70 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Component("BBCNewsHotProcessor")
-public class BBCNewsHotProcessor implements HotProcessor
+public class BBCNewsHotProcessor extends DocumentHotProcessor
 {
-    private static final Logger log = LoggerFactory.getLogger(BBCNewsHotProcessor.class);
-
-    @Autowired
-    private BaseHotProcessor baseHotProcessor;
-
-    public static final String DOMAIN = "https://www.bbc.com";
-    public static final String HOT_PAGE_URL = "https://www.bbc.com/news";
     public static final String ITEM_KEY = "gs-c-promo-heading";
 
+    @Autowired
+    private SiteProperties siteProperties;
+
+    @Autowired
+    private ApplicationContext context;
+
     @Override
-    public List<Info> crawlHotList()
-    {
-        List<Info> list = new ArrayList<>();
+    @PostConstruct
+    protected void initialize(){
+        injectBeans(context);
+        setFieldsByProperties(siteProperties);
+        this.log = LoggerFactory.getLogger(BBCNewsHotProcessor.class);
+        this.header = generateHeader();
+        this.requestBody = generateRequestBody();
+        this.requestMethod = RequestMethod.GET;
+    }
 
-        // document
-        Document doc = baseHotProcessor.getDoc(HOT_PAGE_URL, null, log);
-        if (doc == null)
-        {
-            return list;
-        }
+    @Override
+    protected Elements getElements(Document document) {
+        Elements elements = document.getElementsByClass("nw-c-top-stories--standard").get(0).getElementsByClass(ITEM_KEY);
+        return elements;
+    }
 
-        // elements
-
-        Elements elements = doc.getElementsByClass("nw-c-top-stories--standard").get(0).getElementsByClass(ITEM_KEY);
-        int i = 0;
-        for (Element element : elements)
-        {
-            try
-            {
-                String infoTitle = element.getElementsByClass("gs-c-promo-heading__title").html();
-                StringBuilder infoUrl = new StringBuilder();
-                infoUrl.append(DOMAIN);
-                infoUrl.append(element.attr("href"));
-                String id = String.valueOf(++i);
-                list.add(new Info(id, infoTitle, infoUrl.toString()));
+    @Override
+    protected List<Info> getInfoDataByElements(Elements elements) {
+        List<Info> infoList = new ArrayList<>();
+        if (elements != null) {
+            int i = 0;
+            for (Element element : elements) {
+                try {
+                    String infoTitle = element.getElementsByClass("gs-c-promo-heading__title").html();
+                    StringBuilder infoUrl = new StringBuilder();
+                    infoUrl.append(getDomainByUrl(this.url));
+                    infoUrl.append(element.attr("href"));
+                    String id = String.valueOf(++i);
+                    infoList.add(new Info(id, infoTitle, infoUrl.toString()));
+                } catch (IndexOutOfBoundsException e) {
+                    log.error("Can't find attribute!", e);
+                }
             }
-            catch(IndexOutOfBoundsException e)
-            {
-                log.error("Can't find attribute!", e);
-            }
         }
+        return handlerCenter.handleData(infoList);
+    }
 
-        return baseHotProcessor.handleData(list);
+    @Override
+    protected Map<String, String> generateHeader() {
+        return null;
+    }
+
+    @Override
+    protected String generateRequestBody() {
+        return null;
     }
 }

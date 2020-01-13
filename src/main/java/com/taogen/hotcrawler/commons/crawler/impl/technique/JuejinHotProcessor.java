@@ -1,84 +1,71 @@
 package com.taogen.hotcrawler.commons.crawler.impl.technique;
 
 import com.jayway.jsonpath.JsonPath;
-import com.taogen.hotcrawler.commons.crawler.HotProcessor;
-import com.taogen.hotcrawler.commons.crawler.impl.BaseHotProcessor;
+import com.taogen.hotcrawler.commons.config.SiteProperties;
+import com.taogen.hotcrawler.commons.constant.RequestMethod;
+import com.taogen.hotcrawler.commons.crawler.APIHotProcessor;
+import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
 import com.taogen.hotcrawler.commons.entity.Info;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Component("JuejinHotProcessor")
-public class JuejinHotProcessor implements HotProcessor
+public class JuejinHotProcessor extends APIHotProcessor
 {
-    private static final Logger log = LoggerFactory.getLogger(JuejinHotProcessor.class);
 
     @Autowired
-    private BaseHotProcessor baseHotProcessor;
+    private SiteProperties siteProperties;
 
-    public static final String DOMAIN = "https://juejin.im";
-    public static final String HOT_PAGE_URL = "https://juejin.im";
-    public static final String HOT_API_URL = "https://web-api.juejin.im/query";
-    public static final String REQUEST_BODY = "{\"operationName\":\"\",\"query\":\"\",\"variables\":{\"first\":20,\"after\":\"\",\"order\":\"POPULAR\"},\"extensions\":{\"query\":{\"id\":\"21207e9ddb1de777adeaca7a2fb38030\"}}}";
+    @Autowired
+    private ApplicationContext context;
 
     @Override
-    public List<Info> crawlHotList()
-    {
-        List<Info> list = new ArrayList<>();
-
-        // json
-        String json = null;
-        try
-        {
-            json = Jsoup.connect(HOT_API_URL).ignoreContentType(true).headers(getHeaders()).requestBody(REQUEST_BODY).method(Connection.Method.POST).execute().body();
-        }
-        catch (IOException e)
-        {
-            log.error("Something error {}", e.getMessage(), e);
-        }
-
-        if (json == null)
-        {
-            return list;
-        }
-
-        list = getResultList(json);
-        return baseHotProcessor.handleData(list);
+    @PostConstruct
+    protected void initialize(){
+        injectBeans(context);
+        setFieldsByProperties(siteProperties);
+        this.log = LoggerFactory.getLogger(JuejinHotProcessor.class);
+        this.header = generateHeader();
+        this.requestBody = generateRequestBody();
+        this.requestMethod = RequestMethod.POST;
     }
 
-    private Map<String,String> getHeaders()
-    {
-        Map<String,String> headers = new HashMap<>();
-
-        headers.put("Content-Type", "application/json");
-        headers.put("Host", "web-api.juejin.im");
-        headers.put("Origin","https://juejin.im");
-        headers.put("Referer", "https://juejin.im/?sort=popular");
-        headers.put("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101 Firefox/69.0");
-        headers.put("X-Agent", "Juejin/Web");
-        return headers;
-    }
-
-    private List<Info> getResultList(String json)
-    {
+    @Override
+    protected List<Info> getInfoDataByJson(String json) {
         List<Info> list = new ArrayList<>();
         if (json != null && json.length() > 0)
         {
             List<String> titles = JsonPath.read(json, "$.data.articleFeed.items.edges.[*].node.title");
             List<String> urls = JsonPath.read(json, "$.data.articleFeed.items.edges.[*].node.originalUrl");
-            List<Info> indexInfoList = baseHotProcessor.getInfoListByTitlesAndUrls(titles, urls);
+            List<Info> indexInfoList = getInfoListByTitlesAndUrls(titles, urls);
             list.addAll(indexInfoList);
             log.debug("index infoList size is {}", indexInfoList.size());
         }
-        return list;
+        return handlerCenter.handleData(list);
+    }
+
+    @Override
+    protected Map<String, String> generateHeader() {
+        Map<String,String> header = new HashMap<>();
+        header.put("Content-Type", "application/json");
+        header.put("Host", "web-api.juejin.im");
+        header.put("Origin","https://juejin.im");
+        header.put("Referer", "https://juejin.im/?sort=popular");
+        header.put("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:69.0) Gecko/20100101 Firefox/69.0");
+        header.put("X-Agent", "Juejin/Web");
+        return header;
+    }
+
+    @Override
+    protected String generateRequestBody() {
+        return "{\"operationName\":\"\",\"query\":\"\",\"variables\":{\"first\":20,\"after\":\"\",\"order\":\"POPULAR\"},\"extensions\":{\"query\":{\"id\":\"21207e9ddb1de777adeaca7a2fb38030\"}}}";
     }
 }

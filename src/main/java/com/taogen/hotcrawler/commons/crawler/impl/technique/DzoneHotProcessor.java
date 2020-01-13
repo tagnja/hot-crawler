@@ -1,62 +1,62 @@
 package com.taogen.hotcrawler.commons.crawler.impl.technique;
 
 import com.jayway.jsonpath.JsonPath;
-import com.taogen.hotcrawler.commons.crawler.HotProcessor;
-import com.taogen.hotcrawler.commons.crawler.impl.BaseHotProcessor;
+import com.taogen.hotcrawler.commons.config.SiteProperties;
+import com.taogen.hotcrawler.commons.constant.RequestMethod;
+import com.taogen.hotcrawler.commons.crawler.APIHotProcessor;
+import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
 import com.taogen.hotcrawler.commons.entity.Info;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Component("DzoneHotProcessor")
-public class DzoneHotProcessor implements HotProcessor
+public class DzoneHotProcessor extends APIHotProcessor
 {
-    private static final Logger log = LoggerFactory.getLogger(DzoneHotProcessor.class);
+    @Autowired
+    private SiteProperties siteProperties;
 
     @Autowired
-    private BaseHotProcessor baseHotProcessor;
-
-    public static final String DOMAIN = "https://dzone.com";
-    public static final String HOT_PAGE_URL = "https://dzone.com/list";
-    public static final String HOT_API_URL = "https://dzone.com/services/widget/article-listV2/list?sort=newest";
-    public static final String ITEM_KEY = "article-title";
+    private ApplicationContext context;
 
     @Override
-    public List<Info> crawlHotList()
-    {
-        List<Info> list = new ArrayList<>();
-
-        // API Json
-        String json = null;
-        json = baseHotProcessor.getJson(HOT_API_URL, log);
-
-        if (json == null)
-        {
-            return list;
-        }
-
-        list = getResultList(json);
-        return baseHotProcessor.handleData(list);
+    @PostConstruct
+    protected void initialize(){
+        injectBeans(context);
+        setFieldsByProperties(siteProperties);
+        this.log = LoggerFactory.getLogger(DzoneHotProcessor.class);
+        this.header = generateHeader();
+        this.requestBody = generateRequestBody();
+        this.requestMethod = RequestMethod.GET;
     }
 
-    private List<Info> getResultList(String json)
-    {
+    @Override
+    protected List<Info> getInfoDataByJson(String json) {
         List<Info> list = new ArrayList<>();
-
-        if (json != null && json.length() > 0)
-        {
+        if (json != null && json.length() > 0) {
             List<String> titles = JsonPath.read(json, "$.result.data.nodes.[*].title");
             List<String> urls = JsonPath.read(json, "$.result.data.nodes.[*].articleLink");
-            urls = baseHotProcessor.urlsAddPrefix(DOMAIN, urls);
-            List<Info> indexInfoList = baseHotProcessor.getInfoListByTitlesAndUrls(titles, urls);
+            urls = urlsAddPrefix(getDomainByUrl(this.url), urls);
+            List<Info> indexInfoList = getInfoListByTitlesAndUrls(titles, urls);
             list.addAll(indexInfoList);
             log.debug("index infoList size is {}", indexInfoList.size());
         }
+        return handlerCenter.handleData(list);
+    }
 
-        return list;
+    @Override
+    protected Map<String, String> generateHeader() {
+        return null;
+    }
+
+    @Override
+    protected String generateRequestBody() {
+        return null;
     }
 }
