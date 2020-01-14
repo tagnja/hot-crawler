@@ -6,7 +6,9 @@
    #example
    cates[0].sites[0].id = 1
    cates[0].sites[0].name = example
-   cates[0].sites[0].processorName: ExampleHotProcessor
+   cates[0].sites[0].processorName = ExampleHotProcessor
+   cates[0].sites[0].url = https://example.com/list
+   cates[0].sites[0].prefix = https://example.com
    ```
    
 2. Add processor of crawler. e.g. `hot-crawler/src/main/java/com/taogen/hotcrawler/commons/crawler/impl/ExampleHotProcessor.java`
@@ -22,6 +24,8 @@
        }
    }
    ```
+
+   Tips: You can also extend one abstract class if need. Abstract classes have implemented some operations for you.
 
 3. Test and running on local.
 

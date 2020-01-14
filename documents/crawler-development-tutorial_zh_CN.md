@@ -6,7 +6,9 @@
    #example
    cates[0].sites[0].id = 1
    cates[0].sites[0].name = example
-   cates[0].sites[0].processorName: ExampleHotProcessor
+   cates[0].sites[0].processorName = ExampleHotProcessor
+   cates[0].sites[0].url = https://example.com/list
+   cates[0].sites[0].prefix = https://example.com
    ```
    
 2. 添加热点爬取处理器，如 hot-crawler/src/main/java/com/taogen/hotcrawler/commons/crawler/impl/ExampleHotProcessor.java
@@ -22,6 +24,8 @@
        }
    }
    ```
+
+   Tips：你也可以继承某个实现 HotProcessor 的抽象类，这些抽象类帮你实现了一些操作。
 
 3. 本地测试和运行
 
