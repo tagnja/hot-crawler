@@ -60,7 +60,7 @@ public class ZhihuHotProcessor extends APIHotProcessor
 
         for (int i = 0; i < urls.size(); i++)
         {
-            urls.set(i, urls.get(i).replace("https://api.zhihu.com/questions", getDomainByUrl(this.url) + "/question"));
+            urls.set(i, urls.get(i).replace("https://api.zhihu.com/questions", this.prefix + "/question"));
         }
 
         for (int i = 1; i < titles.size(); i++)

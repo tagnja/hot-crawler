@@ -59,7 +59,7 @@ public class GeekParkHotProcessor extends DocumentHotProcessor
                         infoTitle = infoTitle.substring(0, index);
                     }
                     StringBuilder infoUrl = new StringBuilder();
-                    infoUrl.append(getDomainByUrl(this.url));
+                    infoUrl.append(this.prefix);
                     infoUrl.append(item.attr("href"));
                     String id = String.valueOf(++i);
                     list.add(new Info(id, infoTitle, infoUrl.toString()));

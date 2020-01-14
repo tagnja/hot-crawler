@@ -54,7 +54,7 @@ public class InfoqcomHotProcessor extends DocumentHotProcessor
                     element = element.getElementsByClass("card__title").get(0).getElementsByTag("a").get(0);
                     String infoTitle = element.html();
                     StringBuilder infoUrl = new StringBuilder();
-                    infoUrl.append(getDomainByUrl(this.url));
+                    infoUrl.append(this.prefix);
                     infoUrl.append(element.attr("href"));
                     String id = String.valueOf(++i);
                     list.add(new Info(id, infoTitle, infoUrl.toString()));

@@ -55,7 +55,7 @@ public class HackernewsHotProcessor extends DocumentHotProcessor
                 String id = String.valueOf(i + 1);
                 Elements aElements = urlElements.get(i).getElementsByTag("a");
                 String infoUrl = aElements.get(aElements.size() - 1).attr("href");
-                infoUrl = getDomainByUrl(this.url) + "/" + infoUrl;
+                infoUrl = this.prefix + "/" + infoUrl;
                 String infoTitle = titleElements.get(i).html();
                 list.add(new Info(id, infoTitle, infoUrl));
             }

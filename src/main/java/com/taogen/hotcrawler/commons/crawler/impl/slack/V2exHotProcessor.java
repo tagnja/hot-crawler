@@ -66,7 +66,7 @@ public class V2exHotProcessor extends DocumentHotProcessor
                 Elements elements1 = element.getElementsByTag("a");
                 String infoTitle = elements1.html();
                 StringBuilder infoUrl = new StringBuilder();
-                infoUrl.append(getDomainByUrl(this.url));
+                infoUrl.append(this.prefix);
                 infoUrl.append(elements1.attr("href"));
                 String id = String.valueOf(++i);
                 String url = infoUrl.substring(0, infoUrl.indexOf("#"));

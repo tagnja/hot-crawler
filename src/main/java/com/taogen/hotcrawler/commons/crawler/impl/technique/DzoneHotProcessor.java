@@ -41,7 +41,7 @@ public class DzoneHotProcessor extends APIHotProcessor
         if (json != null && json.length() > 0) {
             List<String> titles = JsonPath.read(json, "$.result.data.nodes.[*].title");
             List<String> urls = JsonPath.read(json, "$.result.data.nodes.[*].articleLink");
-            urls = urlsAddPrefix(getDomainByUrl(this.url), urls);
+            urls = urlsAddPrefix(this.prefix, urls);
             List<Info> indexInfoList = getInfoListByTitlesAndUrls(titles, urls);
             list.addAll(indexInfoList);
             log.debug("index infoList size is {}", indexInfoList.size());

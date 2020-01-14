@@ -60,7 +60,7 @@ public class TianyaHotProcessor extends DocumentHotProcessor
                 String id = String.valueOf(++i);
                 String infoUrl = itemElement.attr("href");
                 String infoTitle = itemElement.html();
-                infoUrl = getDomainByUrl(this.url) + infoUrl;
+                infoUrl = this.prefix + infoUrl;
                 list.add(new Info(id, infoTitle, infoUrl));
             }
         }

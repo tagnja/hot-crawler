@@ -69,7 +69,7 @@ public class InfoqHotProcessor extends APIHotProcessor
         {
             log.error("Something error {}", e.getMessage(), e);
         }
-        return null;
+        return "";
     }
 
     @Override

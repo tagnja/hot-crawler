@@ -54,7 +54,7 @@ public class DeveloperHotProcessor extends DocumentHotProcessor
                     Element item = element.getElementsByClass("title").get(0).getElementsByTag("a").get(0);
                     String infoTitle = item.html();
                     StringBuilder infoUrl = new StringBuilder();
-                    infoUrl.append(getDomainByUrl(this.url));
+                    infoUrl.append(this.prefix);
                     infoUrl.append(item.attr("href"));
                     String id = String.valueOf(++i);
                     list.add(new Info(id, infoTitle, infoUrl.toString()));

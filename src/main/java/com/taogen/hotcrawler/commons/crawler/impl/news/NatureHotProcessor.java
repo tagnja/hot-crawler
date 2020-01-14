@@ -54,7 +54,7 @@ public class NatureHotProcessor extends DocumentHotProcessor
                 try {
                     String infoTitle = element.getElementsByClass("c-article-item__title").get(0).html();
                     StringBuilder infoUrl = new StringBuilder();
-                    infoUrl.append(getDomainByUrl(this.url));
+                    infoUrl.append(this.prefix);
                     infoUrl.append(element.getElementsByTag("a").get(0).attr("href"));
                     String id = String.valueOf(++i);
                     list.add(new Info(id, infoTitle, infoUrl.toString()));

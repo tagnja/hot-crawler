@@ -62,7 +62,7 @@ public class CloudmusicHotProcessor extends DocumentHotProcessor
                     itemElement = element.getElementsByTag("a").get(0);
                     String id = String.valueOf(++i);
                     StringBuilder infoUrl = new StringBuilder();
-                    infoUrl.append(getDomainByUrl(this.url));
+                    infoUrl.append(this.prefix);
                     infoUrl.append("#");
                     infoUrl.append(itemElement.attr("href"));
                     String infoTitle = itemElement.html();

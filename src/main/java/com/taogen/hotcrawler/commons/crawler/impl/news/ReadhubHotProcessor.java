@@ -43,7 +43,7 @@ public class ReadhubHotProcessor extends APIHotProcessor
 
         for (int i = 0; i < urls.size(); i++)
         {
-            urls.set(i, new StringBuilder(getDomainByUrl(this.url)).append("/").append(urls.get(i)).toString());
+            urls.set(i, new StringBuilder(this.prefix).append("/").append(urls.get(i)).toString());
         }
 
         for (int i = 0; i < titles.size(); i++)

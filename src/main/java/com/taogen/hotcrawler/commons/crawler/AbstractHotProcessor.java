@@ -4,6 +4,7 @@ import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
 import com.taogen.hotcrawler.commons.entity.Info;
+import lombok.Data;
 import org.jsoup.Connection;
 import org.slf4j.Logger;
 import org.springframework.context.ApplicationContext;
@@ -12,11 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Data
 public abstract class AbstractHotProcessor implements HotProcessor
 {
     private static final int DOMAIN_INDEX_SPAN = 2;
     protected String name;
     protected String url;
+    protected String prefix;
     protected Map<String, String> header;
     protected String requestBody;
     protected RequestMethod requestMethod;
@@ -38,24 +41,11 @@ public abstract class AbstractHotProcessor implements HotProcessor
         if (sites != null) {
             for (SiteProperties.SiteInfo site : sites) {
                 if (this.getClass().getSimpleName().equals(site.getProcessorName())){
-                    this.url = site.getUrl();
-                    this.name = site.getName();
+                    setName(site.getName());
+                    setUrl(site.getUrl());
+                    setPrefix(site.getPrefix());
                 }
             }
-        }
-    }
-
-    protected String getDomainByUrl(String url){
-        if (url == null || url.length() == 0)
-        {
-            return null;
-        }
-        int indexOfDomainBegin = url.indexOf("//");
-        int indexOfDomainEnd = url.indexOf('/', indexOfDomainBegin + DOMAIN_INDEX_SPAN);
-        if (indexOfDomainEnd > indexOfDomainBegin){
-            return url.substring(0, indexOfDomainEnd);
-        }else{
-            return url;
         }
     }
 

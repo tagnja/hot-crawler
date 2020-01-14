@@ -42,6 +42,7 @@ public class SiteProperties
         private String name;
         private String processorName;
         private String url;
+        private String prefix;
     }
 
     @PostConstruct

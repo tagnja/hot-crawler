@@ -55,7 +55,7 @@ public class HuxiuHotProcessor extends DocumentHotProcessor
                     Element titleItem = element.getElementsByClass("article-item__content__title").get(0);
                     String infoTitle = titleItem.html();
                     Element urlItem = element.getElementsByClass("article-item__img").get(0).parent();
-                    StringBuilder infoUrl = new StringBuilder(getDomainByUrl(this.url));
+                    StringBuilder infoUrl = new StringBuilder(this.prefix);
                     infoUrl.append(urlItem.attr("href"));
                     String id = String.valueOf(++i);
                     list.add(new Info(id, infoTitle, infoUrl.toString()));

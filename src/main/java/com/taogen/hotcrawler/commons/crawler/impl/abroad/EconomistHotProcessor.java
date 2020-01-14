@@ -55,7 +55,7 @@ public class EconomistHotProcessor extends DocumentHotProcessor
                     Element item = element.getElementsByClass("teaser__link").get(0);
                     String infoTitle = item.attr("aria-label");
                     StringBuilder infoUrl = new StringBuilder();
-                    infoUrl.append(getDomainByUrl(this.url));
+                    infoUrl.append(this.prefix);
                     infoUrl.append(item.attr("href"));
                     String id = String.valueOf(++i);
                     list.add(new Info(id, infoTitle, infoUrl.toString()));

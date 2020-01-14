@@ -72,7 +72,7 @@ public class GithubHotProcessor extends DocumentHotProcessor
                 String infoTitle = infoUrl.substring(infoUrl.indexOf('/', 1) + 1) + ". ";
                 String desc = descElement == null ? "" : descElement.html();
                 infoTitle = infoTitle + desc;
-                infoUrl = getDomainByUrl(this.url) + infoUrl;
+                infoUrl = this.prefix + infoUrl;
                 list.add(new Info(id, infoTitle, infoUrl));
             }
         }

@@ -55,7 +55,7 @@ public class SegmentFaultHotProcessor extends DocumentHotProcessor
                     String infoTitle = element.getElementsByClass("news__item-title").get(0).html();
                     // url
                     StringBuilder infoUrl = new StringBuilder();
-                    infoUrl.append(getDomainByUrl(this.url));
+                    infoUrl.append(this.prefix);
                     infoUrl.append(element.getElementsByTag("a").get(1).attr("href"));
                     String id = String.valueOf(++i);
                     list.add(new Info(id, infoTitle, infoUrl.toString()));
