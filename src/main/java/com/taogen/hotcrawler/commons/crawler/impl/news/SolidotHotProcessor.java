@@ -3,7 +3,6 @@ package com.taogen.hotcrawler.commons.crawler.impl.news;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.DocumentHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -66,7 +65,7 @@ public class SolidotHotProcessor extends DocumentHotProcessor
                 }
             }
         }
-        return handlerCenter.handleData(list);
+        return list;
     }
 
     @Override

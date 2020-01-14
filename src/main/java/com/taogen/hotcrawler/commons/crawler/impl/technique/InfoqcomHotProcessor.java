@@ -3,7 +3,6 @@ package com.taogen.hotcrawler.commons.crawler.impl.technique;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.DocumentHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -64,7 +63,7 @@ public class InfoqcomHotProcessor extends DocumentHotProcessor
                 log.error("Can't find attribute!", e);
             }
         }
-        return handlerCenter.handleData(list);
+        return list;
     }
 
     @Override

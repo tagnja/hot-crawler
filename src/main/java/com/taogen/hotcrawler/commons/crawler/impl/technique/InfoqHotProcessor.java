@@ -5,7 +5,6 @@ import com.jayway.jsonpath.JsonPath;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.APIHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -112,14 +111,12 @@ public class InfoqHotProcessor extends APIHotProcessor
             list.addAll(hotInfoList);
             log.debug("day hot infoList size is {}", hotInfoList.size());
         }
-
         // update all id
         for (int i = 0; i < list.size(); i++)
         {
             list.get(i).setId(String.valueOf(i+1));
         }
-
-        return handlerCenter.handleData(list);
+        return list;
     }
 
     @Override

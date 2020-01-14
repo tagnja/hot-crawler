@@ -3,14 +3,10 @@ package com.taogen.hotcrawler.commons.crawler.impl.news;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.DocumentHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.HotProcessor;
-import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
-import com.taogen.hotcrawler.commons.crawler.impl.slack.V2exHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -68,7 +64,7 @@ public class HuxiuHotProcessor extends DocumentHotProcessor
                 }
             }
         }
-        return handlerCenter.handleData(list);
+        return list;
     }
 
     @Override

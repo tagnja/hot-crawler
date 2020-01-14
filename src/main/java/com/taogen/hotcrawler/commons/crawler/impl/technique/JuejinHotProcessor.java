@@ -4,7 +4,6 @@ import com.jayway.jsonpath.JsonPath;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.APIHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +48,7 @@ public class JuejinHotProcessor extends APIHotProcessor
             list.addAll(indexInfoList);
             log.debug("index infoList size is {}", indexInfoList.size());
         }
-        return handlerCenter.handleData(list);
+        return list;
     }
 
     @Override

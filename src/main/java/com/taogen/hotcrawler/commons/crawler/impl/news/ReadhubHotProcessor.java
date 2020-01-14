@@ -1,11 +1,9 @@
 package com.taogen.hotcrawler.commons.crawler.impl.news;
 
 import com.jayway.jsonpath.JsonPath;
-import com.taogen.hotcrawler.api.service.BaseService;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.APIHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

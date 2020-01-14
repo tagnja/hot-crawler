@@ -3,13 +3,10 @@ package com.taogen.hotcrawler.commons.crawler.impl.abroad;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.DocumentHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.HotProcessor;
-import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -50,7 +47,7 @@ public class BBCNewsHotProcessor extends DocumentHotProcessor
 
     @Override
     protected List<Info> getInfoDataByElements(Elements elements) {
-        List<Info> infoList = new ArrayList<>();
+        List<Info> list = new ArrayList<>();
         if (elements != null) {
             int i = 0;
             for (Element element : elements) {
@@ -60,13 +57,13 @@ public class BBCNewsHotProcessor extends DocumentHotProcessor
                     infoUrl.append(getDomainByUrl(this.url));
                     infoUrl.append(element.attr("href"));
                     String id = String.valueOf(++i);
-                    infoList.add(new Info(id, infoTitle, infoUrl.toString()));
+                    list.add(new Info(id, infoTitle, infoUrl.toString()));
                 } catch (IndexOutOfBoundsException e) {
                     log.error("Can't find attribute!", e);
                 }
             }
         }
-        return handlerCenter.handleData(infoList);
+        return list;
     }
 
     @Override

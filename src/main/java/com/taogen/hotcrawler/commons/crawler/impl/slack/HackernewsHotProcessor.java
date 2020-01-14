@@ -3,7 +3,6 @@ package com.taogen.hotcrawler.commons.crawler.impl.slack;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.DocumentHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -61,7 +60,7 @@ public class HackernewsHotProcessor extends DocumentHotProcessor
                 list.add(new Info(id, infoTitle, infoUrl));
             }
         }
-        return handlerCenter.handleData(list);
+        return list;
     }
 
     @Override
