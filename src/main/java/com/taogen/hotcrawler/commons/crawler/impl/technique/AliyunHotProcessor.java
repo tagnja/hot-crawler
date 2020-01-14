@@ -1,4 +1,4 @@
-//package com.taogen.hotcrawler.commons.crawler.impl.technique;
+package com.taogen.hotcrawler.commons.crawler.impl.technique;//package com.taogen.hotcrawler.commons.crawler.impl.technique;
 //
 //import com.taogen.hotcrawler.commons.crawler.HotProcessor;
 //import com.taogen.hotcrawler.commons.entity.Info;

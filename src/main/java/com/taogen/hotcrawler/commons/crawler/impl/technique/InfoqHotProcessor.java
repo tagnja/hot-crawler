@@ -4,7 +4,7 @@ package com.taogen.hotcrawler.commons.crawler.impl.technique;
 import com.jayway.jsonpath.JsonPath;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
-import com.taogen.hotcrawler.commons.crawler.APIHotProcessor;
+import com.taogen.hotcrawler.commons.crawler.AbstractHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component("InfoqHotProcessor")
-public class InfoqHotProcessor extends APIHotProcessor
+public class InfoqHotProcessor extends AbstractHotProcessor
 {
     public static final String HOT_API_URL_INDEX = "https://www.infoq.cn/public/v1/article/getIndexList";
     public static final String HOT_API_URL_RECOMMEND = "https://www.infoq.cn/public/v1/my/recommond";
@@ -42,38 +42,41 @@ public class InfoqHotProcessor extends APIHotProcessor
     @Override
     @PostConstruct
     protected void initialize(){
-        injectBeans(context);
-        setFieldsByProperties(siteProperties);
-        this.log = LoggerFactory.getLogger(InfoqHotProcessor.class);
-        this.header = generateHeader();
-        this.requestBody = generateRequestBody();
-        this.requestMethod = RequestMethod.POST;
+        RequestMethod requestMethod = RequestMethod.GET;
+        setFieldsByProperties(siteProperties, requestMethod, generateHeader(),generateRequestBody());
+        injectBeansByContext(context);
+        setLog(LoggerFactory.getLogger(getClass()));
     }
 
     @Override
-    protected String getJson(){
+    public List<Info> crawlHotList() {
+        getJson();
+        List<Info> list = getInfoDataByJson();
+        log.debug("crawl hot list from {}, list size is {}", this.name, list.size());
+        return handlerCenter.handleData(list);
+    }
+
+    protected void getJson(){
         try {
             // selected 4 + recommend 24 + hot_day 8
             indexJson = Jsoup.connect(HOT_API_URL_INDEX).ignoreContentType(true).
-                    headers(this.header).method(Connection.Method.GET).execute().body();
+                    headers(getHttpRequest().getHeader()).method(Connection.Method.GET).execute().body();
             recommendJson = Jsoup.connect(HOT_API_URL_RECOMMEND).ignoreContentType(true).
-                    headers(this.header).requestBody(REQUEST_BODY).method(Connection.Method.POST).execute().body();
+                    headers(getHttpRequest().getHeader()).requestBody(REQUEST_BODY).method(Connection.Method.POST).execute().body();
             this.score = JsonPath.read(recommendJson, "$.data.[-1].score");
             if (score != null && score > 0)
             {
                 recommendJson2 = Jsoup.connect(HOT_API_URL_RECOMMEND).ignoreContentType(true).
-                        headers(this.header).requestBody(this.requestBody).method(Connection.Method.POST).execute().body();
+                        headers(getHttpRequest().getHeader()).requestBody(getHttpRequest().getRequestBody()).method(Connection.Method.POST).execute().body();
             }
         }
         catch (IOException e)
         {
             log.error("Something error {}", e.getMessage(), e);
         }
-        return "";
     }
 
-    @Override
-    protected List<Info> getInfoDataByJson(String json) {
+    protected List<Info> getInfoDataByJson() {
         List<Info> list = new ArrayList<>();
         if (indexJson != null && indexJson.length() > 0)
         {

@@ -27,12 +27,10 @@ public class DzoneHotProcessor extends APIHotProcessor
     @Override
     @PostConstruct
     protected void initialize(){
-        injectBeans(context);
-        setFieldsByProperties(siteProperties);
-        this.log = LoggerFactory.getLogger(DzoneHotProcessor.class);
-        this.header = generateHeader();
-        this.requestBody = generateRequestBody();
-        this.requestMethod = RequestMethod.GET;
+        RequestMethod requestMethod = RequestMethod.GET;
+        setFieldsByProperties(siteProperties, requestMethod, generateHeader(),generateRequestBody());
+        injectBeansByContext(context);
+        setLog(LoggerFactory.getLogger(getClass()));
     }
 
     @Override

@@ -31,12 +31,10 @@ public class SolidotHotProcessor extends DocumentHotProcessor
     @Override
     @PostConstruct
     protected void initialize(){
-        injectBeans(context);
-        setFieldsByProperties(siteProperties);
-        this.log = LoggerFactory.getLogger(SolidotHotProcessor.class);
-        this.header = generateHeader();
-        this.requestBody = generateRequestBody();
-        this.requestMethod = RequestMethod.GET;
+        RequestMethod requestMethod = RequestMethod.GET;
+        setFieldsByProperties(siteProperties, requestMethod, generateHeader(),generateRequestBody());
+        injectBeansByContext(context);
+        setLog(LoggerFactory.getLogger(getClass()));
     }
 
     @Override

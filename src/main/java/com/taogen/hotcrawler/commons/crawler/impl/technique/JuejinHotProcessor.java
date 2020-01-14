@@ -29,12 +29,10 @@ public class JuejinHotProcessor extends APIHotProcessor
     @Override
     @PostConstruct
     protected void initialize(){
-        injectBeans(context);
-        setFieldsByProperties(siteProperties);
-        this.log = LoggerFactory.getLogger(JuejinHotProcessor.class);
-        this.header = generateHeader();
-        this.requestBody = generateRequestBody();
-        this.requestMethod = RequestMethod.POST;
+        RequestMethod requestMethod = RequestMethod.POST;
+        setFieldsByProperties(siteProperties, requestMethod, generateHeader(),generateRequestBody());
+        injectBeansByContext(context);
+        setLog(LoggerFactory.getLogger(getClass()));
     }
 
     @Override
