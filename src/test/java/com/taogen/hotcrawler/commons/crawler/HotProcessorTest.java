@@ -2,7 +2,6 @@ package com.taogen.hotcrawler.commons.crawler;
 
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.junit.Ignore;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,25 +24,41 @@ public class HotProcessorTest
         {
             for (int i = 0; i < hotList.size(); i++)
             {
-                Info info = hotList.get(i);
-                if (! String.valueOf(i+1).equals(info.getId())){
-                    log.debug("error info: {}, {}, {}", info.getId(), info.getTitle(), info.getUrl());
-                }
-                assertEquals(String.valueOf(i+1), info.getId());
-                assertNotNull(info.getTitle());
-                assertNotNull(info.getUrl());
-
-                // only single http(s)://
-                int index1 = info.getUrl().indexOf("://");
-                int index2 = info.getUrl().indexOf("://", index1 + 1);
-                if (index2 != -1)
-                {
-                    log.error("error url is {}", info.getUrl());
-                }
-                assertTrue(index1 != -1);
-                assertTrue(index2 == -1);
+                testInfo(hotList.get(i), i);
             }
 
         }
+    }
+
+    private void testInfo(Info info, int i) {
+        testId(String.valueOf(i+1), info.getId());
+        testTitle(info.getTitle());
+        testUrl(info.getUrl());
+    }
+
+    private void testId(String expectId, String actualId){
+        assertEquals(expectId, actualId);
+    }
+
+    private void testTitle(String title) {
+        assertNotNull(title);
+    }
+
+    private void testUrl(String url) {
+        assertNotNull(url);
+        assertTrue(url.startsWith("http"));
+        hasOnlySingleUrl(url);
+
+    }
+
+    private void hasOnlySingleUrl(String url){
+        int index1 = url.indexOf("://");
+        int index2 = url.indexOf("://", index1 + 1);
+        if (index2 != -1)
+        {
+            log.error("error url is {}", url);
+        }
+        assertTrue(index1 != -1);
+        assertTrue(index2 == -1);
     }
 }
