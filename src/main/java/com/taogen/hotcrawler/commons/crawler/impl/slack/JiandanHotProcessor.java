@@ -63,14 +63,4 @@ public class JiandanHotProcessor extends DocumentHotProcessor
         }
         return list;
     }
-
-    @Override
-    protected Map<String, String> generateHeader() {
-        return null;
-    }
-
-    @Override
-    protected String generateRequestBody() {
-        return null;
-    }
 }

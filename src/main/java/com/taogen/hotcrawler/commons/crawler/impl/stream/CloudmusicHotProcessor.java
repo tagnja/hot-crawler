@@ -81,9 +81,4 @@ public class CloudmusicHotProcessor extends DocumentHotProcessor
         header.put("Referer", "https://music.163.com/");
         return header;
     }
-
-    @Override
-    protected String generateRequestBody() {
-        return null;
-    }
 }

@@ -6,6 +6,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class DocumentHotProcessor extends AbstractHotProcessor {
 
@@ -28,5 +29,17 @@ public abstract class DocumentHotProcessor extends AbstractHotProcessor {
         }
         log.debug("crawl hot list from {}, list size is {}", this.name, infoList.size());
         return handlerCenter.handleData(infoList);
+    }
+
+    @Override
+    protected Map<String, String> generateHeader(){
+        // Basic implementation, most situation not need header
+        return null;
+    }
+
+    @Override
+    protected String generateRequestBody(){
+        // Basic implementation, most situation not need request body
+        return null;
     }
 }

@@ -38,18 +38,6 @@ public class V2exHotProcessor extends DocumentHotProcessor
     }
 
     @Override
-    public Map<String, String> generateHeader() {
-        // not need
-        return null;
-    }
-
-    @Override
-    protected String generateRequestBody() {
-        // not need
-        return null;
-    }
-
-    @Override
     public Elements getElements(Document document) {
         Elements elements = document.getElementsByClass(ITEM_KEY);
         return elements;

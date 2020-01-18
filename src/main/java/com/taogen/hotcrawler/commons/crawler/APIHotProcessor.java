@@ -4,6 +4,7 @@ import com.taogen.hotcrawler.commons.entity.Info;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class APIHotProcessor extends AbstractHotProcessor {
 
@@ -24,5 +25,15 @@ public abstract class APIHotProcessor extends AbstractHotProcessor {
         return handlerCenter.handleData(infoList);
     }
 
+    @Override
+    protected Map<String, String> generateHeader(){
+        // Basic implementation, most situation not need header
+        return null;
+    }
 
+    @Override
+    protected String generateRequestBody(){
+        // Basic implementation, most situation not need request body
+        return null;
+    }
 }

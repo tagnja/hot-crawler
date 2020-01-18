@@ -34,18 +34,6 @@ public class ZhihuHotProcessor extends APIHotProcessor
     }
 
     @Override
-    protected Map<String, String> generateHeader() {
-        // not need
-        return null;
-    }
-
-    @Override
-    protected String generateRequestBody() {
-        // not need
-        return null;
-    }
-
-    @Override
     public List<Info> getInfoDataByJson(String json) {
         List<Info> list = new ArrayList<>();
         if (json == null)
