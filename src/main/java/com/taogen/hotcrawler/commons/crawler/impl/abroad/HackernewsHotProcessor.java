@@ -1,4 +1,4 @@
-package com.taogen.hotcrawler.commons.crawler.impl.slack;
+package com.taogen.hotcrawler.commons.crawler.impl.abroad;
 
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
