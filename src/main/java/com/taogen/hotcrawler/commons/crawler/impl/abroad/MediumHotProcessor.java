@@ -43,9 +43,9 @@ public class MediumHotProcessor extends APIHotProcessor {
         List<Info> list = new ArrayList<>();
         if (json != null && json.length() > 0)
         {
-            List<String> titles1 = JsonPath.read(json, "$.data.topic.featurePosts.postPreviews.[*].post.title");
+            List<String> titles1 = JsonPath.read(json, "$.data.topic.featuredPosts.postPreviews.[*].post.title");
+            List<String> urls1 = JsonPath.read(json, "$.data.topic.featuredPosts.postPreviews.[*].post.mediumUrl");
             List<String> titles2 = JsonPath.read(json, "$.data.topic.latestPosts.postPreviews.[*].post.title");
-            List<String> urls1 = JsonPath.read(json, "$.data.topic.featurePosts.postPreviews.[*].post.mediumUrl");
             List<String> urls2 = JsonPath.read(json, "$.data.topic.latestPosts.postPreviews.[*].post.mediumUrl");
             List<Info> indexInfoList = getInfoListByTitlesAndUrls(titles1, urls1);
             List<Info> indexInfoList2 = getInfoListByTitlesAndUrls(titles2, urls2);
