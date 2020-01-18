@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Component("DzoneHotProcessor")
 public class DzoneHotProcessor extends APIHotProcessor

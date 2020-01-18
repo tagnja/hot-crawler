@@ -67,7 +67,6 @@ public class CloudmusicHotProcessor extends DocumentHotProcessor
                     list.add(new Info(id, infoTitle, infoUrl.toString()));
                 } catch (NullPointerException | IndexOutOfBoundsException e) {
                     log.error("Can't found item element by attribute!", e);
-                    continue;
                 }
             }
         }

@@ -4,7 +4,6 @@ import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.SimpleDocumentHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.LoggerFactory;
@@ -13,8 +12,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component("SolidotHotProcessor")
 public class SolidotHotProcessor extends SimpleDocumentHotProcessor

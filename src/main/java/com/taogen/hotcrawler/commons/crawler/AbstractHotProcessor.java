@@ -27,14 +27,12 @@ public abstract class AbstractHotProcessor implements HotProcessor
     protected Logger log;
     protected HandlerCenter handlerCenter;
 
-    public abstract List<Info> crawlHotList();
     protected abstract void initialize();
     protected abstract Map<String, String> generateHeader();
     protected abstract String generateRequestBody();
 
     protected void injectBeansByContext(ApplicationContext applicationContext){
         this.handlerCenter = applicationContext.getBean(HandlerCenter.class);
-//        log.debug("site properties inject ------------ is {}", applicationContext.getBean(SiteProperties.class));
     }
 
     protected void setFieldsByProperties(SiteProperties siteProperties, RequestMethod requestMethod, Map<String, String> header, String requestBody){

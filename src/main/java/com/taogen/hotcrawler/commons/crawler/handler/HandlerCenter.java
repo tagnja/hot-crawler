@@ -28,7 +28,7 @@ public class HandlerCenter {
     }
 
     private void setHandlerChain(){
-        if (dataHandlers != null && dataHandlers.size() > 0){
+        if (! dataHandlers.isEmpty()){
             firstDataHandler = (DataHandler) baseService.getBean(dataHandlers.get(0));
             DataHandler dataHandler = firstDataHandler;
             for (int i = 1; i < dataHandlers.size(); i++){

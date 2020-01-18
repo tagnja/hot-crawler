@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Component("BBCNewsHotProcessor")
 public class BBCNewsHotProcessor extends DocumentHotProcessor
@@ -39,8 +38,7 @@ public class BBCNewsHotProcessor extends DocumentHotProcessor
 
     @Override
     protected Elements getElements(Document document) {
-        Elements elements = document.getElementsByClass("nw-c-top-stories--standard").get(0).getElementsByClass(ITEM_KEY);
-        return elements;
+        return document.getElementsByClass("nw-c-top-stories--standard").get(0).getElementsByClass(ITEM_KEY);
     }
 
     @Override

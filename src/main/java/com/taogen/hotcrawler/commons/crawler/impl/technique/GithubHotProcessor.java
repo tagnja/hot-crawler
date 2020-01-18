@@ -4,17 +4,13 @@ import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.SimpleDocumentHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component("GithubHotProcessor")
 public class GithubHotProcessor extends SimpleDocumentHotProcessor
@@ -55,24 +51,5 @@ public class GithubHotProcessor extends SimpleDocumentHotProcessor
         info.setTitle(infoTitle.toString());
         info.setUrl(infoUrl);
         return info;
-    }
-
-    @Override
-    protected Elements getElements(Document document) {
-        return document.getElementsByClass(ITEM_KEY);
-    }
-
-    @Override
-    protected List<Info> getInfoDataByElements(Elements elements) {
-        List<Info> list = new ArrayList<>();
-        if (elements != null) {
-            int i = 0;
-            for (Element element : elements) {
-                // id
-                String id = String.valueOf(++i);
-
-            }
-        }
-        return list;
     }
 }

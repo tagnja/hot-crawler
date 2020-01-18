@@ -1,7 +1,7 @@
 package com.taogen.hotcrawler.frontend.controller;
 
-import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.api.service.InfoService;
+import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.entity.Info;
 import com.taogen.hotcrawler.commons.entity.InfoCate;
 import org.slf4j.Logger;

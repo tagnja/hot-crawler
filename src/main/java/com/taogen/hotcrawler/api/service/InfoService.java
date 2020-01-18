@@ -25,8 +25,7 @@ public class InfoService extends BaseService
 
     public List<Info> findListByCateIdAndTypeId(String cateId, String typeId)
     {
-        List<Info> infoList = infoRepository.findByCateIdAndTypeId(cateId, typeId);
-        return infoList;
+        return infoRepository.findByCateIdAndTypeId(cateId, typeId);
     }
 
 
