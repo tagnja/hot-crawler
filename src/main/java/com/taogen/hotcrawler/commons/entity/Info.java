@@ -23,6 +23,12 @@ public class Info implements Serializable, Comparable<Info>
         this.url = url;
     }
 
+    public Info(String title, String url)
+    {
+        this.title = title;
+        this.url = url;
+    }
+
     @Override
     public int compareTo(Info info) {
         return Integer.valueOf(this.id).compareTo(Integer.valueOf(info.id));
