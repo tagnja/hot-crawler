@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
-@Component("ifanrHotProcessor")
+@Component("IfanrHotProcessor")
 public class IfanrHotProcessor extends SimpleDocumentHotProcessor {
     public static final String ITEM_KEY = "article-item";
 
