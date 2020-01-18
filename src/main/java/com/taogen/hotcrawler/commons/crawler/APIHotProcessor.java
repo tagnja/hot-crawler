@@ -1,5 +1,6 @@
 package com.taogen.hotcrawler.commons.crawler;
 
+import com.jayway.jsonpath.PathNotFoundException;
 import com.taogen.hotcrawler.commons.entity.Info;
 
 import java.util.ArrayList;
@@ -19,7 +20,11 @@ public abstract class APIHotProcessor extends AbstractHotProcessor {
         List<Info> infoList = new ArrayList<>();
         String json = getJson(this.httpRequest);
         if (json != null){
-            infoList = getInfoDataByJson(json);
+            try{
+                infoList = getInfoDataByJson(json);
+            }catch (PathNotFoundException e){
+                log.error("Json path error!", e);
+            }
         }
         log.debug("crawl hot list from {}, list size is {}", this.name, infoList.size());
         return handlerCenter.handleData(infoList);
