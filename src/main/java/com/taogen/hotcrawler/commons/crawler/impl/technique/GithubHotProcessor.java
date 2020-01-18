@@ -37,19 +37,20 @@ public class GithubHotProcessor extends SimpleDocumentHotProcessor
     protected Info getInfoByElement(Element element) {
         Element urlElement = element.getElementsByTag("h1").get(0).getElementsByTag("a").get(0);
         Element descElement = null;
-        if (!element.getElementsByTag("p").isEmpty()) {
+        if (! element.getElementsByTag("p").isEmpty()) {
             descElement = element.getElementsByTag("p").get(0);
         }
-        String infoUrl = urlElement.attr("href");
+        String repositoryName = urlElement.attr("href");
+        // Title
         StringBuilder infoTitle = new StringBuilder();
-        infoTitle.append(this.prefix);
-        infoTitle.append(infoUrl.substring(infoUrl.indexOf('/', 1) + 1));
+        infoTitle.append(repositoryName.substring(repositoryName.indexOf('/', 1) + 1));
         infoTitle.append(". ");
         String desc = descElement == null ? "" : descElement.html();
         infoTitle.append(desc);
-        Info info = new Info();
-        info.setTitle(infoTitle.toString());
-        info.setUrl(infoUrl);
-        return info;
+        // Url
+        StringBuilder infoUrl = new StringBuilder();
+        infoUrl.append(this.prefix);
+        infoUrl.append(repositoryName);
+        return new Info(infoTitle.toString(), infoUrl.toString());
     }
 }
