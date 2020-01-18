@@ -2,7 +2,7 @@ package com.taogen.hotcrawler.commons.crawler.impl.news;
 
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
-import com.taogen.hotcrawler.commons.crawler.DocumentHotProcessor;
+import com.taogen.hotcrawler.commons.crawler.SimpleDocumentHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -15,10 +15,9 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Component("SolidotHotProcessor")
-public class SolidotHotProcessor extends DocumentHotProcessor
+public class SolidotHotProcessor extends SimpleDocumentHotProcessor
 {
     public static final String ITEM_KEY = "block_m";
 
@@ -35,34 +34,20 @@ public class SolidotHotProcessor extends DocumentHotProcessor
         setFieldsByProperties(siteProperties, requestMethod, generateHeader(),generateRequestBody());
         injectBeansByContext(context);
         setLog(LoggerFactory.getLogger(getClass()));
+        this.elementClass = ITEM_KEY;
     }
 
     @Override
-    protected Elements getElements(Document document) {
-        Elements elements = document.getElementsByClass(ITEM_KEY);
-        return elements;
-    }
-
-    @Override
-    protected List<Info> getInfoDataByElements(Elements elements) {
-        List<Info> list = new ArrayList<>();
-        if (elements != null) {
-            int i = 0;
-            for (Element element : elements) {
-                try {
-                    Elements elements1 = element.getElementsByClass("bg_htit").get(0).getElementsByTag("h2").get(0).getElementsByTag("a");
-                    Element item = elements1.get(elements1.size() - 1);
-                    String infoTitle = item.html();
-                    StringBuilder infoUrl = new StringBuilder();
-                    infoUrl.append(this.prefix);
-                    infoUrl.append(item.attr("href"));
-                    String id = String.valueOf(++i);
-                    list.add(new Info(id, infoTitle, infoUrl.toString()));
-                } catch (IndexOutOfBoundsException e) {
-                    log.error("Can't find attribute!", e);
-                }
-            }
-        }
-        return list;
+    protected Info getInfoByElement(Element element) {
+        Elements elements = element.getElementsByClass("bg_htit").get(0).getElementsByTag("h2").get(0).getElementsByTag("a");
+        Element item = elements.get(elements.size() - 1);
+        String infoTitle = item.html();
+        StringBuilder infoUrl = new StringBuilder();
+        infoUrl.append(this.prefix);
+        infoUrl.append(item.attr("href"));
+        Info info = new Info();
+        info.setTitle(infoTitle);
+        info.setUrl(infoUrl.toString());
+        return info;
     }
 }

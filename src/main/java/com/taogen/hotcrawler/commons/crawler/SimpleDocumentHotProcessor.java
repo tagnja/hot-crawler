@@ -27,7 +27,7 @@ public abstract class SimpleDocumentHotProcessor extends DocumentHotProcessor {
                 try {
                     Info info = getInfoByElement(element);
                     list.add(info);
-                } catch (IndexOutOfBoundsException e) {
+                } catch (IndexOutOfBoundsException | NullPointerException e) {
                     log.error("Can't find attribute in element {}!", i, e);
                 }
                 i++;

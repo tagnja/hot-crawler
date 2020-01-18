@@ -3,6 +3,7 @@ package com.taogen.hotcrawler.commons.crawler.impl.slack;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.DocumentHotProcessor;
+import com.taogen.hotcrawler.commons.crawler.SimpleDocumentHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component("DoubanHotProcessor")
-public class DoubanHotProcessor extends DocumentHotProcessor
+public class DoubanHotProcessor extends SimpleDocumentHotProcessor
 {
     public static final String ITEM_KEY = "channel-item";
 
@@ -35,33 +36,17 @@ public class DoubanHotProcessor extends DocumentHotProcessor
         setFieldsByProperties(siteProperties, requestMethod, generateHeader(),generateRequestBody());
         injectBeansByContext(context);
         setLog(LoggerFactory.getLogger(getClass()));
+        this.elementClass = ITEM_KEY;
     }
 
     @Override
-    protected Elements getElements(Document document) {
-        Elements elements = document.getElementsByClass(ITEM_KEY);
-        return elements;
-    }
-
-    @Override
-    protected List<Info> getInfoDataByElements(Elements elements) {
-        List<Info> list = new ArrayList<>();
-        if (elements != null) {
-            int i = 0;
-            for (Element element : elements) {
-                Element itemElement = null;
-                try {
-                    itemElement = element.getElementsByClass("bd").get(0).getElementsByTag("a").get(0);
-                } catch (NullPointerException | IndexOutOfBoundsException e) {
-                    log.error("Can't found item element by attribute!", e);
-                    continue;
-                }
-                String id = String.valueOf(++i);
-                String infoUrl = itemElement.attr("href");
-                String infoTitle = itemElement.html();
-                list.add(new Info(id, infoTitle, infoUrl));
-            }
-        }
-        return list;
+    protected Info getInfoByElement(Element element) {
+        element = element.getElementsByClass("bd").get(0).getElementsByTag("a").get(0);
+        String infoUrl = element.attr("href");
+        String infoTitle = element.html();
+        Info info = new Info();
+        info.setTitle(infoTitle);
+        info.setUrl(infoUrl);
+        return info;
     }
 }

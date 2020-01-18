@@ -3,6 +3,7 @@ package com.taogen.hotcrawler.commons.crawler.impl.slack;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.DocumentHotProcessor;
+import com.taogen.hotcrawler.commons.crawler.SimpleDocumentHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component("TianyaHotProcessor")
-public class TianyaHotProcessor extends DocumentHotProcessor
+public class TianyaHotProcessor extends SimpleDocumentHotProcessor
 {
     public static final String ITEM_KEY = "td-title";
 
@@ -35,33 +36,19 @@ public class TianyaHotProcessor extends DocumentHotProcessor
         setFieldsByProperties(siteProperties, requestMethod, generateHeader(),generateRequestBody());
         injectBeansByContext(context);
         setLog(LoggerFactory.getLogger(getClass()));
+        this.elementClass = ITEM_KEY;
     }
 
     @Override
-    protected Elements getElements(Document document) {
-        return document.getElementsByClass(ITEM_KEY);
-    }
-
-    @Override
-    protected List<Info> getInfoDataByElements(Elements elements) {
-        List<Info> list = new ArrayList<>();
-        if (elements != null) {
-            int i = 0;
-            for (Element element : elements) {
-                Element itemElement = null;
-                try {
-                    itemElement = element.getElementsByTag("a").get(0);
-                } catch (IndexOutOfBoundsException e) {
-                    log.error("Can't found item element by attribute!", e);
-                    continue;
-                }
-                String id = String.valueOf(++i);
-                String infoUrl = itemElement.attr("href");
-                String infoTitle = itemElement.html();
-                infoUrl = this.prefix + infoUrl;
-                list.add(new Info(id, infoTitle, infoUrl));
-            }
-        }
-        return list;
+    protected Info getInfoByElement(Element element) {
+        element = element.getElementsByTag("a").get(0);
+        StringBuilder infoUrl = new StringBuilder();
+        infoUrl.append(this.prefix);
+        infoUrl.append(element.attr("href"));
+        String infoTitle = element.html();
+        Info info = new Info();
+        info.setTitle(infoTitle);
+        info.setUrl(infoUrl.toString());
+        return info;
     }
 }
