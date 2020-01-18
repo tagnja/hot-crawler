@@ -4,6 +4,7 @@ import com.jayway.jsonpath.JsonPath;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.APIHotProcessor;
+import com.taogen.hotcrawler.commons.crawler.SimpleAPIHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Component("JuejinHotProcessor")
-public class JuejinHotProcessor extends APIHotProcessor
+public class JuejinHotProcessor extends SimpleAPIHotProcessor
 {
 
     @Autowired
@@ -33,20 +31,8 @@ public class JuejinHotProcessor extends APIHotProcessor
         setFieldsByProperties(siteProperties, requestMethod, generateHeader(),generateRequestBody());
         injectBeansByContext(context);
         setLog(LoggerFactory.getLogger(getClass()));
-    }
-
-    @Override
-    protected List<Info> getInfoDataByJson(String json) {
-        List<Info> list = new ArrayList<>();
-        if (json != null && json.length() > 0)
-        {
-            List<String> titles = JsonPath.read(json, "$.data.articleFeed.items.edges.[*].node.title");
-            List<String> urls = JsonPath.read(json, "$.data.articleFeed.items.edges.[*].node.originalUrl");
-            List<Info> indexInfoList = getInfoListByTitlesAndUrls(titles, urls);
-            list.addAll(indexInfoList);
-            log.debug("index infoList size is {}", indexInfoList.size());
-        }
-        return list;
+        setTitleJsonPaths(Arrays.asList("$.data.articleFeed.items.edges.[*].node.title"));
+        setUrlJsonPaths(Arrays.asList("$.data.articleFeed.items.edges.[*].node.originalUrl"));
     }
 
     @Override

@@ -1,28 +1,20 @@
 package com.taogen.hotcrawler.commons.crawler.impl.abroad;//package com.taogen.hotcrawler.commons.crawler.impl.abroad;
 
-import com.jayway.jsonpath.JsonPath;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
-import com.taogen.hotcrawler.commons.crawler.APIHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.HotProcessor;
-import com.taogen.hotcrawler.commons.entity.Info;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.slf4j.Logger;
+import com.taogen.hotcrawler.commons.crawler.SimpleAPIHotProcessor;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Component("MediumHotProcessor")
-public class MediumHotProcessor extends APIHotProcessor {
+public class MediumHotProcessor extends SimpleAPIHotProcessor {
     @Autowired
     private SiteProperties siteProperties;
 
@@ -36,23 +28,8 @@ public class MediumHotProcessor extends APIHotProcessor {
         setFieldsByProperties(siteProperties, requestMethod, generateHeader(),generateRequestBody());
         injectBeansByContext(context);
         setLog(LoggerFactory.getLogger(getClass()));
-    }
-
-    @Override
-    protected List<Info> getInfoDataByJson(String json) {
-        List<Info> list = new ArrayList<>();
-        if (json != null && json.length() > 0)
-        {
-            List<String> titles1 = JsonPath.read(json, "$.data.topic.featuredPosts.postPreviews.[*].post.title");
-            List<String> urls1 = JsonPath.read(json, "$.data.topic.featuredPosts.postPreviews.[*].post.mediumUrl");
-            List<String> titles2 = JsonPath.read(json, "$.data.topic.latestPosts.postPreviews.[*].post.title");
-            List<String> urls2 = JsonPath.read(json, "$.data.topic.latestPosts.postPreviews.[*].post.mediumUrl");
-            List<Info> indexInfoList = getInfoListByTitlesAndUrls(titles1, urls1);
-            List<Info> indexInfoList2 = getInfoListByTitlesAndUrls(titles2, urls2);
-            list.addAll(indexInfoList);
-            list.addAll(indexInfoList2);
-        }
-        return list;
+        setTitleJsonPaths(Arrays.asList("$.data.topic.featuredPosts.postPreviews.[*].post.title", "$.data.topic.latestPosts.postPreviews.[*].post.title"));
+        setUrlJsonPaths(Arrays.asList("$.data.topic.featuredPosts.postPreviews.[*].post.mediumUrl", "$.data.topic.latestPosts.postPreviews.[*].post.mediumUrl"));
     }
 
     @Override
