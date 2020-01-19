@@ -63,7 +63,7 @@ public class HackernewsHotProcessor extends DocumentHotProcessor
 
     @Override
     protected Map<String, String> generateHeader() {
-        return null;
+        return getBasicHeaders();
     }
 
     @Override

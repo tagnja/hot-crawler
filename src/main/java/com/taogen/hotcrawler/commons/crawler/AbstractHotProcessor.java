@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,12 +64,14 @@ public abstract class AbstractHotProcessor implements HotProcessor
         }
     }
 
-    protected void addBasicHeaders(Connection connection)
+    protected Map<String, String> getBasicHeaders()
     {
-        connection.header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
-        connection.header("Accept-Encoding", "gzip, deflate, br");
-        connection.header("Accept-Language", "en-US,en;q=0.5");
-        connection.header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0");
+        Map<String, String> header = new HashMap<>();
+        header.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+        header.put("Accept-Encoding", "gzip, deflate, br");
+        header.put("Accept-Language", "en-US,en;q=0.5");
+        header.put("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0");
+        return header;
     }
 
     protected List<String> urlsAddPrefix(String prefix, List<String> urls)
@@ -105,7 +108,7 @@ public abstract class AbstractHotProcessor implements HotProcessor
         Document doc = null;
         Connection connection = Jsoup.connect(httpRequest.getUrl());
         if (httpRequest.getHeader() != null) {
-            addBasicHeaders(connection);
+            connection.headers(getBasicHeaders());
             connection.headers(httpRequest.getHeader());
         }
         try {
