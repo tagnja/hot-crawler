@@ -16,7 +16,7 @@ public abstract class SimpleAPIHotProcessor extends APIHotProcessor {
     @Override
     protected List<Info> getInfoDataByJson(String json) {
         List<Info> infoList = new ArrayList<>();
-        if (json != null & checkJsonPathList(this.titleJsonPaths, this.urlJsonPaths)){
+        if (json != null && checkJsonPathList(this.titleJsonPaths, this.urlJsonPaths)){
             for (int i = 0; i < titleJsonPaths.size(); i++){
                 try {
                     List<String> titles = JsonPath.read(json, this.titleJsonPaths.get(i));
@@ -31,11 +31,7 @@ public abstract class SimpleAPIHotProcessor extends APIHotProcessor {
     }
 
     private boolean checkJsonPathList(List<String> titleJsonPaths, List<String> urlJsonPaths){
-        if (titleJsonPaths != null && urlJsonPaths != null && titleJsonPaths.size() == urlJsonPaths.size()){
-            return true;
-        }else{
-            return false;
-        }
+        return titleJsonPaths != null && urlJsonPaths != null && titleJsonPaths.size() == urlJsonPaths.size();
     }
 
 }
