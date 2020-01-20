@@ -23,9 +23,9 @@ public class InfoService extends BaseService
 
     private final DateFormat dateFormatter = new SimpleDateFormat("yyyyMMdd");
 
-    public List<Info> findListByCateIdAndTypeId(String cateId, String typeId)
+    public List<Info> findListByTypeId(String code)
     {
-        return infoRepository.findByCateIdAndTypeId(cateId, typeId);
+        return infoRepository.findByTypeId(code);
     }
 
 

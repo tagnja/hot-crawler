@@ -23,7 +23,7 @@ public class InfoServiceTest
     @Test
     public void findListByTypeIdTest()
     {
-        List<Info> infoList = infoService.findListByCateIdAndTypeId("1", "1");
+        List<Info> infoList = infoService.findListByTypeId("1");
         log.info("info list size: " + infoList.size());
     }
 

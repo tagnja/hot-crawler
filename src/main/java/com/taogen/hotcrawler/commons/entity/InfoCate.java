@@ -1,23 +1,15 @@
 package com.taogen.hotcrawler.commons.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class InfoCate
 {
-    private String id;
+    private String code;
     private String name;
     private List<InfoType> infoTypes;
-
-    public InfoCate(){}
-
-    public InfoCate(String id, String name, List<InfoType> types)
-    {
-        this.id = id;
-        this.name = name;
-        this.infoTypes = (types == null ? new ArrayList<>() : types);
-    }
 }

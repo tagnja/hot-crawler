@@ -1,18 +1,12 @@
 package com.taogen.hotcrawler.commons.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class InfoType
 {
-    private String id;
+    private String code;
     private String name;
-
-    public InfoType(){}
-
-    public InfoType(String id, String name)
-    {
-        this.id = id;
-        this.name = name;
-    }
 }

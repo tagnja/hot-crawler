@@ -31,44 +31,33 @@ public class InfoRepository
         userVisitCountHashOps = redisTemplate.opsForHash();
     }
 
-    private String getKeyByCateIdAndTypeId(String cateId, String typeId)
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("site:");
-        stringBuilder.append(cateId.trim());
-        stringBuilder.append("-");
-        stringBuilder.append(typeId.trim());
-        stringBuilder.append(":info");
-        return stringBuilder.toString();
-    }
-    public void save(Info info, String cateId, String typeId)
+    public void save(Info info, String code)
     {
 
-        String key = getKeyByCateIdAndTypeId(cateId, typeId);
+        String key = code;
         hashOps.putIfAbsent(key, info.getId(), info);
     }
 
-    public void saveAll(List<Info> infoList, String cateId, String typeId)
+    public void saveAll(List<Info> infoList, String code)
     {
-        String key = getKeyByCateIdAndTypeId(cateId, typeId);
+        String key = code;
         Map<String, Info> map = new HashMap<>();
         infoList.forEach(info -> map.put(info.getId(), info));
         hashOps.putAll(key, map);
     }
 
-    public void update(Info info, String cateId, String typeId)
+    public void update(Info info, String code)
     {
-        String key = getKeyByCateIdAndTypeId(cateId, typeId);
+        String key = code;
         hashOps.put(key, info.getId(), info);
     }
 
-    public List<Info> findByCateIdAndTypeId(String cateId, String typeId)
+    public List<Info> findByTypeId(String code)
     {
         Map<String, Info> infoMap = new HashMap<>();
-        String key = getKeyByCateIdAndTypeId(cateId, typeId);
-        if (redisTemplate.hasKey(key))
+        if (redisTemplate.hasKey(code))
         {
-            infoMap = hashOps.entries(key);
+            infoMap = hashOps.entries(code);
         }
         List<Info> infoList = new ArrayList<>();
         infoMap.forEach((k, v) -> infoList.add(v));
@@ -77,28 +66,25 @@ public class InfoRepository
         return infoList;
     }
 
-    public Info findByInfoId(String cateId, String typeId, String infoId)
+    public Info findByInfoId(String code, String infoId)
     {
         Info info = null;
-        String key = getKeyByCateIdAndTypeId(cateId, typeId);
-        if (redisTemplate.hasKey(key))
+        if (redisTemplate.hasKey(code))
         {
-            info = hashOps.get(key, infoId);
+            info = hashOps.get(code, infoId);
         }
         return info;
     }
 
-    public long countByTypeId(String cateId, String typeId)
+    public long countByTypeId(String code)
     {
-        String key = getKeyByCateIdAndTypeId(cateId, typeId);
-        Long count = hashOps.size(key);
+        Long count = hashOps.size(code);
         return count == null ? 0 : count;
     }
 
-    public void removeByTypeId(String cateId, String typeId)
+    public void removeByTypeId(String code)
     {
-        String key = getKeyByCateIdAndTypeId(cateId, typeId);
-        redisTemplate.delete(key);
+        redisTemplate.delete(code);
     }
 
     public void statVisitUser(String ip, String today)

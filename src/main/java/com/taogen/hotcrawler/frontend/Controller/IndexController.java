@@ -52,21 +52,18 @@ public class IndexController
     {
         log.debug(DOMAIN_DESC, domain);
         log.debug("tab: {}", tab);
-        String cateId = "1";
-        String typeId = "1";
-        if (tab != null && tab.split("-").length == 2)
-        {
-            tab = tab.trim();
-            cateId = tab.split("-")[0];
-            typeId = tab.split("-")[1];
+        if (tab == null || tab.isEmpty()){
+            tab = siteProperties.getDefaultSiteInfo().getCode();
         }
+        SiteProperties.SiteInfo siteInfo = siteProperties.getSiteBySiteCode(tab);
         List<InfoCate> cates = siteProperties.convertToInfoCateList();
-        List<Info> infos = infoService.findListByCateIdAndTypeId(cateId, typeId);
+        List<Info> infos = infoService.findListByTypeId(siteInfo.getCode());
         Long visitUserCount = infoService.countVisitUser();
 
         model.addAttribute(KEY_DOMAIN, domain);
         model.addAttribute("cates", cates);
         model.addAttribute("infos", infos);
+        model.addAttribute("thisSiteInfo", siteInfo);
         model.addAttribute("visitUserCount", visitUserCount);
         infoService.statVisitUser(request);
         log.info("Current visit by {}", InfoService.getRealIpAddress(request));

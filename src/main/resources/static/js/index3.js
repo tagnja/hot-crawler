@@ -18,7 +18,7 @@ $.ajax({
             var infoTypes = infoCate.infoTypes;
             for (var i = 0; i < infoTypes.length; i++)
             {
-                var menuItem = "<a class='menu-item pointer' cateId='"+infoCate.id+"' typeId='"+infoTypes[i].id+"'>" + infoTypes[i].name + "</a>";
+                var menuItem = "<a class='menu-item pointer' cateId='"+infoCate.id+"' code='"+infoTypes[i].id+"'>" + infoTypes[i].name + "</a>";
                 $("#"+ menuRowId).append(menuItem);
             }
         }
@@ -27,15 +27,15 @@ $.ajax({
 
         // initial get infos
         // var hash = window.location.hash.substr(1);
-        // var cateId, typeId;
+        // var cateId, code;
         // if (hash) {
         //     cateId = hash.split('-')[0];
-        //     typeId = hash.split('-')[1];
+        //     code = hash.split('-')[1];
         // } else {
         //     cateId = infoCates[0].id;
-        //     typeId = infoCates[0].infoTypes[0].id;
+        //     code = infoCates[0].infoTypes[0].id;
         // }
-        // console.log("cateId: " + cateId + ", typeId: " + typeId);
+        // console.log("cateId: " + cateId + ", code: " + code);
         getInfos(infoCates[0].id, infoCates[0].infoTypes[0].id);
     },
     error: function(res){
@@ -45,27 +45,27 @@ $.ajax({
 
 $(".menu-item").click(function () {
     var cateId = $(this).attr("cateId");
-    var typeId = $(this).attr("typeId");
-    // window.location = window.location.href.split('#')[0] + "#" + cateId +"-"+typeId;
+    var code = $(this).attr("code");
+    // window.location = window.location.href.split('#')[0] + "#" + cateId +"-"+code;
     // window.location.reload();
-    getInfos(cateId, typeId);
+    getInfos(cateId, code);
     //console.log(infos);
 });
 
-function selected(cateId, typeId)
+function selected(cateId, code)
 {
     $(".menu-item").each(function() {
-        if ($(this).attr("cateId") == cateId && $(this).attr("typeId") == typeId) {
+        if ($(this).attr("cateId") == cateId && $(this).attr("code") == code) {
             $(this).css({"background-color": "#445", "color": "#FFFFFF"});
         }else{
             $(this).css({"background-color": "#FFFFFF", "color": "#000000"});
         }
     });
 }
-function getInfos(cateId, typeId)
+function getInfos(cateId, code)
 {
     var infos;
-    var getInfoUrl = domain + "/api/v1/cates/"+cateId+"/types/" + typeId + "/infos";
+    var getInfoUrl = domain + "/api/v1/cates/"+cateId+"/types/" + code + "/infos";
     $.ajax({
         url: getInfoUrl,
         type: "get",
@@ -73,7 +73,7 @@ function getInfos(cateId, typeId)
         dataType: "json",
         success: function(res){
             infos = res.data;
-            putInfos("#main", infos, cateId, typeId);
+            putInfos("#main", infos, cateId, code);
         },
         error: function(res){
             console.log(JSON.stringify(res))
@@ -82,7 +82,7 @@ function getInfos(cateId, typeId)
     return infos;
 }
 
-function putInfos(elementId, infos, cateId, typeId) {
+function putInfos(elementId, infos, cateId, code) {
     $(elementId).empty();
     if (infos.length > 0){
         var infoItem;
@@ -99,5 +99,5 @@ function putInfos(elementId, infos, cateId, typeId) {
         var blankTip = "<div style='text-align: center;'>该站点暂无数据！</div>";
         $(elementId).append(blankTip);
     }
-    selected(cateId, typeId);
+    selected(cateId, code);
 }

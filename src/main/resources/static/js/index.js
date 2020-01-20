@@ -18,7 +18,7 @@ $.ajax({
             var infoTypes = infoCate.infoTypes;
             for (var i = 0; i < infoTypes.length; i++)
             {
-                var menuItem = "<div class='menu-item pointer' cateId='"+infoCate.id+"' typeId='"+infoTypes[i].id+"'>" + infoTypes[i].name + "</div>";
+                var menuItem = "<div class='menu-item pointer' cateId='"+infoCate.id+"' code='"+infoTypes[i].id+"'>" + infoTypes[i].name + "</div>";
                 $("#"+ menuRowId).append(menuItem);
             }
         }
@@ -27,16 +27,16 @@ $.ajax({
 
         // initial get infos
         var hash = window.location.hash.substr(1);
-        var cateId, typeId;
+        var cateId, code;
         if (hash) {
             cateId = hash.split('-')[0];
-            typeId = hash.split('-')[1];
+            code = hash.split('-')[1];
         } else {
             cateId = infoCates[0].id;
-            typeId = infoCates[0].infoTypes[0].id;
+            code = infoCates[0].infoTypes[0].id;
         }
-        // console.log("cateId: " + cateId + ", typeId: " + typeId);
-        getInfos(cateId, typeId);
+        // console.log("cateId: " + cateId + ", code: " + code);
+        getInfos(cateId, code);
     },
     error: function(res){
         console.log(JSON.stringify(res))
@@ -45,27 +45,27 @@ $.ajax({
 
 $(".menu-item").click(function () {
     var cateId = $(this).attr("cateId");
-    var typeId = $(this).attr("typeId");
-    window.location = window.location.href.split('#')[0] + "#" + cateId +"-"+typeId;
+    var code = $(this).attr("code");
+    window.location = window.location.href.split('#')[0] + "#" + cateId +"-"+code;
     window.location.reload();
-    //getInfos(cateId, typeId);
+    //getInfos(cateId, code);
     //console.log(infos);
 });
 
-function selected(cateId, typeId)
+function selected(cateId, code)
 {
     $(".menu-item").each(function() {
-        if ($(this).attr("cateId") == cateId && $(this).attr("typeId") == typeId) {
+        if ($(this).attr("cateId") == cateId && $(this).attr("code") == code) {
             $(this).css({"background-color": "#445", "color": "#FFFFFF"});
 
         }
     });
 }
-function getInfos(cateId, typeId)
+function getInfos(cateId, code)
 {
-    selected(cateId, typeId);
+    selected(cateId, code);
     var infos;
-    var getInfoUrl = domain + "/api/v1/cates/"+cateId+"/types/" + typeId + "/infos";
+    var getInfoUrl = domain + "/api/v1/cates/"+cateId+"/types/" + code + "/infos";
     $.ajax({
         url: getInfoUrl,
         type: "get",

@@ -42,11 +42,11 @@ public class InfoController extends BaseV1Controller
 
     @GetMapping(value = "/cates/{cid}/types/{tid}/infos", produces = PRODUCES_JSON)
     @ApiOperation("Get All Information of specified type.")
-    public GenericResponseModel<Info> getTypeInfos(@PathVariable(value = "cid") String cateId, @PathVariable(value = "tid") String typeId)
+    public GenericResponseModel<Info> getTypeInfos(@PathVariable(value = "cid") String cateId, @PathVariable(value = "tid") String code)
     {
-        log.debug("cateId is {}, typeId is  {}", cateId, typeId);
+        log.debug("cateId is {}, code is  {}", cateId, code);
         GenericResponseModel result = new GenericResponseModel();
-        List<Info> infoList = infoService.findListByCateIdAndTypeId(cateId, typeId);
+        List<Info> infoList = infoService.findListByTypeId(code);
         if (infoList != null)
         {
             result.setData(infoList);
