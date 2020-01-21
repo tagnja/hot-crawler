@@ -24,6 +24,7 @@ public abstract class DocumentHotProcessor extends AbstractHotProcessor {
         if (document != null){
             Elements elements = getElements(document);
             if (elements != null){
+                log.debug("elements size is {}", elements.size());
                 infoList = getInfoDataByElements(elements);
             }
         }
