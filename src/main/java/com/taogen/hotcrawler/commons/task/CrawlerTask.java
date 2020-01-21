@@ -67,11 +67,11 @@ public class CrawlerTask
                 executorService.submit(() -> {
                     try {
                         HotProcessor hotProcessor = null;
-                        hotProcessor = (HotProcessor) baseService.getBean(site.getProcessorName());
+                        hotProcessor = (HotProcessor) baseService.getBean(Class.forName(site.getProcessorClassPath()));
                         List<Info> infoList = hotProcessor.crawlHotList();
                         infoRepository.removeByTypeId(site.getCode());
                         infoRepository.saveAll(infoList, site.getCode());
-                    } catch (RuntimeException e) {
+                    } catch (RuntimeException | ClassNotFoundException e) {
                         log.error(e.getMessage(), e);
                     }
                 });

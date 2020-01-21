@@ -4,6 +4,7 @@ import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.handler.HandlerCenter;
 import com.taogen.hotcrawler.commons.entity.Info;
+import com.taogen.hotcrawler.commons.util.ClassUtils;
 import com.taogen.hotcrawler.commons.vo.HttpRequest;
 import lombok.Data;
 import org.jsoup.Connection;
@@ -46,7 +47,7 @@ public abstract class AbstractHotProcessor implements HotProcessor
         List<SiteProperties.SiteInfo> sites = siteProperties.sites();
         if (sites != null) {
             for (SiteProperties.SiteInfo site : sites) {
-                if (this.getClass().getSimpleName().equals(site.getProcessorName())){
+                if (this.getClass().equals(ClassUtils.getClassByClassPath(site.getProcessorClassPath()))){
                     setName(site.getName());
                     getHttpRequest().setUrl(site.getUrl());
                     setPrefix(site.getPrefix());
