@@ -3,7 +3,6 @@ package com.taogen.hotcrawler.commons.crawler.impl.slack;
 import com.taogen.hotcrawler.commons.config.SiteProperties;
 import com.taogen.hotcrawler.commons.constant.RequestMethod;
 import com.taogen.hotcrawler.commons.crawler.DocumentHotProcessor;
-import com.taogen.hotcrawler.commons.crawler.SimpleDocumentHotProcessor;
 import com.taogen.hotcrawler.commons.entity.Info;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -19,7 +18,6 @@ import java.util.List;
 
 @Component
 public class DoubanTopicsHotProcessor extends DocumentHotProcessor {
-    public static final String ITEM_KEY = "indexs";
 
     @Autowired
     private SiteProperties siteProperties;
