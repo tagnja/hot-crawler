@@ -1,4 +1,4 @@
-package com.taogen.hotcrawler.frontend.controller;
+package com.taogen.hotcrawler.frontend.Controller;
 
 import com.taogen.hotcrawler.api.service.InfoService;
 import com.taogen.hotcrawler.commons.config.SiteProperties;

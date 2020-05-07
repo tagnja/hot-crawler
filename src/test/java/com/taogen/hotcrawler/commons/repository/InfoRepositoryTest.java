@@ -28,6 +28,7 @@ public class InfoRepositoryTest
         infoRepository.save(new Info("2", "haha2", "http://bvaidu22"), "1");
         Assert.assertNotNull(infoRepository.findByInfoId("1", "1"));
         Assert.assertNotNull(infoRepository.findByInfoId("1", "2"));
+        log.info("infoRepository.findByInfoId(\"1\", \"1\"): "+ infoRepository.findByInfoId("1", "1"));
     }
 
     @Test

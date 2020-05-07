@@ -1,101 +1,50 @@
-package com.taogen.hotcrawler.commons.crawler.impl.stream;//package com.taogen.hotcrawler.commons.crawler.impl.stream;
-//
-//import com.taogen.hotcrawler.commons.crawler.HotProcessor;
-//import com.taogen.hotcrawler.commons.entity.Info;
-//import com.taogen.hotcrawler.commons.util.OsUtils;
-//import org.jsoup.nodes.Document;
-//import org.jsoup.nodes.Element;
-//import org.jsoup.select.Elements;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.stereotype.Component;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//@Component("BilibiliHotProcessor")
-//public class BilibiliHotProcessor implements HotProcessor
-//{
-//    private static final Logger log = LoggerFactory.getLogger(BilibiliHotProcessor.class);
-//
-//    @Autowired
-//    private BaseHotProcessor baseHotProcessor;
-//
-//    @Value("${crawler.chromeDriver.enable}")
-//    private Boolean enable;
-//
-//    @Value("${crawler.chromeDriver.linuxPath}")
-//    private String linuxPath;
-//
-//    @Value("${crawler.chromeDriver.winPath}")
-//    private String winPath;
-//
-//    public static final String DOMAIN = "https://www.bilibili.com";
-//    public static final String HOT_PAGE_URL = "https://www.bilibili.com/v/kichiku/guide/#/all/click/0/1/";
-////    public static final String HOT_PAGE_URL = "https://www.bilibili.com/v/kichiku/guide/";
-//    public static final String ITEM_KEY = "l-item";
-//
-//
-//    @Override
-//    public List<Info> crawlHotList()
-//    {
-//        List<Info> list = new ArrayList<>();
-//        if (! enable)
-//        {
-//            return list;
-//        }
-//        String osType = OsUtils.getOsType();
-//        log.info("os type is {}", osType);
-////        if (OsUtils.OS_TYPE_WINDOWS.equals(osType))
-////        {
-////            System.setProperty("webdriver.chrome.driver", winPath);
-////            log.info("driver path: {}", winPath);
-////        }
-////        else
-////        {
-////            System.setProperty("webdriver.chrome.driver", linuxPath);
-////            log.info("driver path: {}", linuxPath);
-////        }
-//
-//        // doc
-//        Document doc = baseHotProcessor.getDocByWebDriver(HOT_PAGE_URL, log);
-//        if (doc == null)
-//        {
-//            return list;
-//        }
-//
-//        // elements
-//        Elements elements = doc.getElementsByClass(ITEM_KEY);
-//        log.debug("elements size is {}", elements.size());
-//
-//        int i = 0;
-//        for (Element element : elements)
-//        {
-//            Element itemElement = null;
-//            try
-//            {
-//                itemElement = element.getElementsByClass("title").get(0);
-//            }
-//            catch (NullPointerException | IndexOutOfBoundsException e)
-//            {
-//                log.error("Can't found item element by attribute!", e);
-//                continue;
-//            }
-//            // id
-//            String id = String.valueOf(++i);
-//
-//            // url
-//            String infoUrl = itemElement.attr("href").substring(2);
-//            infoUrl = "https://" + infoUrl;
-//
-//            // title
-//            String infoTitle = itemElement.html();
-//
-//            list.add(new Info(id, infoTitle, infoUrl));
-//        }
-//
-//        return baseHotProcessor.handleData(list);
-//    }
-//}
+package com.taogen.hotcrawler.commons.crawler.impl.stream;
+
+import com.taogen.hotcrawler.commons.config.SiteProperties;
+import com.taogen.hotcrawler.commons.constant.RequestMethod;
+import com.taogen.hotcrawler.commons.crawler.SimpleDocumentHotProcessor;
+import com.taogen.hotcrawler.commons.entity.Info;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+
+@Component("BilibiliHotProcessor")
+public class BilibiliHotProcessor extends SimpleDocumentHotProcessor
+{
+    private static final String ITEM_KEY = "info";
+
+    @Autowired
+    private SiteProperties siteProperties;
+
+    @Autowired
+    private ApplicationContext context;
+
+    @Override
+    @PostConstruct
+    protected void initialize(){
+        RequestMethod requestMethod = RequestMethod.GET;
+        setFieldsByProperties(siteProperties, requestMethod, generateHeader(),generateRequestBody());
+        injectBeansByContext(context);
+        setLog(LoggerFactory.getLogger(getClass()));
+        this.elementClass = ITEM_KEY;
+    }
+
+    @Override
+    protected Info getInfoByElement(Element element) {
+        Elements elements1 = element.getElementsByTag("a");
+        String infoTitle = elements1.html();
+        StringBuilder infoUrl = new StringBuilder();
+//        infoUrl.append(this.prefix);
+        infoUrl.append(elements1.attr("href"));
+        String url = infoUrl.toString(); //.substring(0, infoUrl.indexOf("#"));
+        Info info = new Info();
+        info.setTitle(infoTitle);
+        info.setUrl(url);
+        return info;
+    }
+}

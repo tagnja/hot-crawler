@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: prod
-#    active: dev
+#    active: prod
+    active: dev
   application:
     name: hotcrawler

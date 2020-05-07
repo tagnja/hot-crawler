@@ -1,3 +1,4 @@
+#domain: https://hotnews.com
 domain: https://hot.const520.com
 crawler:
   task:
@@ -32,5 +33,5 @@ logging:
     org.springframework.web: error
     com.taogen.hotcrawler: info
     org.hibernate: error
-#  path: /var/log/hot.const520.com
-#  file: ${logging.path}/${spring.application.name}.log
+  path: /var/log/hot.const520.com
+  file: ${logging.path}/${spring.application.name}.log

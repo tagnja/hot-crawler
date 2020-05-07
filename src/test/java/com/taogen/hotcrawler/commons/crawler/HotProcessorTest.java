@@ -25,6 +25,7 @@ public class HotProcessorTest
             for (int i = 0; i < hotList.size(); i++)
             {
                 testInfo(hotList.get(i), i);
+                log.debug(hotList.get(i).getMap().toString());
             }
 
         }

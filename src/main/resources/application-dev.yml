@@ -34,4 +34,4 @@ logging:
     com.taogen.hotcrawler: debug
     org.hibernate: info
 server:
-  port: 8080
+  port: 8990
